@@ -1,6 +1,6 @@
 ## Update Log
 
-#Day1
+### Day1
 Set up basic stucture of the next framework and add all basic components of 'texas holdem game'. Added Draw card/shuffle deck and Start a new game method
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
