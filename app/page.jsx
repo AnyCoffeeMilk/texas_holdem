@@ -16,27 +16,23 @@ import usePokerDeck from "@/hooks/usePokerDeck";
 import NewGameBtn from "./_components/NewGameBtn";
 
 export default function Home() {
-    const { pokerDeck, setPokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
+    const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
 
     const [isClient, setIsClient] = useState(false)
     const [playerName, setPlayerName] = useState("Bishop")
     const [playerIcon, setPlayerIcon] = useState(null)
-    const [playerCards, setPlayerCards] = useState(() => drawCards(pokerDeck, 2))
-    const [tableCards, setTableCards] = useState(() => drawCards(pokerDeck, 3))
-    const [opponents, setOpponents] = useState(() => [
-        { icon: null, name: 'Pawn', cards: drawCards(pokerDeck, 2), bets: 4 },
-        { icon: null, name: 'Queen', cards: drawCards(pokerDeck, 2), bets: 2 },
-        { icon: null, name: 'Knight', cards: drawCards(pokerDeck, 2), bets: 0 },
-    ])
+    const [playerCards, setPlayerCards] = useState([])
+    const [tableCards, setTableCards] = useState([])
+    const [opponents, setOpponents] = useState([])
 
     useEffect(() => {
         setIsClient(true)
+        handleNewGame()
     }, [])
 
-    const handleNewGameBtn = () => {
+    const handleNewGame = () => {
         const new_deck = getNewDeck()
         const cards_tmp = drawCards(new_deck, 11)
-        setPokerDeck(new_deck)
         setPlayerCards([cards_tmp.pop(), cards_tmp.pop()])
         setTableCards([cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop()])
         setOpponents([
@@ -44,6 +40,10 @@ export default function Home() {
             { icon: null, name: 'Queen', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 2 },
             { icon: null, name: 'Knight', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 0 },
         ])
+    }
+
+    const handleCall = () => {
+
     }
 
     const opponentsMap = opponents.map((item, index) => (
@@ -86,7 +86,7 @@ export default function Home() {
                     <TableCards cards={tableCards} />
                     <GameText text={"Test text"} />
                     <BetsPool betsTotal={6} />
-                    <NewGameBtn onClick={handleNewGameBtn} />
+                    <NewGameBtn onClick={handleNewGame} />
                 </div>
             </div>
         </main>

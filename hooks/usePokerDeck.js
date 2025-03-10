@@ -42,7 +42,7 @@ const usePokerDeck = () => {
         return cards
     }
 
-    return { pokerDeck, setPokerDeck, drawCard, drawCards, getNewDeck }
+    return { pokerDeck, drawCard, drawCards, getNewDeck }
 }
 
 export default usePokerDeck
