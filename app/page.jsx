@@ -43,7 +43,11 @@ export default function Home() {
     }
 
     const handleCall = () => {
-
+        const tmp = [...tableCards]
+        if (tmp.length < 5) {
+            tmp.push(drawCard(pokerDeck))
+            setTableCards(tmp)
+        }
     }
 
     const opponentsMap = opponents.map((item, index) => (
@@ -72,7 +76,7 @@ export default function Home() {
                 </div>
                 <PlayerHands cards={playerCards} />
                 <div className={styles.playerBtnArea}>
-                    <CallBtn onClick={() => console.log(drawCard())} />
+                    <CallBtn onClick={handleCall} />
                     <RaiseBtn onClick={null} />
                     <FoldBtn onClick={null} />
                 </div>

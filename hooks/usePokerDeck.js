@@ -19,8 +19,6 @@ const getNewDeck = () => {
 const usePokerDeck = () => {
     const [pokerDeck, setPokerDeck] = useState(getNewDeck)
 
-    console.log(pokerDeck)
-
     const drawCard = (deck) => {
         const tmpDeck = [...deck]
         const index = Math.floor(Math.random() * deck.length)

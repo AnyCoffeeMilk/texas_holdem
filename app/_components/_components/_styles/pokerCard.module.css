@@ -1,7 +1,45 @@
 .container {
+    background-color: transparent;
     height: 100px;
     width: 80px;
+    perspective: 1000px;
+}
+
+.innerArea {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s;
+    transform-style: preserve-3d;
+}
+
+.facedownArea {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.container:hover .innerArea {
+    transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.cardFront {
     padding: 0.5em;
-    border: 2px solid green;
     background-color: black;
+    border: 2px solid palevioletred;
+}
+
+.cardBack {
+    background-color: dimgray;
+    transform: rotateY(180deg);
 }

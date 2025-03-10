@@ -8,6 +8,7 @@ export default function Opponent({ name, icon, cards, bets }) {
             key={index}
             rank={item.rank}
             suit={item.suit}
+            isFacedown={true}
         />
     ))
 
