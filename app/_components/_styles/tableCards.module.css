@@ -1,0 +1,9 @@
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3em 1em;
+    gap: 1em;
+    border: 2px solid wheat;
+}

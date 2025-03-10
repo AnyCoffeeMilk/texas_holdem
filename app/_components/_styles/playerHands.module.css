@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    padding: 2em 0;
+    background-color: darkslategray;
+}
