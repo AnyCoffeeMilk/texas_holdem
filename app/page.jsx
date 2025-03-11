@@ -14,6 +14,7 @@ import FoldBtn from "./_components/FoldBtn";
 import GameText from "./_components/GameText";
 import usePokerDeck from "@/hooks/usePokerDeck";
 import NewGameBtn from "./_components/NewGameBtn";
+import useGetWinner from "@/hooks/useGetWinner";
 
 export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
@@ -24,6 +25,7 @@ export default function Home() {
     const [playerCards, setPlayerCards] = useState([])
     const [tableCards, setTableCards] = useState([])
     const [opponents, setOpponents] = useState([])
+    const [gameText, setGameText] = useState("Test Text")
 
     useEffect(() => {
         setIsClient(true)
@@ -32,15 +34,27 @@ export default function Home() {
 
     const handleNewGame = () => {
         const new_deck = getNewDeck()
-        const cards_tmp = drawCards(new_deck, 11)
+        const cards_tmp = drawCards(new_deck, 11+2)
         setPlayerCards([cards_tmp.pop(), cards_tmp.pop()])
-        setTableCards([cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop()])
+        setTableCards([cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop()])
         setOpponents([
             { icon: null, name: 'Pawn', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 4 },
             { icon: null, name: 'Queen', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 2 },
             { icon: null, name: 'Knight', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 0 },
         ])
     }
+
+    useEffect(() => {
+        if (opponents.length === 3 && playerCards.length === 2 && tableCards.length === 5) {
+            const winner_name = useGetWinner([
+                { name: playerName, cards: playerCards },
+                { name: opponents[0].name, cards: opponents[0].cards },
+                { name: opponents[1].name, cards: opponents[1].cards },
+                { name: opponents[2].name, cards: opponents[2].cards },
+            ], tableCards)
+            setGameText('Winner: ' + winner_name)
+        }
+    }, [opponents])
 
     const handleCall = () => {
         const tmp = [...tableCards]
@@ -88,7 +102,7 @@ export default function Home() {
                 </div>
                 <div className={styles.centerArea}>
                     <TableCards cards={tableCards} />
-                    <GameText text={"Test text"} />
+                    <GameText text={gameText} />
                     <BetsPool betsTotal={6} />
                     <NewGameBtn onClick={handleNewGame} />
                 </div>

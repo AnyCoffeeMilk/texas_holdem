@@ -1,7 +1,13 @@
 ## Update Log
 
-### Day1
-Set up basic stucture of the next framework and add all basic components of 'texas holdem game'. Added Draw card/shuffle deck and Start a new game method
+### Day 1
+Set up basic stucture of the next framework and add all basic components of 'texas holdem game'. 
+Added Draw card/shuffle deck and Start a new game method.
+
+### Day 2
+Complete the card pattern detect algorithm (Can get the score of each card pattern).
+Complete the winner detect algorithm (Can get the winner of the game according to the scores).
+Add a flip card method for the PokerCard component for testing and fun.
 
 
 ## Getting Started

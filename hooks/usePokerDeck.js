@@ -21,8 +21,8 @@ const usePokerDeck = () => {
 
     const drawCard = (deck) => {
         const tmpDeck = [...deck]
-        const index = Math.floor(Math.random() * deck.length)
-        const card = deck[index]
+        const index = Math.floor(Math.random() * tmpDeck.length)
+        const card = tmpDeck[index]
         tmpDeck.splice(index, 1)
         setPokerDeck(tmpDeck)
         return card
@@ -33,7 +33,7 @@ const usePokerDeck = () => {
         const cards = []
         for (let i = count; i > 0; i--) {
             const index = Math.floor(Math.random() * tmpDeck.length)
-            cards.push(deck[index])
+            cards.push(tmpDeck[index])
             tmpDeck.splice(index, 1)
         }
         setPokerDeck(tmpDeck)
