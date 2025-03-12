@@ -9,6 +9,11 @@ Complete the card pattern detect algorithm (Can get the score of each card patte
 Complete the winner detect algorithm (Can get the winner of the game according to the scores).
 Add a flip card method for the PokerCard component for testing and fun.
 
+### Day 3
+Complete the turn queue system (Including Call, Raise, Fold function for player side).
+Implement of the winner detect system to the turn queue system.
+Winner detect bug fix.
+
 
 ## Getting Started
 

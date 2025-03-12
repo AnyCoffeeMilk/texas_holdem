@@ -153,7 +153,7 @@ const useGetWinner = (gamers, TableCards) => {
         })
     })
 
-    for (let i = 8; i >= 0; i--) {
+    for (let i = 8; i >= 0; i--) { // Loop all 8 type of pattern
         let i_gamer_tmp = []
 
         gamers_tmp.forEach(gamer => {
@@ -173,7 +173,7 @@ const useGetWinner = (gamers, TableCards) => {
                     i_gamer_tmp = i_gamer_tmp.filter(gamer => gamer.kicker[j] === max_kicker)
                 }
             } else if (i === 0) {
-                for (let j = 0; j < 7; j++) {
+                for (let j = 0; j < 5; j++) {
                     const max_kicker = Math.max(...i_gamer_tmp.map(gamer => gamer.kicker[j]))
                     i_gamer_tmp = i_gamer_tmp.filter(gamer => gamer.kicker[j] === max_kicker)
                 }

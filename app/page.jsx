@@ -23,9 +23,13 @@ export default function Home() {
     const [playerName, setPlayerName] = useState("Bishop")
     const [playerIcon, setPlayerIcon] = useState(null)
     const [playerCards, setPlayerCards] = useState([])
+    const [playerBets, setPlayerBets] = useState(0)
     const [tableCards, setTableCards] = useState([])
     const [opponents, setOpponents] = useState([])
     const [gameText, setGameText] = useState("Test Text")
+    const [turnQueue, setTurnQueue] = useState([])
+    const [turnCounter, setTurnCounter] = useState(0)
+    const [topBets, setTopBets] = useState(0)
 
     useEffect(() => {
         setIsClient(true)
@@ -34,34 +38,66 @@ export default function Home() {
 
     const handleNewGame = () => {
         const new_deck = getNewDeck()
-        const cards_tmp = drawCards(new_deck, 11+2)
+        const cards_tmp = drawCards(new_deck, 11)
         setPlayerCards([cards_tmp.pop(), cards_tmp.pop()])
-        setTableCards([cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop()])
+        setTableCards([cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop()])
         setOpponents([
-            { icon: null, name: 'Pawn', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 4 },
+            { icon: null, name: 'Pawn', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 0 },
             { icon: null, name: 'Queen', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 2 },
-            { icon: null, name: 'Knight', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 0 },
+            { icon: null, name: 'Knight', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 4 },
         ])
+        setTopBets(4)
+        setTurnCounter(0)
+        setTurnQueue([playerName, 'Pawn', 'Queen', 'Knight'])
     }
 
     useEffect(() => {
-        if (opponents.length === 3 && playerCards.length === 2 && tableCards.length === 5) {
-            const winner_name = useGetWinner([
-                { name: playerName, cards: playerCards },
-                { name: opponents[0].name, cards: opponents[0].cards },
-                { name: opponents[1].name, cards: opponents[1].cards },
-                { name: opponents[2].name, cards: opponents[2].cards },
-            ], tableCards)
-            setGameText('Winner: ' + winner_name)
+        let queue_tmp = [...turnQueue]
+        const inTurn_gamer = queue_tmp.shift()
+        queue_tmp.push(inTurn_gamer)
+        console.log(queue_tmp, turnCounter)
+        setGameText(`${inTurn_gamer}'s turn.`)
+        if (turnCounter >= turnQueue.length) {
+            setTurnCounter(1)
+            const tableCard_tmp = [...tableCards]
+            if (tableCard_tmp.length < 5) {
+                tableCard_tmp.push(drawCard(pokerDeck))
+                setTableCards(tableCard_tmp)
+            } else {
+                const winner_name = useGetWinner([
+                    { name: playerName, cards: playerCards },
+                    { name: opponents[0].name, cards: opponents[0].cards },
+                    { name: opponents[1].name, cards: opponents[1].cards },
+                    { name: opponents[2].name, cards: opponents[2].cards },
+                ], tableCards)
+                setGameText('Winner: ' + winner_name)
+            }
+        } else {
+            setTurnCounter(cur => cur + 1)
         }
-    }, [opponents])
+        if (inTurn_gamer !== playerName) {
+            setTimeout(() => setTurnQueue(queue_tmp), 1500)
+        }
+    }, [turnQueue])
 
     const handleCall = () => {
-        const tmp = [...tableCards]
-        if (tmp.length < 5) {
-            tmp.push(drawCard(pokerDeck))
-            setTableCards(tmp)
-        }
+        setPlayerBets(topBets)
+        let queue_tmp = [...turnQueue]
+        queue_tmp.push(queue_tmp.shift())
+        setTurnQueue(queue_tmp)
+    }
+
+    const handleRaise = () => {
+        setPlayerBets(topBets * 2)
+        setTopBets(topBets * 2)
+        setTurnCounter(1)
+        let queue_tmp = [...turnQueue]
+        queue_tmp.push(queue_tmp.shift())
+        setTurnQueue(queue_tmp)
+    }
+
+    const handleFold = () => {
+        setTurnQueue(turnQueue.filter(name => name !== playerName))
     }
 
     const opponentsMap = opponents.map((item, index) => (
@@ -91,10 +127,10 @@ export default function Home() {
                 <PlayerHands cards={playerCards} />
                 <div className={styles.playerBtnArea}>
                     <CallBtn onClick={handleCall} />
-                    <RaiseBtn onClick={null} />
-                    <FoldBtn onClick={null} />
+                    <RaiseBtn onClick={handleRaise} />
+                    <FoldBtn onClick={handleFold} />
                 </div>
-                <PlayerBets bets={0} />
+                <PlayerBets bets={playerBets} />
             </div>
             <div className={styles.mainArea}>
                 <div className={styles.opponentArea}>
