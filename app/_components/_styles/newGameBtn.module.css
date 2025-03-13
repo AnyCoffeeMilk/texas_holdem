@@ -4,7 +4,6 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 150px;
-    height: 80px;
+    /* height: 80px; */
     margin: 1em;
 }

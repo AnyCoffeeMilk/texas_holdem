@@ -1,4 +1,30 @@
 .container {
     flex: 1;
-    width: 100%;
+    display: flex;
+    background-color: var(--prime-light);
+    border: 2px solid var(--prime-dark);
+    border-radius: 4px;
+    font-size: x-large;
+    font-weight: bold;
+    
+}
+
+.innerContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--prime-dark);
+    letter-spacing: 0.2em;
+    margin: 2px;
+    padding: 0.5em 2em;
+    border-radius: 2px;
+    transition: 0.1s;
+    text-shadow: -1px -1px 0 var(--prime-light), 1px -1px 0 var(--prime-light), -1px 1px 0 var(--prime-light), 1px 1px 0 var(--prime-light);
+    background-color: var(--prime-dark);
+}
+
+.innerContainer:hover {
+    color: var(--prime-light);
+    text-shadow: none;
 }

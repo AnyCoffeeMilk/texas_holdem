@@ -52,6 +52,7 @@ export default function Home() {
     }
 
     useEffect(() => {
+        if (turnQueue[0] === undefined) return
         let queue_tmp = [...turnQueue]
         const inTurn_gamer = queue_tmp.shift()
         queue_tmp.push(inTurn_gamer)

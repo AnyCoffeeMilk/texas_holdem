@@ -3,13 +3,19 @@
     display: flex;
     padding: 1em;
     gap: 1em;
-    border: 2px solid wheat;
+    border-radius: 4px;
+    border-top: 2px solid var(--prime-dark);
+    border-left: 2px solid var(--prime-dark);
+    -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+    -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+    box-shadow: 2px 2px 0px 2px var(--prime-dark);
 }
 
 .iconArea {
     flex: 1;
     width: 100px;
-    border: 2px solid gold;
+    border-radius: 4px;
+    border: 2px solid var(--prime-dark);
 }
 
 .infoArea {
@@ -21,8 +27,11 @@
 .nameText {
     font-size: larger;
     font-weight: bold;
+    font-style: italic;
     text-align: center;
-    background: darkslateblue;
+    color: var(--prime-light);
+    border-radius: 4px;
+    background-color: var(--prime-dark);
 }
 
 .gameDataArea {
@@ -42,6 +51,5 @@
 .betsArea {
     width: 100%;
     text-align: center;
-    border: 2px solid salmon;
     padding: 0.5em;
 }

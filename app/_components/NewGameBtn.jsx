@@ -6,7 +6,7 @@ export default function NewGameBtn({ onClick }) {
     return (
         <div className={styles.container}>
             <ThemeBtn onClick={onClick}>
-                New Game
+                NEW GAME
             </ThemeBtn>
         </div>
     )

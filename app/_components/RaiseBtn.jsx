@@ -4,7 +4,7 @@ import ThemeBtn from './_components/ThemeBtn'
 export default function RaiseBtn({ onClick }) {
     return (
         <ThemeBtn onClick={onClick}>
-            Raise!
+            RAISE
         </ThemeBtn>
     )
 }

@@ -22,7 +22,7 @@ export default function PokerCard({ rank, suit, isFacedown }) {
                     </div>
                 </div>
                 <div className={styles.cardBack}>
-
+                    <div className={styles.cardBackInner} />
                 </div>
             </div>
         </div>

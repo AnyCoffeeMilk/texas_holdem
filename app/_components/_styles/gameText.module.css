@@ -2,10 +2,13 @@
     position: absolute;
     top: 0;
     right: 0;
-    border: 2px solid saddlebrown;
+    background-color: var(--prime-dark);
+    color: var(--prime-light);
     width: 100%;
     margin: 1em 0;
     padding: 0.5em;
     font-size: x-large;
+    font-style: italic;
+    font-weight: bold;
     text-align: center;
 }

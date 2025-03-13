@@ -11,7 +11,12 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  border: 2px solid wheat;
+  border-radius: 4px;
+  border-top: 2px solid var(--prime-dark);
+  border-left: 2px solid var(--prime-dark);
+  -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+  -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+  box-shadow: 2px 2px 0px 2px var(--prime-dark);
   padding: 1em;
 }
 
@@ -23,7 +28,8 @@
 .playerIconArea {
   height: 120px;
   width: 100px;
-  border: 2px solid gold;
+  border-radius: 4px;
+  border: 2px solid var(--prime-dark);
 }
 
 .playerDataArea {
@@ -34,10 +40,13 @@
 }
 
 .playerNameText {
+  text-align: center;
   font-size: xx-large;
   font-weight: bold;
-  padding: 0 0.5em;
-  background: darkslateblue;
+  font-style: italic;
+  color: var(--prime-light);
+  background-color: var(--prime-dark);
+  border-radius: 4px;
 }
 
 .mainArea {
