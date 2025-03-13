@@ -2,7 +2,6 @@
     align-self: flex-end;
     display: flex;
     padding: 0.25em;
-    gap: 0.25em;;
     align-items: stretch;
     font-weight: bold;
     background-color: var(--prime-dark);
@@ -15,8 +14,8 @@
     align-items: center;
     justify-content: center;
     font-size: x-large;
-    letter-spacing: 2px;
-    padding: 0 0.25em;
+    letter-spacing: 0.15em;
+    padding: 0 0.5em;
     color: var(--prime-dark);
     text-shadow: -1px -1px 0 var(--prime-light), 1px -1px 0 var(--prime-light), -1px 1px 0 var(--prime-light), 1px 1px 0 var(--prime-light);
 }
