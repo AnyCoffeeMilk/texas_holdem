@@ -14,6 +14,10 @@ Complete the turn queue system (Including Call, Raise, Fold function for player 
 Implement of the winner detect system to the turn queue system.
 Winner detect bug fix.
 
+### Day 4
+Apple the design to the layout frame.
+Add responsive effect to the buttons.
+Gattered some icon for after use.
 
 ## Getting Started
 
