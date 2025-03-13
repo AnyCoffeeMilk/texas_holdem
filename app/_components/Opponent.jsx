@@ -27,7 +27,12 @@ export default function Opponent({ name, icon, cards, bets }) {
                     {cardsMap}
                 </div>
                 <div className={styles.betsArea}>
-                    Bets: {bets}
+                    <div className={styles.label}>
+                        BETS
+                    </div>
+                    <div className={styles.currency}>
+                        {bets.toString().padStart(3, "0")}
+                    </div>
                 </div>
             </div>
         </div>

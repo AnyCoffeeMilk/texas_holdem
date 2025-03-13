@@ -50,6 +50,33 @@
 
 .betsArea {
     width: 100%;
-    text-align: center;
-    padding: 0.5em;
+    display: flex;
+    padding: 0.25em;
+    align-items: stretch;
+    font-weight: bold;
+    background-color: var(--prime-dark);
+    border-radius: 4px;
+}
+
+.label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: larger;
+    letter-spacing: 0.15em;
+    padding: 0 0.5em;
+    color: var(--prime-dark);
+    text-shadow: -1px -1px 0 var(--prime-light), 1px -1px 0 var(--prime-light), -1px 1px 0 var(--prime-light), 1px 1px 0 var(--prime-light);
+}
+
+.currency {
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    padding: 0 0.25em;
+    color: var(--prime-dark);
+    font-size: x-large;
+    letter-spacing: 2px;
+    background-color: var(--prime-light);
 }
