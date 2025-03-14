@@ -24,6 +24,8 @@ Icon implement (including using useMemo to optimize loading performance).
 Style update (icluding design of cards, borders and paddings).
 New font update.
 More button click response.
+New Homepage (including navigation of game page).
+Action bar in game page.
 
 ## Getting Started
 
