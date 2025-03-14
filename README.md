@@ -19,6 +19,12 @@ Apple the design to the layout frame.
 Add responsive effect to the buttons.
 Gattered some icon for after use.
 
+### Day 5
+Icon implement (including using useMemo to optimize loading performance). 
+Style update (icluding design of cards, borders and paddings).
+New font update.
+More button click response.
+
 ## Getting Started
 
 First, run the development server:

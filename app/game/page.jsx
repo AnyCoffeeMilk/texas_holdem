@@ -5,15 +5,9 @@ import styles from "./page.module.css";
 import Opponent from "./_components/Opponent";
 import TableCards from "./_components/TableCards";
 import PlayerHands from "./_components/PlayerHands";
-import CallBtn from "./_components/CallBtn";
-import RaiseBtn from "./_components/RaiseBtn";
-import PlayerBank from "./_components/PlayerBank";
-import FoldBtn from "./_components/FoldBtn";
 import GameText from "./_components/GameText";
 import usePokerDeck from "@/hooks/usePokerDeck";
-import NewGameBtn from "./_components/NewGameBtn";
 import useGetWinner from "@/hooks/useGetWinner";
-import Image from "next/image";
 import BishopSVG from "@/public/avatar/bishop.svg";
 import KingSVG from "@/public/avatar/king.svg";
 import KnightSVG from "@/public/avatar/knight.svg";
@@ -22,6 +16,7 @@ import QueenSVG from "@/public/avatar/queen.svg";
 import RookSVG from "@/public/avatar/rook.svg";
 import ChipLabel from "../_components/ChipLabel";
 import Avatar from "../_components/Avatar";
+import ThemeBtn from "../_components/ThemeBtn";
 
 export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
@@ -131,14 +126,23 @@ export default function Home() {
                         <div className={styles.playerNameText}>
                             {playerName}
                         </div>
-                        <PlayerBank chips={10} />
+                        {/* <PlayerBank chips={10} /> */}
+                        <ChipLabel className={styles.playerBank} chips={10} digits={5}>
+                            Bank
+                        </ChipLabel>
                     </div>
                 </div>
                 <PlayerHands cards={playerCards} />
                 <div className={styles.playerBtnArea}>
-                    <CallBtn onClick={handleCall} />
-                    <RaiseBtn onClick={handleRaise} />
-                    <FoldBtn onClick={handleFold} />
+                    <ThemeBtn onClick={handleCall}>
+                        CALL
+                    </ThemeBtn>
+                    <ThemeBtn onClick={handleRaise}>
+                        RAISE
+                    </ThemeBtn>
+                    <ThemeBtn onClick={handleFold}>
+                        FOLD
+                    </ThemeBtn>
                 </div>
                 <ChipLabel className={styles.playerBets} chips={playerBets} digits={3}>
                     BETS
@@ -154,7 +158,9 @@ export default function Home() {
                     <ChipLabel className={styles.betsPool} chips={6} digits={4}>
                         POOL
                     </ChipLabel>
-                    <NewGameBtn onClick={handleNewGame} />
+                    <ThemeBtn className={styles.newGameBtn} onClick={handleNewGame}>
+                        NEW GAME
+                    </ThemeBtn>
                 </div>
             </div>
         </main >

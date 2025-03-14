@@ -46,6 +46,23 @@
   border-radius: 4px;
 }
 
+.playerBank {
+  flex: 1;
+  font-size: x-large;
+}
+
+.playerBtnArea {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  flex: 1;
+}
+
+.playerBets {
+  align-self: flex-end;
+  font-size: x-large;
+}
+
 .mainArea {
   display: flex;
   flex-direction: column;
@@ -72,14 +89,8 @@
   font-size: x-large;
 }
 
-.playerBtnArea {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  flex: 1;
-}
-
-.playerBets { 
-  align-self: flex-end;
-  font-size: x-large;
+.newGameBtn {
+  position: absolute;
+  bottom: 0.5em;
+  left: 0.5em;
 }
