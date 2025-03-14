@@ -17,6 +17,7 @@ import RookSVG from "@/public/avatar/rook.svg";
 import ChipLabel from "../_components/ChipLabel";
 import Avatar from "../_components/Avatar";
 import ThemeBtn from "../_components/ThemeBtn";
+import ActionBar from "./_components/ActionBar";
 
 export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
@@ -58,7 +59,6 @@ export default function Home() {
         let queue_tmp = [...turnQueue]
         const inTurn_gamer = queue_tmp.shift()
         queue_tmp.push(inTurn_gamer)
-        console.log(queue_tmp, turnCounter)
         setGameText(`${inTurn_gamer}'s turn.`)
         if (turnCounter >= turnQueue.length) {
             setTurnCounter(1)
@@ -116,6 +116,7 @@ export default function Home() {
     return !isClient ? null : (
         <main className={styles.page}>
             <div className={styles.playerArea}>
+                <ActionBar />
                 <div className={styles.playerInfoArea}>
                     <Avatar
                         className={styles.playerAvatar}
@@ -126,7 +127,6 @@ export default function Home() {
                         <div className={styles.playerNameText}>
                             {playerName}
                         </div>
-                        {/* <PlayerBank chips={10} /> */}
                         <ChipLabel className={styles.playerBank} chips={10} digits={5}>
                             Bank
                         </ChipLabel>
@@ -153,14 +153,14 @@ export default function Home() {
                     {opponentsMap}
                 </div>
                 <div className={styles.centerArea}>
-                    <TableCards cards={tableCards} />
                     <GameText text={gameText} />
-                    <ChipLabel className={styles.betsPool} chips={6} digits={4}>
-                        POOL
-                    </ChipLabel>
+                    <TableCards cards={tableCards} />
                     <ThemeBtn className={styles.newGameBtn} onClick={handleNewGame}>
                         NEW GAME
                     </ThemeBtn>
+                    <ChipLabel className={styles.betsPool} chips={6} digits={4}>
+                        POOL
+                    </ChipLabel>
                 </div>
             </div>
         </main >

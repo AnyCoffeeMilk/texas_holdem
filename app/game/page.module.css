@@ -9,7 +9,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 1em; 
   border-radius: 4px;
   border-top: 2px solid var(--prime-dark);
   border-left: 2px solid var(--prime-dark);
@@ -21,23 +21,26 @@
 
 .playerInfoArea {
   display: flex;
-  gap: 1em;
+  gap: 0.5em;
 }
 
 .playerAvatar {
-  height: 120px;
-  width: 100px;
+  height: 144px;
+  width: 120px;
 }
 
 .playerDataArea {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
 }
 
 .playerNameText {
-  text-align: center;
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: xx-large;
   font-weight: bold;
   font-style: italic;
@@ -47,15 +50,15 @@
 }
 
 .playerBank {
-  flex: 1;
+  flex: 4;
   font-size: x-large;
 }
 
 .playerBtnArea {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1em;
-  flex: 1;
 }
 
 .playerBets {

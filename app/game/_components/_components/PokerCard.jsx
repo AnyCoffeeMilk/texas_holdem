@@ -17,6 +17,7 @@ export default function PokerCard({ rank, suit, isFacedown }) {
             className={styles.iconImg}
             src={IconSVG}
             alt="Icon of the Poker Card"
+            draggable={false}
         />
     ), [])
 

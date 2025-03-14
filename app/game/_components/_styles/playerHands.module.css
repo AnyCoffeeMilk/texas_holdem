@@ -1,8 +1,9 @@
 .container {
+    flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 1em;
-    padding: 2em 0;
     border-radius: 4px;
     border: 2px solid var(--prime-dark);
 }

@@ -9,6 +9,7 @@ export default function ChipLabel({ className, chips, digits, children }) {
             className={styles.chipImg}
             src={ChipSVG}
             alt="Icon of Chips"
+            draggable={false}
         />
     ), [])
 

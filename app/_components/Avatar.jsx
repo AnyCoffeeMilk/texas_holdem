@@ -8,6 +8,7 @@ export default function Avatar({ className, src, name }) {
             className={styles.img}
             src={src}
             alt={`Avatar of ${name}`}
+            draggable={false}
         />
     ), [src, name])
 
