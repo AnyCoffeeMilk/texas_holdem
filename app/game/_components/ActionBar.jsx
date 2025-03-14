@@ -28,7 +28,7 @@ export default function ActionBar() {
 
     return (
         <div className={styles.container}>
-            <Link href="/" className={styles.btn}>
+            <Link draggable={false} href="/" className={styles.btn}>
                 HOME
                 {goBackSVG}
             </Link>

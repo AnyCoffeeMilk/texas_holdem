@@ -23,9 +23,10 @@ Gattered some icon for after use.
 Icon implement (including using useMemo to optimize loading performance). 
 Style update (icluding design of cards, borders and paddings).
 New font update.
-More button click response.
+New Icon.
 New Homepage (including navigation of game page).
-Action bar in game page.
+More button click response.
+Add Action bar in game page.
 
 ## Getting Started
 

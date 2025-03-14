@@ -59,7 +59,11 @@ export default function Home() {
         let queue_tmp = [...turnQueue]
         const inTurn_gamer = queue_tmp.shift()
         queue_tmp.push(inTurn_gamer)
-        setGameText(`${inTurn_gamer}'s turn.`)
+        if (inTurn_gamer === playerName) {
+            setGameText("It's your turn now.")
+        } else {
+            setGameText(`${inTurn_gamer}'s turn.`)
+        }
         if (turnCounter >= turnQueue.length) {
             setTurnCounter(1)
             const tableCard_tmp = [...tableCards]
@@ -128,7 +132,7 @@ export default function Home() {
                             {playerName}
                         </div>
                         <ChipLabel className={styles.playerBank} chips={10} digits={5}>
-                            Bank
+                            BANK
                         </ChipLabel>
                     </div>
                 </div>
