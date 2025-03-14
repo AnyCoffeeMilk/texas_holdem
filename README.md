@@ -17,7 +17,7 @@ Winner detect bug fix.
 ### Day 4
 Apple the design to the layout frame.
 Add responsive effect to the buttons.
-Gattered some icon for after use.
+Gathered some icon for after use.
 
 ### Day 5
 Icon implement (including using useMemo to optimize loading performance). 
