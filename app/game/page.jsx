@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import Opponent from "./game/_components/Opponent";
-import TableCards from "./game/_components/TableCards";
-import PlayerHands from "./game/_components/PlayerHands";
-import CallBtn from "./game/_components/CallBtn";
-import RaiseBtn from "./game/_components/RaiseBtn";
-import PlayerBank from "./game/_components/PlayerBank";
-import FoldBtn from "./game/_components/FoldBtn";
-import GameText from "./game/_components/GameText";
+import Opponent from "./_components/Opponent";
+import TableCards from "./_components/TableCards";
+import PlayerHands from "./_components/PlayerHands";
+import CallBtn from "./_components/CallBtn";
+import RaiseBtn from "./_components/RaiseBtn";
+import PlayerBank from "./_components/PlayerBank";
+import FoldBtn from "./_components/FoldBtn";
+import GameText from "./_components/GameText";
 import usePokerDeck from "@/hooks/usePokerDeck";
-import NewGameBtn from "./game/_components/NewGameBtn";
+import NewGameBtn from "./_components/NewGameBtn";
 import useGetWinner from "@/hooks/useGetWinner";
 import Image from "next/image";
 import BishopSVG from "@/public/avatar/bishop.svg";
@@ -20,10 +20,10 @@ import KnightSVG from "@/public/avatar/knight.svg";
 import PawnSVG from "@/public/avatar/pawn.svg";
 import QueenSVG from "@/public/avatar/queen.svg";
 import RookSVG from "@/public/avatar/rook.svg";
-import ChipLabel from "./_components/ChipLabel";
-import Avatar from "./_components/Avatar";
+import ChipLabel from "../_components/ChipLabel";
+import Avatar from "../_components/Avatar";
 
-export default function Game() {
+export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
 
     const [isClient, setIsClient] = useState(false)
@@ -49,9 +49,9 @@ export default function Game() {
         setPlayerCards([cards_tmp.pop(), cards_tmp.pop()])
         setTableCards([cards_tmp.pop(), cards_tmp.pop(), cards_tmp.pop()])
         setOpponents([
-            { icon: PawnSVG, name: 'Pawn', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 0 },
-            { icon: QueenSVG, name: 'Queen', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 2 },
-            { icon: KnightSVG, name: 'Knight', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 4 },
+            { avatar: PawnSVG, name: 'Pawn', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 0 },
+            { avatar: QueenSVG, name: 'Queen', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 2 },
+            { avatar: KnightSVG, name: 'Knight', cards: [cards_tmp.pop(), cards_tmp.pop()], bets: 4 },
         ])
         setTopBets(4)
         setTurnCounter(0)
@@ -111,7 +111,7 @@ export default function Game() {
     const opponentsMap = opponents.map((item, index) => (
         <Opponent
             key={index}
-            icon={item.icon}
+            avatar={item.avatar}
             name={item.name}
             cards={item.cards}
             bets={item.bets}
@@ -122,7 +122,7 @@ export default function Game() {
         <main className={styles.page}>
             <div className={styles.playerArea}>
                 <div className={styles.playerInfoArea}>
-                    <Avatar 
+                    <Avatar
                         className={styles.playerAvatar}
                         src={playerAvatar}
                         name={playerName}

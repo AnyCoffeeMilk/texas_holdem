@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import styles from './_styles/pokerCard.module.css'
+import Image from 'next/image'
+import IconSVG from '@/public/icon.svg'
 
 export default function PokerCard({ rank, suit, isFacedown }) {
     const [flip, setFlip] = useState(isFacedown)
@@ -10,19 +12,31 @@ export default function PokerCard({ rank, suit, isFacedown }) {
 
     const handleFlip = () => setFlip(cur => !cur)
 
+    const iconSVG = useMemo(() => (
+        <Image
+            className={styles.iconImg}
+            src={IconSVG}
+            alt="Icon of the Poker Card"
+        />
+    ), [])
+
     return (
         <div className={styles.container} onClick={handleFlip}>
             <div className={styles.innerArea} style={container_style}>
                 <div className={styles.cardFront}>
-                    <div>
-                        {rank}
-                    </div>
-                    <div>
-                        {suit}
+                    <div className={styles.textArea}>
+                        <div>
+                            {rank}
+                        </div>
+                        <div>
+                            {suit}
+                        </div>
                     </div>
                 </div>
                 <div className={styles.cardBack}>
-                    <div className={styles.cardBackInner} />
+                    <div className={styles.cardBackInner}>
+                        {iconSVG}
+                    </div>
                 </div>
             </div>
         </div>
