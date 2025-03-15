@@ -9,6 +9,15 @@
     margin-top: 2px;
 }
 
+.label > div {
+    -webkit-text-stroke: 0;
+    color: var(--prime-light);
+}
+
+.label > div + div {
+    color: var(--prime-dark);
+}
+
 .container .btn {
     font-size: large;
 }

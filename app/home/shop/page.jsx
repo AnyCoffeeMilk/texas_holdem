@@ -10,9 +10,8 @@ import LoanItem from "./_components/LoanItem";
 
 const loan_list = [
     { text: 'LOAN A BIT', chips: 50 },
-    { text: 'LOAN MORE', chips: 100 },
-    { text: 'NOT A LOAN', chips: -50 },
-    { text: 'WHY YES', chips: -100 },
+    { text: 'LOAN A LOT', chips: 100 },
+    { text: 'BUY ME A COFFEE', chips: -50 },
 ]
 
 export default function Profile() {
