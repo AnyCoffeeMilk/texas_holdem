@@ -44,7 +44,7 @@
 }
 
 .container:disabled .innerContainer {
-    cursor:not-allowed;
+    cursor: not-allowed;
     color: var(--prime-light);
     -webkit-text-stroke: 1px var(--prime-dark);
     background-color: var(--prime-light);

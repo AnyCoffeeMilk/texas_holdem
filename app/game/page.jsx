@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 import Opponent from "./_components/Opponent";
 import TableCards from "./_components/TableCards";

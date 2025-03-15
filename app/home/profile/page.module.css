@@ -1,0 +1,83 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100svh;
+}
+
+.container {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 1em;
+  border-radius: 4px;
+  border-top: 2px solid var(--prime-dark);
+  border-left: 2px solid var(--prime-dark);
+  -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+  -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+  box-shadow: 2px 2px 0px 2px var(--prime-dark);
+  padding: 1em;
+}
+
+.container .goback {
+  padding: 0.25em 0.5em;
+  align-self: flex-start;
+}
+
+.subTitleText {
+  padding: 0.5em 0.5em;
+  font-size: larger;
+  font-weight: bold;
+  color: var(--prime-light);
+  background-color: var(--prime-dark);
+  border-radius: 2px;
+}
+
+.avatarArea {
+  display: flex;
+  gap: 0.5em;
+}
+
+.avatarArea .avatar {
+  width: 100px;
+  height: 120px;
+  border: none;
+  padding: 0;
+}
+
+.avatarArea .avatar:hover {
+  border: 2px solid var(--prime-dark);
+}
+
+.avatarArea .selected {
+  border: 2px solid var(--prime-dark);
+}
+
+.avatarArea .avatar img {
+  border: none;
+}
+
+.inputArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+  border-radius: 4px;
+  border: 2px solid var(--prime-dark);
+}
+
+.inputArea input {
+  width: 270px;
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
+  font-style: italic;
+  color: var(--prime-light);
+  background-color: var(--prime-dark);
+  border-radius: 4px;
+}
+
+.inputArea input::selection {
+  color: var(--prime-dark);
+  background-color: var(--prime-light);
+}

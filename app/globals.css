@@ -42,6 +42,15 @@ button {
   cursor: pointer;
   outline: inherit;
   border: none;
+  background: none;
+  font-family: var(--font-prime);
+}
+
+input {
+  padding: 0;
+  outline: inherit;
+  border: none;
+  background: none;
   font-family: var(--font-prime);
 }
 

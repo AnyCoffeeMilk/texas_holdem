@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Avatar from "@/app/_components/Avatar";
 import ChipLabel from "@/app/_components/ChipLabel";
-import Link from "next/link";
 import EditSVG from "./_components/EditSVG";
 import ShopSVG from "./_components/ShopSVG";
 import SettingsSVG from "../_components/SettingsSVG";
 import OnlineMatchSVG from "./_components/OnlineMatchSVG";
 import AIMatchSVG from "./_components/AIMatchSVG";
 import { read_player_profile, set_player_profile } from "../../actions/actions";
+import ThemeLink from "../_components/ThemeLink";
 
 export default function Home() {
     const [playerName, setPlayerName] = useState('Loading...')
@@ -34,9 +34,9 @@ export default function Home() {
                         <div className={styles.profileHeaderText}>
                             PROFILE
                         </div>
-                        <Link draggable={false} href="/" className={styles.btn}>
+                        <ThemeLink href="/home/profile" className={styles.editBtn}>
                             Edit <EditSVG />
-                        </Link>
+                        </ThemeLink>
                     </div>
                     <Avatar
                         className={styles.playerAvatar}
@@ -67,19 +67,19 @@ export default function Home() {
                         </div>
                     </div>
                     <div className={styles.btnArea}>
-                        <Link draggable={false} href="/game" className={styles.btn}>
+                        <ThemeLink href="/game">
                             START ONLINE MATCH <OnlineMatchSVG />
-                        </Link>
-                        <Link draggable={false} href="/game" className={styles.btn}>
+                        </ThemeLink>
+                        <ThemeLink href="/game">
                             START AI MATCH <AIMatchSVG />
-                        </Link>
+                        </ThemeLink>
                         <div className={styles.btnBottomArea}>
-                            <Link draggable={false} href="/" className={styles.btn}>
+                            <ThemeLink href="/">
                                 SHOP <ShopSVG />
-                            </Link>
-                            <Link draggable={false} href="/" className={styles.btn} style={{ flex: 1 }}>
+                            </ThemeLink>
+                            <ThemeLink href="/" className={styles.settingsBtn}>
                                 SETTINGS <SettingsSVG />
-                            </Link>
+                            </ThemeLink>
                         </div>
                     </div>
                 </div>

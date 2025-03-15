@@ -17,17 +17,17 @@ const avatar_dict = {
     'rook': RookSVG,
 }
 
-async function set_player_profile() {
+async function set_player_profile(name = null, avatar = null, bank = null) {
     const cookieStore = await cookies()
 
-    if (!cookieStore.has('player_name')) {
-        cookieStore.set('player_name', 'Bishop')
+    if (name) {
+        cookieStore.set('player_name', name)
     }
-    if (!cookieStore.has('player_avatar')) {
-        cookieStore.set('player_avatar', 'bishop')
+    if (avatar) {
+        cookieStore.set('player_avatar', Object.keys(avatar_dict).find(key => avatar_dict[key].src === avatar.src))
     }
-    if (!cookieStore.has('player_bank')) {
-        cookieStore.set('player_bank', '100')
+    if (bank) {
+        cookieStore.set('player_bank', bank)
     }
 }
 
