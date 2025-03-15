@@ -12,9 +12,9 @@
 
 .playerArea {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
   border-radius: 4px;
   border-top: 2px solid var(--prime-dark);
   border-left: 2px solid var(--prime-dark);
@@ -24,12 +24,46 @@
   padding: 1em;
 }
 
+.playerAreaHeader {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  gap: 1em;
+  margin-bottom: 0.5em;
+}
+
+.playerAreaHeader .btn {
+  margin-left: auto;
+  margin-right: 2px;
+  padding: 0.25em 0.5em;
+}
+
+.profileHeaderText {
+  flex: 1;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  font-size: x-large;
+  font-weight: bold;
+  border-radius: 2px;
+  color: var(--prime-dark);
+  letter-spacing: 0.2em;
+  -webkit-text-stroke: 1px var(--prime-dark);
+}
+
 .playerAvatar {
   height: 300px;
-  width: 250px;
+  width: 100%;
 }
 
 .playerDataArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.playerDataArea {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
@@ -49,13 +83,6 @@
 
 .playerBank {
   font-size: x-large;
-}
-
-.playerDataArea {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
 }
 
 .playerNameText {

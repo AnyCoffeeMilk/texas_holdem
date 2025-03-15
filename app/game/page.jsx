@@ -22,11 +22,9 @@ import { read_player_profile } from "@/actions/actions";
 
 export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
-
-    const [isClient, setIsClient] = useState(false)
     
     const [playerName, setPlayerName] = useState("Bishop")
-    const [playerAvatar, setPlayerAvatar] = useState(BishopSVG)
+    const [playerAvatar, setPlayerAvatar] = useState()
     const [playerBank, setPlayerBank] = useState(0)
     const [playerCards, setPlayerCards] = useState([])
     const [playerBets, setPlayerBets] = useState(0)
@@ -41,7 +39,6 @@ export default function Home() {
     const [turnCounter, setTurnCounter] = useState(0)
 
     useEffect(() => {
-        setIsClient(true)
         read_player_profile()
             .then(({ player_name, player_avatar, player_bank }) => {
                 setPlayerName(player_name)
@@ -132,7 +129,7 @@ export default function Home() {
         />
     ))
 
-    return !isClient ? null : (
+    return !playerAvatar ? null : (
         <main className={styles.page}>
             <div className={styles.playerArea}>
                 <ActionBar />

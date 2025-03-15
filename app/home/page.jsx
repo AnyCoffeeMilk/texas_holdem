@@ -1,15 +1,16 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Avatar from "@/app/_components/Avatar";
 import ChipLabel from "@/app/_components/ChipLabel";
 import Link from "next/link";
+import EditSVG from "./_components/EditSVG";
 import ShopSVG from "./_components/ShopSVG";
 import SettingsSVG from "../_components/SettingsSVG";
 import OnlineMatchSVG from "./_components/OnlineMatchSVG";
 import AIMatchSVG from "./_components/AIMatchSVG";
 import { read_player_profile, set_player_profile } from "../../actions/actions";
-import { useEffect, useState } from "react";
 
 export default function Home() {
     const [playerName, setPlayerName] = useState('Loading...')
@@ -25,10 +26,18 @@ export default function Home() {
             })
     }, [])
 
-    return (
+    return !playerAvatar ? null : (
         <main className={styles.page}>
             <div className={styles.container}>
                 <div className={styles.playerArea}>
+                    <div className={styles.playerAreaHeader}>
+                        <div className={styles.profileHeaderText}>
+                            PROFILE
+                        </div>
+                        <Link draggable={false} href="/" className={styles.btn}>
+                            Edit <EditSVG />
+                        </Link>
+                    </div>
                     <Avatar
                         className={styles.playerAvatar}
                         src={playerAvatar}
