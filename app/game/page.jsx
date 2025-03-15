@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 import Opponent from "./_components/Opponent";
 import TableCards from "./_components/TableCards";
@@ -37,6 +37,7 @@ export default function Home() {
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [turnQueue, setTurnQueue] = useState([])
     const [turnCounter, setTurnCounter] = useState(0)
+    const turnTimeout = useRef(null)
 
     useEffect(() => {
         read_player_profile()
@@ -49,6 +50,7 @@ export default function Home() {
     }, [])
 
     const handleNewGame = () => {
+        clearTimeout(turnTimeout.current)
         const new_deck = getNewDeck()
         const cards_tmp = drawCards(new_deck, 11)
         setPlayerCards([cards_tmp.pop(), cards_tmp.pop()])
@@ -89,13 +91,13 @@ export default function Home() {
                     { name: opponents[2].name, cards: opponents[2].cards },
                 ].filter(gamer => turnQueue.includes(gamer.name)), tableCards)
                 setGameText('Winner: ' + winner_name)
-                setTurnQueue([undefined])
+                return
             }
         } else {
             setTurnCounter(cur => cur + 1)
         }
         if (inTurn_gamer !== playerName) {
-            setTimeout(() => setTurnQueue(queue_tmp), 1500)
+            turnTimeout.current = setTimeout(() => setTurnQueue(queue_tmp), 1500)
         }
     }, [turnQueue])
 
