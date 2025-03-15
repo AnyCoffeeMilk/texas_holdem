@@ -18,25 +18,36 @@ import ChipLabel from "../_components/ChipLabel";
 import Avatar from "../_components/Avatar";
 import ThemeBtn from "../_components/ThemeBtn";
 import ActionBar from "./_components/ActionBar";
+import { read_player_profile } from "@/actions/actions";
 
 export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
 
     const [isClient, setIsClient] = useState(false)
+    
     const [playerName, setPlayerName] = useState("Bishop")
-    const [playerAvatar, setPlayerIcon] = useState(BishopSVG)
+    const [playerAvatar, setPlayerAvatar] = useState(BishopSVG)
+    const [playerBank, setPlayerBank] = useState(0)
     const [playerCards, setPlayerCards] = useState([])
     const [playerBets, setPlayerBets] = useState(0)
-    const [btnDisabled, setBtnDisabled] = useState(true)
-    const [tableCards, setTableCards] = useState([])
+    
     const [opponents, setOpponents] = useState([])
+    const [tableCards, setTableCards] = useState([])
     const [gameText, setGameText] = useState("Test Text")
+    const [topBets, setTopBets] = useState(0)
+    
+    const [btnDisabled, setBtnDisabled] = useState(true)
     const [turnQueue, setTurnQueue] = useState([])
     const [turnCounter, setTurnCounter] = useState(0)
-    const [topBets, setTopBets] = useState(0)
 
     useEffect(() => {
         setIsClient(true)
+        read_player_profile()
+            .then(({ player_name, player_avatar, player_bank }) => {
+                setPlayerName(player_name)
+                setPlayerAvatar(player_avatar)
+                setPlayerBank(player_bank)
+            })
         handleNewGame()
     }, [])
 
@@ -135,7 +146,7 @@ export default function Home() {
                         <div className={styles.playerNameText}>
                             {playerName}
                         </div>
-                        <ChipLabel className={styles.playerBank} chips={10} digits={5}>
+                        <ChipLabel className={styles.playerBank} chips={playerBank} digits={5}>
                             BANK
                         </ChipLabel>
                     </div>

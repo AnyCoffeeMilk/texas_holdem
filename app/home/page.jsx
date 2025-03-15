@@ -8,34 +8,20 @@ import ShopSVG from "./_components/ShopSVG";
 import SettingsSVG from "../_components/SettingsSVG";
 import OnlineMatchSVG from "./_components/OnlineMatchSVG";
 import AIMatchSVG from "./_components/AIMatchSVG";
-import { read_player_profile, set_player_profile } from "./actions";
-import BishopSVG from "@/public/avatar/bishop.svg";
-import KingSVG from "@/public/avatar/king.svg";
-import KnightSVG from "@/public/avatar/knight.svg";
-import PawnSVG from "@/public/avatar/pawn.svg";
-import QueenSVG from "@/public/avatar/queen.svg";
-import RookSVG from "@/public/avatar/rook.svg";
+import { read_player_profile, set_player_profile } from "../../actions/actions";
 import { useEffect, useState } from "react";
-
-const avatar_dict = {
-    'bishop': BishopSVG,
-    'king': KingSVG,
-    'knight': KnightSVG,
-    'pawn': PawnSVG,
-    'queen': QueenSVG,
-    'rook': RookSVG,
-}
 
 export default function Home() {
     const [playerName, setPlayerName] = useState('Loading...')
     const [playerAvatar, setPlayerAvatar] = useState()
+    const [playerBank, setPlayerBank] = useState(0)
 
     useEffect(() => {
-        set_player_profile()
         read_player_profile()
-            .then(({ player_name, player_avatar }) => {
+            .then(({ player_name, player_avatar, player_bank }) => {
                 setPlayerName(player_name)
-                setPlayerAvatar(avatar_dict[player_avatar])
+                setPlayerAvatar(player_avatar)
+                setPlayerBank(player_bank)
             })
     }, [])
 
@@ -52,7 +38,7 @@ export default function Home() {
                         <div className={styles.playerNameText}>
                             {playerName}
                         </div>
-                        <ChipLabel className={styles.playerBank} chips={10} digits={5}>
+                        <ChipLabel className={styles.playerBank} chips={playerBank} digits={5}>
                             BANK
                         </ChipLabel>
                     </div>
