@@ -1,13 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import BishopSVG from "@/public/avatar/bishop.svg";
-import KingSVG from "@/public/avatar/king.svg";
-import KnightSVG from "@/public/avatar/knight.svg";
-import PawnSVG from "@/public/avatar/pawn.svg";
-import QueenSVG from "@/public/avatar/queen.svg";
-import RookSVG from "@/public/avatar/rook.svg";
 import Avatar from "@/app/_components/Avatar";
 import ChipLabel from "@/app/_components/ChipLabel";
 import Link from "next/link";
@@ -15,17 +8,38 @@ import ShopSVG from "./_components/ShopSVG";
 import SettingsSVG from "../_components/SettingsSVG";
 import OnlineMatchSVG from "./_components/OnlineMatchSVG";
 import AIMatchSVG from "./_components/AIMatchSVG";
+import { read_player_profile, set_player_profile } from "./actions";
+import BishopSVG from "@/public/avatar/bishop.svg";
+import KingSVG from "@/public/avatar/king.svg";
+import KnightSVG from "@/public/avatar/knight.svg";
+import PawnSVG from "@/public/avatar/pawn.svg";
+import QueenSVG from "@/public/avatar/queen.svg";
+import RookSVG from "@/public/avatar/rook.svg";
+import { useEffect, useState } from "react";
+
+const avatar_dict = {
+    'bishop': BishopSVG,
+    'king': KingSVG,
+    'knight': KnightSVG,
+    'pawn': PawnSVG,
+    'queen': QueenSVG,
+    'rook': RookSVG,
+}
 
 export default function Home() {
-    const [isClient, setIsClient] = useState(false)
-    const [playerName, setPlayerName] = useState("Bishop")
-    const [playerAvatar, setPlayerIcon] = useState(BishopSVG)
+    const [playerName, setPlayerName] = useState('Loading...')
+    const [playerAvatar, setPlayerAvatar] = useState()
 
     useEffect(() => {
-        setIsClient(true)
+        set_player_profile()
+        read_player_profile()
+            .then(({ player_name, player_avatar }) => {
+                setPlayerName(player_name)
+                setPlayerAvatar(avatar_dict[player_avatar])
+            })
     }, [])
 
-    return !isClient ? null : (
+    return (
         <main className={styles.page}>
             <div className={styles.container}>
                 <div className={styles.playerArea}>

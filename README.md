@@ -28,6 +28,10 @@ New Homepage (including navigation of game page).
 More button click response.
 Add Action bar in game page.
 
+### Day 6
+More icon implement (using React component to import SVGs)
+Game page button style update, lock while not in turn function update.
+
 ## Getting Started
 
 First, run the development server:
