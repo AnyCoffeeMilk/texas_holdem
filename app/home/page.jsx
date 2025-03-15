@@ -8,9 +8,13 @@ import KnightSVG from "@/public/avatar/knight.svg";
 import PawnSVG from "@/public/avatar/pawn.svg";
 import QueenSVG from "@/public/avatar/queen.svg";
 import RookSVG from "@/public/avatar/rook.svg";
-import Avatar from "./_components/Avatar";
-import ChipLabel from "./_components/ChipLabel";
+import Avatar from "@/app/_components/Avatar";
+import ChipLabel from "@/app/_components/ChipLabel";
 import Link from "next/link";
+import ShopSVG from "./_components/ShopSVG";
+import SettingsSVG from "../_components/SettingsSVG";
+import OnlineMatchSVG from "./_components/OnlineMatchSVG";
+import AIMatchSVG from "./_components/AIMatchSVG";
 
 export default function Home() {
     const [isClient, setIsClient] = useState(false)
@@ -55,17 +59,17 @@ export default function Home() {
                     </div>
                     <div className={styles.btnArea}>
                         <Link draggable={false} href="/game" className={styles.btn}>
-                            START ONLINE MATCH
+                            START ONLINE MATCH <OnlineMatchSVG />
                         </Link>
                         <Link draggable={false} href="/game" className={styles.btn}>
-                            START AI MATCH
+                            START AI MATCH <AIMatchSVG />
                         </Link>
                         <div className={styles.btnBottomArea}>
                             <Link draggable={false} href="/" className={styles.btn}>
-                                SHOP
+                                SHOP <ShopSVG />
                             </Link>
                             <Link draggable={false} href="/" className={styles.btn} style={{ flex: 1 }}>
-                                SETTINGS
+                                SETTINGS <SettingsSVG />
                             </Link>
                         </div>
                     </div>

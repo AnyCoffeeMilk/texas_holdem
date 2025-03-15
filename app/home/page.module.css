@@ -153,3 +153,8 @@
   background-color: var(--prime-dark);
   color: var(--prime-light);
 }
+
+.btn:focus svg {
+  fill: var(--prime-light);
+  stroke: var(--prime-light);
+}

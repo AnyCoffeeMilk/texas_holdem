@@ -1,40 +1,18 @@
 import React, { useMemo } from 'react'
 import styles from './_styles/actionBar.module.css'
 import Image from 'next/image'
-import GoBackSVG from '@/public/goBack.svg'
-import SettingsSVG from '@/public/settings.svg'
 import Link from 'next/link'
+import GoBackSVG from '/app/_components/GoBackSVG'
+import SettingsSVG from '@/app/_components/SettingsSVG'
 
 export default function ActionBar() {
-    const goBackSVG = useMemo(() => (
-        <Image
-            className={styles.img}
-            style={{ transform: "scale(1.3)" }}
-            src={GoBackSVG}
-            alt='Go Back to Homepage.'
-            draggable={false}
-        />
-    ), [])
-
-    const settingsSVG = useMemo(() => (
-        <Image
-            className={styles.img}
-            style={{ transform: "scale(1.2)" }}
-            src={SettingsSVG}
-            alt='Open Settings page.'
-            draggable={false}
-        />
-    ), [])
-
     return (
         <div className={styles.container}>
-            <Link draggable={false} href="/" className={styles.btn}>
-                HOME
-                {goBackSVG}
+            <Link draggable={false} href="/home" className={styles.btn}>
+                HOME <GoBackSVG />
             </Link>
             <button className={styles.btn}>
-                SETTINGS
-                {settingsSVG}
+                SETTINGS <SettingsSVG />
             </button>
         </div>
     )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Opponent from "./_components/Opponent";
 import TableCards from "./_components/TableCards";
@@ -27,6 +27,7 @@ export default function Home() {
     const [playerAvatar, setPlayerIcon] = useState(BishopSVG)
     const [playerCards, setPlayerCards] = useState([])
     const [playerBets, setPlayerBets] = useState(0)
+    const [btnDisabled, setBtnDisabled] = useState(true)
     const [tableCards, setTableCards] = useState([])
     const [opponents, setOpponents] = useState([])
     const [gameText, setGameText] = useState("Test Text")
@@ -61,8 +62,10 @@ export default function Home() {
         queue_tmp.push(inTurn_gamer)
         if (inTurn_gamer === playerName) {
             setGameText("It's your turn now.")
+            setBtnDisabled(false)
         } else {
             setGameText(`${inTurn_gamer}'s turn.`)
+            setBtnDisabled(true)
         }
         if (turnCounter >= turnQueue.length) {
             setTurnCounter(1)
@@ -76,8 +79,9 @@ export default function Home() {
                     { name: opponents[0].name, cards: opponents[0].cards },
                     { name: opponents[1].name, cards: opponents[1].cards },
                     { name: opponents[2].name, cards: opponents[2].cards },
-                ], tableCards)
+                ].filter(gamer => turnQueue.includes(gamer.name)), tableCards)
                 setGameText('Winner: ' + winner_name)
+                setTurnQueue([undefined])
             }
         } else {
             setTurnCounter(cur => cur + 1)
@@ -138,13 +142,13 @@ export default function Home() {
                 </div>
                 <PlayerHands cards={playerCards} />
                 <div className={styles.playerBtnArea}>
-                    <ThemeBtn onClick={handleCall}>
+                    <ThemeBtn onClick={handleCall} disabled={btnDisabled}>
                         CALL
                     </ThemeBtn>
-                    <ThemeBtn onClick={handleRaise}>
+                    <ThemeBtn onClick={handleRaise} disabled={btnDisabled}>
                         RAISE
                     </ThemeBtn>
-                    <ThemeBtn onClick={handleFold}>
+                    <ThemeBtn onClick={handleFold} disabled={btnDisabled}>
                         FOLD
                     </ThemeBtn>
                 </div>
