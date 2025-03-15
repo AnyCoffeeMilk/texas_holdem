@@ -24,13 +24,13 @@ export default function Profile() {
                     <div className={styles.preference}>
                         THEME
                         <div>
-                            <div>DARK</div> / <div>LIGHT</div>
+                            <div>DARK</div> / <div style={{ textDecoration: 'underline' }}>LIGHT</div>
                         </div>
                     </div>
                     <div className={styles.preference}>
                         LANGUAGE
                         <div>
-                            <div>ENG</div> / <div>ENG</div>
+                            <div style={{ textDecoration: 'underline' }}>ENG</div> / <div>CN</div>
                         </div>
                     </div>
                 </div>
