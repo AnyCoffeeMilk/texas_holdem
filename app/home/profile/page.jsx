@@ -64,11 +64,16 @@ export default function Profile() {
     return !playerAvatar ? null : (
         <main className={styles.page}>
             <div className={styles.container}>
-                <ThemeLink href="/home" className={styles.goback}>
-                    HOME <GoBackSVG />
-                </ThemeLink>
+                <div className={styles.headerArea}>
+                    <ThemeLink href="/home" className={styles.goback}>
+                        HOME <GoBackSVG />
+                    </ThemeLink>
+                    <div className={styles.headerText}>
+                        EDIT PROFILE
+                    </div>
+                </div>
                 <div className={styles.subTitleText}>
-                    ICON
+                    AVATAR
                 </div>
                 <div className={styles.avatarArea}>
                     {avatarSVGMap}

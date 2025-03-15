@@ -74,7 +74,7 @@ export default function Home() {
                             START AI MATCH <AIMatchSVG />
                         </ThemeLink>
                         <div className={styles.btnBottomArea}>
-                            <ThemeLink href="/">
+                            <ThemeLink href="/home/shop">
                                 SHOP <ShopSVG />
                             </ThemeLink>
                             <ThemeLink href="/" className={styles.settingsBtn}>

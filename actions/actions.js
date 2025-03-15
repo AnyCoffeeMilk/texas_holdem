@@ -27,8 +27,10 @@ async function set_player_profile(name = null, avatar = null, bank = null) {
         cookieStore.set('player_avatar', Object.keys(avatar_dict).find(key => avatar_dict[key].src === avatar.src))
     }
     if (bank) {
-        cookieStore.set('player_bank', bank)
+        cookieStore.set('player_bank', (bank > 0 ? bank : 0).toString())
     }
+
+    return { name, avatar, bank: (bank > 0 ? bank : 0) }
 }
 
 async function read_player_profile() {
@@ -46,7 +48,7 @@ async function read_player_profile() {
 
     const player_name = cookieStore.get('player_name').value
     const player_avatar = avatar_dict[cookieStore.get('player_avatar').value]
-    const player_bank = cookieStore.get('player_bank').value
+    const player_bank = parseInt(cookieStore.get('player_bank').value)
 
     return { player_name, player_avatar, player_bank }
 }

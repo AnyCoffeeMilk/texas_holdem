@@ -35,6 +35,9 @@
 .playerAreaHeader .editBtn {
   margin-left: auto;
   margin-right: 2px;
+}
+
+.editBtn div {
   padding: 0.25em 0.5em;
 }
 

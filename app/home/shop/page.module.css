@@ -50,51 +50,22 @@
   border-radius: 2px;
 }
 
-.avatarArea {
-  display: flex;
-  gap: 0.5em;
-}
-
-.avatarArea .avatar {
-  width: 100px;
-  height: 120px;
-  border: none;
-  padding: 0;
-}
-
-.avatarArea .avatar:hover {
-  border: 2px solid var(--prime-dark);
-}
-
-.avatarArea .selected {
-  border: 2px solid var(--prime-dark);
-}
-
-.avatarArea .avatar img {
-  border: none;
-}
-
-.inputArea {
+.bankArea {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2em 0;
+  padding: 1.5em 2em;
   border-radius: 4px;
   border: 2px solid var(--prime-dark);
-}
-
-.inputArea input {
-  width: 270px;
-  text-align: center;
   font-size: xx-large;
-  font-weight: bold;
-  font-style: italic;
-  color: var(--prime-light);
-  background-color: var(--prime-dark);
-  border-radius: 4px;
 }
 
-.inputArea input::selection {
-  color: var(--prime-dark);
-  background-color: var(--prime-light);
+.bankArea > div > div + div {
+  width: 5em;
+}
+
+.shopArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }

@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Link from 'next/link'
 import styles from './_styles/themeLink.module.css'
 
-export default function ThemeLink({ className, href, children }) {
-    return (
-        <Link draggable={false} href={href} className={`${styles.btn} ${className}`}>
+const ThemeLink = memo(({ className, href, children }) => (
+    <Link draggable={false} href={href} className={`${styles.btn} ${className}`}>
+        <div className={styles.inner}>
             {children}
-        </Link>
-    )
-}
+        </div>
+    </Link>
+), (prevProps, nextProps) => (
+    prevProps.className === nextProps.className &&
+    prevProps.href === nextProps.href
+))
+
+export default ThemeLink

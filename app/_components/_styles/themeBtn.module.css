@@ -18,11 +18,10 @@
     justify-content: center;
     align-items: center;
     color: var(--prime-dark);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
     margin: 2px;
     padding: 0.5em 2em;
     border-radius: 2px;
-    transition: 0.1s;
     background-color: var(--prime-light);
 }
 
@@ -31,10 +30,20 @@
     -webkit-text-stroke: 1px var(--prime-dark);
 }
 
+.innerContainer:hover > svg {
+    fill: var(--prime-light);
+    stroke: var(--prime-dark);
+}
+
 .container:active .innerContainer {
     color: var(--prime-light);
     -webkit-text-stroke-color: var(--prime-light);
     background-color: var(--prime-dark);
+}
+
+.container:active > div > svg {
+    fill: var(--prime-light);
+    stroke: var(--prime-light);
 }
 
 .container:disabled {
