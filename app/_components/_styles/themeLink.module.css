@@ -25,9 +25,13 @@
     text-decoration: underline;
 }
 
+.btn:focus {
+    color: var(--prime-light);
+    text-decoration: underline;
+}
+
 .btn:focus .inner {
     background-color: var(--prime-dark);
-    color: var(--prime-light);
 }
 
 .btn:focus svg {

@@ -33,6 +33,7 @@ More icon implement (using React component to import SVGs)
 Game page button style update, lock while not in turn function update.
 Add profile edit server action and profile edit page (/home/profile).
 Add profile data read for Game page.
+Add Shop page (/home/profile), for bank currency loaning (test play).
 
 
 ## Getting Started
