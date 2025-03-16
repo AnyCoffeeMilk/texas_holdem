@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './_styles/tableCards.module.css'
+import styles from './tableCards.module.css'
 import PokerCard from './_components/PokerCard'
 
 export default function TableCards({ cards }) {

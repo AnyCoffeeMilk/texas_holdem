@@ -5,7 +5,6 @@ import styles from "./page.module.css";
 import Opponent from "./_components/Opponent";
 import TableCards from "./_components/TableCards";
 import PlayerHands from "./_components/PlayerHands";
-import GameText from "./_components/GameText";
 import usePokerDeck from "@/hooks/usePokerDeck";
 import useGetWinner from "@/hooks/useGetWinner";
 import BishopSVG from "@/public/avatar/bishop.svg";
@@ -17,23 +16,25 @@ import RookSVG from "@/public/avatar/rook.svg";
 import ChipLabel from "../_components/ChipLabel";
 import Avatar from "../_components/Avatar";
 import ThemeBtn from "../_components/ThemeBtn";
-import ActionBar from "./_components/ActionBar";
 import { read_player_profile } from "@/actions/actions";
+import ThemeLink from "../_components/ThemeLink";
+import GoBackSVG from "../_components/GoBackSVG";
+import SettingsSVG from "../_components/SettingsSVG";
 
 export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
-    
+
     const [playerName, setPlayerName] = useState("Bishop")
     const [playerAvatar, setPlayerAvatar] = useState()
     const [playerBank, setPlayerBank] = useState(0)
     const [playerCards, setPlayerCards] = useState([])
     const [playerBets, setPlayerBets] = useState(0)
-    
+
     const [opponents, setOpponents] = useState([])
     const [tableCards, setTableCards] = useState([])
     const [gameText, setGameText] = useState("Test Text")
     const [topBets, setTopBets] = useState(0)
-    
+
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [turnQueue, setTurnQueue] = useState([])
     const [turnCounter, setTurnCounter] = useState(0)
@@ -134,7 +135,14 @@ export default function Home() {
     return !playerAvatar ? null : (
         <main className={styles.page}>
             <div className={styles.playerArea}>
-                <ActionBar />
+                <div className={styles.headerArea}>
+                    <ThemeLink href="/home" className={styles.link}>
+                        HOME <GoBackSVG />
+                    </ThemeLink>
+                    <ThemeLink href="/settings" className={styles.link}>
+                        SETTINGS <SettingsSVG />
+                    </ThemeLink>
+                </div>
                 <div className={styles.playerInfoArea}>
                     <Avatar
                         className={styles.playerAvatar}
@@ -171,7 +179,9 @@ export default function Home() {
                     {opponentsMap}
                 </div>
                 <div className={styles.centerArea}>
-                    <GameText text={gameText} />
+                    <div className={styles.gameText}>
+                        {gameText}
+                    </div>
                     <TableCards cards={tableCards} />
                     <ThemeBtn className={styles.newGameBtn} onClick={handleNewGame}>
                         NEW GAME

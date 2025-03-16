@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './_styles/themeBtn.module.css'
+import styles from './themeBtn.module.css'
 
 export default function ThemeBtn({ className, disabled, onClick, children }) {
     return (

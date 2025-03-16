@@ -77,7 +77,7 @@ export default function Home() {
                             <ThemeLink href="/home/shop">
                                 SHOP <ShopSVG />
                             </ThemeLink>
-                            <ThemeLink href="/home/settings" className={styles.settingsBtn}>
+                            <ThemeLink href="/settings" className={styles.settingsBtn}>
                                 SETTINGS <SettingsSVG />
                             </ThemeLink>
                         </div>

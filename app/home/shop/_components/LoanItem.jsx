@@ -1,4 +1,4 @@
-import styles from "./_styles/loanItem.module.css";
+import styles from "./loanItem.module.css";
 import PurchaseSVG from './_components/PurchaseSVG'
 import ChipLabel from '@/app/_components/ChipLabel'
 import ThemeBtn from '@/app/_components/ThemeBtn'

@@ -19,6 +19,15 @@
   padding: 1em;
 }
 
+.headerArea {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link div {
+  padding: 0.25em 0.5em;
+}
+
 .playerInfoArea {
   display: flex;
   gap: 0.5em;
@@ -70,6 +79,21 @@
   display: flex;
   flex-direction: column;
   gap: 2em;
+}
+
+.gameText {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--prime-dark);
+  color: var(--prime-light);
+  width: 100%;
+  margin: 1em 0;
+  padding: 0.5em;
+  font-size: x-large;
+  font-style: italic;
+  font-weight: bold;
+  text-align: center;
 }
 
 .opponentArea {

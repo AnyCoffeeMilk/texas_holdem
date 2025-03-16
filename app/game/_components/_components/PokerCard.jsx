@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import styles from './_styles/pokerCard.module.css'
+import styles from './pokerCard.module.css'
 import Image from 'next/image'
 import IconSVG from '@/public/icon.svg'
 

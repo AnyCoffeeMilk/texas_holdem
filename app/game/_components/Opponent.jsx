@@ -1,7 +1,6 @@
 import React from 'react'
-import styles from './_styles/opponent.module.css'
+import styles from './opponent.module.css'
 import PokerCard from './_components/PokerCard'
-import Image from 'next/image'
 import ChipLabel from '@/app/_components/ChipLabel'
 import Avatar from '@/app/_components/Avatar'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './_styles/playerHands.module.css'
+import styles from './playerHands.module.css'
 import PokerCard from './_components/PokerCard'
 
 export default function PlayerHands({ cards }) {
