@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from "react";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 import ThemeLink from "@/app/_components/ThemeLink";
 import GoBackSVG from "@/app/_components/GoBackSVG";
 
