@@ -25,11 +25,10 @@
     grid-template-columns: auto 1fr;
     grid-template-rows: 2.5em auto 1fr auto auto;
     gap: 0.5em;
+    margin-right: 3px;
     border-radius: 4px;
     border-top: 2px solid var(--prime-dark);
     border-left: 2px solid var(--prime-dark);
-    -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
-    -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
     box-shadow: 2px 2px 0px 2px var(--prime-dark);
     padding: 1em;
 
@@ -68,6 +67,7 @@
       justify-content: center;
       align-items: center;
       gap: 1em;
+      font-size: 1.3em;
       border-radius: 4px;
       border: 2px solid var(--prime-dark);
     }
@@ -130,15 +130,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
+      font-size: 1.3em;
       gap: 1em;
-
     }
 
     .newGameBtn {
       position: absolute;
       bottom: 0.5em;
-      left: 0.5em;
+      right: 0.5em;
     }
 
     .betsPool {
@@ -188,7 +187,7 @@
       .newGameBtn {
         font-size: x-small;
         bottom: 1em;
-        left: 1em;
+        right: 1em;
       }
     }
 
@@ -254,11 +253,10 @@
   .container {
     .opponentArea {
       padding: 1em;
+      margin-right: 3px;
       border-radius: 4px;
       border-top: 2px solid var(--prime-dark);
       border-left: 2px solid var(--prime-dark);
-      -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
-      -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
       box-shadow: 2px 2px 0px 2px var(--prime-dark);
     }
 
@@ -282,6 +280,7 @@
     flex: 1;
 
     .opponentArea {
+      margin-right: 0;
       justify-content: space-around;
       padding: 0;
       gap: 0.25em;
@@ -291,6 +290,7 @@
     }
 
     .playerArea {
+      margin-right: 0;
       padding: 0;
       border: none;
       box-shadow: none;

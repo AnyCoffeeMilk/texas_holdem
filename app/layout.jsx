@@ -1,4 +1,4 @@
-import { Atomic_Age, Tektur } from "next/font/google";
+import { Tektur } from "next/font/google";
 import "./globals.css";
 
 const font = Tektur({

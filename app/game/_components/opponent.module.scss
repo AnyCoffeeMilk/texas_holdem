@@ -5,6 +5,7 @@
     grid-template-rows: auto 1fr;
     gap: 0.5em;
     padding: 1em;
+    margin-right: 3px;
     border-radius: 4px;
     border-top: 2px solid var(--prime-dark);
     border-left: 2px solid var(--prime-dark);
@@ -98,6 +99,7 @@
         border: none;
         box-shadow: none;
         max-width: 130px;
+        margin-right: 0;
 
         .infoArea {
             grid-template-columns: 1fr;
