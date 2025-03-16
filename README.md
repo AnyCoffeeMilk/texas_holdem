@@ -7,7 +7,7 @@ Added Draw card/shuffle deck and Start a new game method.
 ### Day 2
 Complete the card pattern detect algorithm (Can get the score of each card pattern).
 Complete the winner detect algorithm (Can get the winner of the game according to the scores).
-Add a flip card method for the PokerCard component for testing and fun.
+Added a flip card method for the PokerCard component for testing and fun.
 
 ### Day 3
 Complete the turn queue system (Including Call, Raise, Fold function for player side).
@@ -16,7 +16,7 @@ Winner detect bug fix.
 
 ### Day 4
 Apple the design to the layout frame.
-Add responsive effect to the buttons.
+Added responsive effect to the buttons.
 Gathered some icon for after use.
 
 ### Day 5
@@ -26,15 +26,20 @@ New font update.
 New Icon.
 New Homepage (including navigation of game page).
 More button click response.
-Add Action bar in game page.
+Added Action bar in game page.
 
 ### Day 6
 More icon implement (using React component to import SVGs)
 Game page button style update, lock while not in turn function update.
-Add profile edit server action and profile edit page (/home/profile).
-Add profile data read for Game page.
-Add Shop page (/home/profile), for bank currency loaning (test play).
-Add Settings page (/home/settings), no function, just a demo.
+Added profile edit server action and profile edit page (/home/profile).
+Added profile data read for Game page.
+Added Shop page (/home/profile), for bank currency loaning (test play).
+Added Settings page (/home/settings), no function, just a demo.
+
+### Day 7
+Changed the layout of Game page (the header part in playerArea).
+Added SCSS/SASS CSS preprocessor (also updated all related css and jsx file).
+Added mobile and tablet viewport layout to all pages.
 
 
 ## Getting Started
