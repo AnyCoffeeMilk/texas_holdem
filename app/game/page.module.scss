@@ -26,6 +26,7 @@
     grid-template-rows: 2.5em auto 1fr auto auto;
     gap: 0.5em;
     margin-right: 3px;
+    margin-bottom: 3px;
     border-radius: 4px;
     border-top: 2px solid var(--prime-dark);
     border-left: 2px solid var(--prime-dark);
@@ -106,10 +107,10 @@
     border-radius: 4px;
     border-top: 2px solid var(--prime-dark);
     border-left: 2px solid var(--prime-dark);
-    -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
-    -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
     box-shadow: 2px 2px 0px 2px var(--prime-dark);
     padding: 3em 1em;
+    margin-bottom: 3px;
+    margin-right: 3px;
 
     .gameText {
       position: absolute;
@@ -170,7 +171,6 @@
     }
 
     .centerArea {
-      margin-right: 3px;
       grid-column: 1;
       grid-row: 3;
       min-height: 180px;
@@ -185,7 +185,7 @@
       }
 
       .newGameBtn {
-        font-size: x-small;
+        font-size: small;
         bottom: 1em;
         right: 1em;
       }
@@ -254,6 +254,7 @@
     .opponentArea {
       padding: 1em;
       margin-right: 3px;
+      margin-bottom: 3px;
       border-radius: 4px;
       border-top: 2px solid var(--prime-dark);
       border-left: 2px solid var(--prime-dark);
@@ -281,6 +282,7 @@
 
     .opponentArea {
       margin-right: 0;
+      margin-bottom: 0;
       justify-content: space-around;
       padding: 0;
       gap: 0.25em;
@@ -291,6 +293,7 @@
 
     .playerArea {
       margin-right: 0;
+      margin-bottom: 0;
       padding: 0;
       border: none;
       box-shadow: none;
