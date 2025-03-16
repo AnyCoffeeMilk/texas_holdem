@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 import Link from 'next/link'
-import styles from './themeLink.module.css'
+import styles from './themeLink.module.scss'
 
 const ThemeLink = memo(({ className, href, children }) => (
-    <Link draggable={false} href={href} className={`${styles.btn} ${className}`}>
+    <Link draggable={false} href={href} className={`${styles.container} ${className}`}>
         <div className={styles.inner}>
             {children}
         </div>

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import Image from 'next/image'
-import styles from './avatar.module.css'
+import styles from './avatar.module.scss'
 
 export default function Avatar({ className, src, name }) {
     const avatarSVG = useMemo(() => src === undefined ? null : (

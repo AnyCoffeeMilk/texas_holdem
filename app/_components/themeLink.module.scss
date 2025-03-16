@@ -1,4 +1,4 @@
-.btn {
+.container {
     padding: 2px;
     color: var(--prime-dark);
     background: none;
@@ -8,33 +8,33 @@
     -webkit-box-shadow: 1.5px 1.5px 0px 1.5px var(--prime-dark);
     -moz-box-shadow: 1.5px 1.5px 0px 1.5px var(--prime-dark);
     box-shadow: 1.5px 1.5px 0px 1.5px var(--prime-dark);
+
+    .inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: larger;
+        gap: 0.2em;
+        padding: 0.5em 0.5em;
+        border-radius: 2px;
+    }
 }
 
-.inner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: larger;
-    gap: 0.2em;
-    padding: 0.5em 0.5em;
-    border-radius: 2px;
-}
-
-.btn:hover {
+.container:hover {
     text-decoration: underline;
 }
 
-.btn:focus {
+.container:focus {
     color: var(--prime-light);
     text-decoration: underline;
-}
 
-.btn:focus .inner {
-    background-color: var(--prime-dark);
-}
+    .inner {
+        background-color: var(--prime-dark);
+    }
 
-.btn:focus svg {
-    fill: var(--prime-light);
-    stroke: var(--prime-light);
+    svg {
+        fill: var(--prime-light);
+        stroke: var(--prime-light);
+    }
 }
