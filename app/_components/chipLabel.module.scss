@@ -37,3 +37,15 @@
         }
     }
 }
+
+@media (max-width: 600px) {
+    .container {
+        .label {
+            padding: 0.25em 0;
+        }
+
+        .currency {
+            padding: 0 0.1em;
+        }
+    }
+}

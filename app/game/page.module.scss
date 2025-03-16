@@ -101,6 +101,13 @@
     display: grid;
     position: relative;
     gap: 1em;
+    border-radius: 4px;
+    border-top: 2px solid var(--prime-dark);
+    border-left: 2px solid var(--prime-dark);
+    -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+    -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+    box-shadow: 2px 2px 0px 2px var(--prime-dark);
+    padding: 3em 1em;
 
     .gameText {
       position: absolute;
@@ -121,14 +128,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 3em 1em;
+
       gap: 1em;
-      border-radius: 4px;
-      border-top: 2px solid var(--prime-dark);
-      border-left: 2px solid var(--prime-dark);
-      -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
-      -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
-      box-shadow: 2px 2px 0px 2px var(--prime-dark);
+
     }
 
     .newGameBtn {
@@ -146,7 +148,9 @@
   }
 }
 
-@media (max-width: 768px) {
+
+
+@media (max-width: 1440px) {
   .container {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr auto;
@@ -165,9 +169,14 @@
     }
 
     .centerArea {
+      margin-right: 3px;
       grid-column: 1;
       grid-row: 3;
       min-height: 180px;
+
+      .gameText {
+        margin: 0.5em 0;
+      }
 
       .tableCardsArea {
         margin-top: 1em;
@@ -196,14 +205,15 @@
       .playerAvatar {
         grid-column: 1;
         grid-row: 1 / 3;
-        height: 180px;
-        width: 140px;
+        height: 120px;
+        width: 100px;
       }
 
       .playerHandArea {
         grid-column: 2;
         grid-row: 1 / 3;
-        font-size: medium;
+        font-size: 0.9em;
+        padding: 0 1em;
       }
 
       .playerBets {
@@ -223,8 +233,71 @@
         grid-column: 3;
         grid-row: 2 / 4;
       }
+
+      .playerBtnArea>button>div {
+        padding: 0;
+      }
     }
   }
 }
 
-@media (max-width: 600px) {}
+@media (max-width: 768px) {
+  .container {
+    .opponentArea {
+      padding: 1em;
+      border-radius: 4px;
+      border-top: 2px solid var(--prime-dark);
+      border-left: 2px solid var(--prime-dark);
+      -webkit-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+      -moz-box-shadow: 2px 2px 0px 2px var(--prime-dark);
+      box-shadow: 2px 2px 0px 2px var(--prime-dark);
+
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    flex: 1;
+
+    .opponentArea {
+      justify-content: space-around;
+      padding: 0;
+      gap: 0.25em;
+      border: none;
+      box-shadow: none;
+      font-size: smaller;
+    }
+
+    .playerArea {
+      padding: 0;
+      border: none;
+      box-shadow: none;
+
+      .playerNameText {
+        font-size: 1.5em;
+      }
+
+      .playerAvatar {
+        height: 120px;
+        width: 100px;
+      }
+
+      .playerHandArea {
+        font-size: 0.9em;
+      }
+
+      .playerBets {
+        font-size: 1em;
+      }
+
+      .playerBank {
+        font-size: 1em;
+      }
+
+      .playerBtnArea>button>div {
+        padding: 0;
+      }
+    }
+  }
+}
