@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from "react";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 import { read_player_profile, set_player_profile } from "@/actions/actions";
 import ThemeBtn from "@/app/_components/ThemeBtn";
 import ThemeLink from "@/app/_components/ThemeLink";
@@ -62,35 +62,33 @@ export default function Profile() {
 
 
     return !playerAvatar ? null : (
-        <main className={styles.page}>
-            <div className={styles.container}>
-                <div className={styles.headerArea}>
-                    <ThemeLink href="/home" className={styles.goback}>
-                        HOME <GoBackSVG />
-                    </ThemeLink>
-                    <div className={styles.headerText}>
-                        EDIT PROFILE
-                    </div>
+        <div className={styles.container}>
+            <div className={styles.headerArea}>
+                <ThemeLink href="/home" className={styles.goback}>
+                    HOME <GoBackSVG />
+                </ThemeLink>
+                <div className={styles.headerText}>
+                    EDIT PROFILE
                 </div>
-                <div className={styles.subTitleText}>
-                    AVATAR
-                </div>
-                <div className={styles.avatarArea}>
-                    {avatarSVGMap}
-                </div>
-                <div className={styles.subTitleText}>
-                    USERNAME
-                </div>
-                <div className={styles.inputArea}>
-                    <input
-                        onChange={handleNameChange}
-                        value={playerName}
-                    />
-                </div>
-                <ThemeBtn onClick={handleSave}>
-                    Save
-                </ThemeBtn>
             </div>
-        </main >
+            <div className={styles.subTitleText}>
+                AVATAR
+            </div>
+            <div className={styles.avatarArea}>
+                {avatarSVGMap}
+            </div>
+            <div className={styles.subTitleText}>
+                USERNAME
+            </div>
+            <div className={styles.inputArea}>
+                <input
+                    onChange={handleNameChange}
+                    value={playerName}
+                />
+            </div>
+            <ThemeBtn onClick={handleSave}>
+                Save
+            </ThemeBtn>
+        </div>
     );
 }
