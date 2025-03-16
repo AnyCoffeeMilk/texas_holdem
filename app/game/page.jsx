@@ -1,10 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 import Opponent from "./_components/Opponent";
-import TableCards from "./_components/TableCards";
-import PlayerHands from "./_components/PlayerHands";
 import usePokerDeck from "@/hooks/usePokerDeck";
 import useGetWinner from "@/hooks/useGetWinner";
 import BishopSVG from "@/public/avatar/bishop.svg";
@@ -20,6 +18,7 @@ import { read_player_profile } from "@/actions/actions";
 import ThemeLink from "../_components/ThemeLink";
 import GoBackSVG from "../_components/GoBackSVG";
 import SettingsSVG from "../_components/SettingsSVG";
+import PokerCard from "./_components/_components/PokerCard";
 
 export default function Home() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
@@ -122,6 +121,22 @@ export default function Home() {
         setTurnQueue(turnQueue.filter(name => name !== playerName))
     }
 
+    const playerHandsMap = playerCards.map((item, index) => (
+        <PokerCard
+            key={index}
+            rank={item.rank}
+            suit={item.suit}
+        />
+    ))
+
+    const tableCardsMap = tableCards.map((item, index) => (
+        <PokerCard
+            key={index}
+            rank={item.rank}
+            suit={item.suit}
+        />
+    ))
+
     const opponentsMap = opponents.map((item, index) => (
         <Opponent
             key={index}
@@ -133,32 +148,30 @@ export default function Home() {
     ))
 
     return !playerAvatar ? null : (
-        <main className={styles.page}>
+        <div className={styles.container}>
+            <div className={styles.headerArea}>
+                <ThemeLink href="/home" className={styles.link}>
+                    HOME <GoBackSVG />
+                </ThemeLink>
+                <ThemeLink href="/game" className={styles.link}>
+                    SETTINGS <SettingsSVG />
+                </ThemeLink>
+            </div>
             <div className={styles.playerArea}>
-                <div className={styles.headerArea}>
-                    <ThemeLink href="/home" className={styles.link}>
-                        HOME <GoBackSVG />
-                    </ThemeLink>
-                    <ThemeLink href="/settings" className={styles.link}>
-                        SETTINGS <SettingsSVG />
-                    </ThemeLink>
+                <Avatar
+                    className={styles.playerAvatar}
+                    src={playerAvatar}
+                    name={playerName}
+                />
+                <div className={styles.playerNameText}>
+                    {playerName}
                 </div>
-                <div className={styles.playerInfoArea}>
-                    <Avatar
-                        className={styles.playerAvatar}
-                        src={playerAvatar}
-                        name={playerName}
-                    />
-                    <div className={styles.playerDataArea}>
-                        <div className={styles.playerNameText}>
-                            {playerName}
-                        </div>
-                        <ChipLabel className={styles.playerBank} chips={playerBank} digits={5}>
-                            BANK
-                        </ChipLabel>
-                    </div>
+                <ChipLabel className={styles.playerBank} chips={playerBank} digits={5}>
+                    BANK
+                </ChipLabel>
+                <div className={styles.playerHandArea}>
+                    {playerHandsMap}
                 </div>
-                <PlayerHands cards={playerCards} />
                 <div className={styles.playerBtnArea}>
                     <ThemeBtn onClick={handleCall} disabled={btnDisabled}>
                         CALL
@@ -174,23 +187,20 @@ export default function Home() {
                     BETS
                 </ChipLabel>
             </div>
-            <div className={styles.mainArea}>
-                <div className={styles.opponentArea}>
-                    {opponentsMap}
-                </div>
-                <div className={styles.centerArea}>
-                    <div className={styles.gameText}>
-                        {gameText}
-                    </div>
-                    <TableCards cards={tableCards} />
-                    <ThemeBtn className={styles.newGameBtn} onClick={handleNewGame}>
-                        NEW GAME
-                    </ThemeBtn>
-                    <ChipLabel className={styles.betsPool} chips={6} digits={4}>
-                        POOL
-                    </ChipLabel>
-                </div>
+            <div className={styles.opponentArea}>
+                {opponentsMap}
             </div>
-        </main >
+            <div className={styles.centerArea}>
+                <div className={styles.gameText}>
+                    {gameText}
+                </div>
+                <div className={styles.tableCardsArea}>
+                    {tableCardsMap}
+                </div>
+                <ThemeBtn className={styles.newGameBtn} onClick={handleNewGame}>
+                    NEW GAME
+                </ThemeBtn>
+            </div>
+        </div >
     );
 }

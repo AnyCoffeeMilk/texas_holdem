@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './opponent.module.css'
+import styles from './opponent.module.scss'
 import PokerCard from './_components/PokerCard'
 import ChipLabel from '@/app/_components/ChipLabel'
 import Avatar from '@/app/_components/Avatar'
@@ -17,7 +17,7 @@ export default function Opponent({ name, avatar, cards, bets }) {
     return (
         <div className={styles.container}>
             <div className={styles.infoArea}>
-                <Avatar 
+                <Avatar
                     className={styles.avatar}
                     src={avatar}
                     name={name}
@@ -26,14 +26,12 @@ export default function Opponent({ name, avatar, cards, bets }) {
                     {name}
                 </div>
             </div>
-            <div className={styles.gameDataArea}>
-                <div className={styles.cardArea}>
-                    {cardsMap}
-                </div>
-                <ChipLabel className={styles.bets} chips={bets} digits={3}>
-                    BETS
-                </ChipLabel>
+            <div className={styles.cardArea}>
+                {cardsMap}
             </div>
+            <ChipLabel className={styles.bets} chips={bets} digits={3}>
+                BETS
+            </ChipLabel>
         </div>
     )
 }

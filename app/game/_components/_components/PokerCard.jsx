@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import styles from './pokerCard.module.css'
+import styles from './pokerCard.module.scss'
 import Image from 'next/image'
 import IconSVG from '@/public/icon.svg'
 
@@ -23,7 +23,7 @@ export default function PokerCard({ rank, suit, isFacedown }) {
 
     return (
         <div className={styles.container} onClick={handleFlip}>
-            <div className={styles.innerArea} style={container_style}>
+            <div className={styles.innerContainer} style={container_style}>
                 <div className={styles.cardFront}>
                     <div className={styles.textArea}>
                         <div>
