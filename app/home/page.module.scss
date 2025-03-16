@@ -128,6 +128,7 @@
 
 @media (max-width: 600px) {
   .container {
+    flex: 1;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
     gap: 1em;

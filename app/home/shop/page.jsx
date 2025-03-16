@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from "react";
-import styles from "./page.module.css";
+import { useEffect, useState } from "react";
+import styles from "./page.module.scss";
 import { read_player_profile, set_player_profile } from "@/actions/actions";
 import ThemeLink from "@/app/_components/ThemeLink";
 import GoBackSVG from "@/app/_components/GoBackSVG";
@@ -48,31 +48,29 @@ export default function Profile() {
     ))
 
     return playerBank === undefined ? null : (
-        <main className={styles.page}>
-            <div className={styles.container}>
-                <div className={styles.headerArea}>
-                    <ThemeLink href="/home" className={styles.goback}>
-                        HOME <GoBackSVG />
-                    </ThemeLink>
-                    <div className={styles.headerText}>
-                        SHOP
-                    </div>
-                </div>
-                <div className={styles.subTitleText}>
-                    MY BANK
-                </div>
-                <div className={styles.bankArea}>
-                    <ChipLabel className={styles.playerBank} chips={playerBank} digits={5}>
-                        BANK
-                    </ChipLabel>
-                </div>
-                <div className={styles.subTitleText}>
-                    LOAN
-                </div>
-                <div className={styles.shopArea}>
-                    {loanItemMap}
+        <div className={styles.container}>
+            <div className={styles.headerArea}>
+                <ThemeLink href="/home" className={styles.goback}>
+                    HOME <GoBackSVG />
+                </ThemeLink>
+                <div className={styles.headerText}>
+                    SHOP
                 </div>
             </div>
-        </main >
+            <div className={styles.subTitleText}>
+                MY BANK
+            </div>
+            <div className={styles.bankArea}>
+                <ChipLabel className={styles.playerBank} chips={playerBank} digits={5}>
+                    BANK
+                </ChipLabel>
+            </div>
+            <div className={styles.subTitleText}>
+                LOAN
+            </div>
+            <div className={styles.shopArea}>
+                {loanItemMap}
+            </div>
+        </div>
     );
 }

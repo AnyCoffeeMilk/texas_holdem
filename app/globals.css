@@ -63,9 +63,7 @@ main {
 
 @media (max-width: 600px) {
   main {
-    display: block;
     width: 100%;
-    min-height: 100svh;
   }
 }
 

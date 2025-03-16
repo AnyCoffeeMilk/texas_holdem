@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import styles from './chipLabel.module.css'
+import styles from './chipLabel.module.scss'
 import Image from 'next/image'
 import ChipSVG from '@/public/chip.svg'
 

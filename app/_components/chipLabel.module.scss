@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    padding: 4px;
+    align-items: stretch;
+    font-weight: bold;
+    background-color: var(--prime-dark);
+    border-radius: 4px;
+
+    .label {
+        flex: 1;
+        display: grid;
+        align-items: center;
+        text-align: center;
+        font-size: 1.2em;
+        line-height: 100%;
+        letter-spacing: 0.15em;
+        padding: 0.25em 0.5em;
+        color: var(--prime-dark);
+        -webkit-text-stroke: 1px var(--prime-light);
+    }
+
+    .currency {
+        display: flex;
+        align-items: center;
+        border-radius: 2px;
+        padding: 0 0.25em;
+        font-size: 1.2em;
+        color: var(--prime-dark);
+        letter-spacing: 2px;
+        background-color: var(--prime-light);
+
+        .chipImg {
+            width: 1em;
+            height: 1em;
+            padding-right: 0.1em;
+            object-fit: contain;
+        }
+    }
+}
