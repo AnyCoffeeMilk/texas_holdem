@@ -32,7 +32,7 @@ export default function Home() {
 
     const [opponents, setOpponents] = useState([])
     const [tableCards, setTableCards] = useState([])
-    const [gameText, setGameText] = useState("Test Text")
+    const [gameText, setGameText] = useState("Loading...")
     const [topBets, setTopBets] = useState(0)
 
     const [btnDisabled, setBtnDisabled] = useState(true)

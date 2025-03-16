@@ -54,6 +54,21 @@ input {
   font-family: var(--font-prime);
 }
 
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100svh;
+}
+
+@media (max-width: 600px) {
+  main {
+    display: block;
+    width: 100%;
+    min-height: 100svh;
+  }
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
