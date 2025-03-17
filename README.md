@@ -41,6 +41,10 @@ Changed the layout of Game page (the header part in playerArea).
 Added SCSS/SASS CSS preprocessor (also updated all related css and jsx file).
 Added mobile and tablet viewport layout to all pages.
 
+## Day 8
+Game page mobile and tablet viewport layout bug fix.
+Update Turn Controller, Player/Opponents Handler to React Hook (WIP)
+Update Turn Controller logic to better fit the implement of bots api and online games. (WIP)
 
 ## Getting Started
 

@@ -8,8 +8,8 @@ export default function Opponent({ name, avatar, cards, bets }) {
     const cardsMap = cards.map((item, index) => (
         <PokerCard
             key={index}
-            rank={item.rank}
-            suit={item.suit}
+            rank={item?.rank}
+            suit={item?.suit}
             isFacedown={true}
         />
     ))

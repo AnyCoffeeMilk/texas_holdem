@@ -21,7 +21,9 @@ export default function PokerCard({ rank, suit, isFacedown }) {
         />
     ), [])
 
-    return (
+    console.log(rank)
+
+    return rank === undefined ? <div className={styles.container} /> : (
         <div className={styles.container} onClick={handleFlip}>
             <div className={styles.innerContainer} style={container_style}>
                 <div className={styles.cardFront}>

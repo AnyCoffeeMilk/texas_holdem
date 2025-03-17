@@ -229,7 +229,7 @@
       .playerBank {
         grid-column: 2;
         grid-row: 3;
-        font-size: 1em;
+        font-size: 1.2em;
       }
 
       .playerBtnArea {
@@ -262,6 +262,10 @@
     }
 
     .playerArea {
+      .playerNameText {
+        font-size: 1.1em;
+      }
+
       .playerHandArea {
         font-size: 1.2em;
       }
@@ -299,7 +303,7 @@
       box-shadow: none;
 
       .playerNameText {
-        font-size: 1.5em;
+        font-size: 1em;
       }
 
       .playerAvatar {

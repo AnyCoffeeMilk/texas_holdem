@@ -124,16 +124,16 @@ export default function Home() {
     const playerHandsMap = playerCards.map((item, index) => (
         <PokerCard
             key={index}
-            rank={item.rank}
-            suit={item.suit}
+            rank={item?.rank}
+            suit={item?.suit}
         />
     ))
 
     const tableCardsMap = tableCards.map((item, index) => (
         <PokerCard
             key={index}
-            rank={item.rank}
-            suit={item.suit}
+            rank={item?.rank}
+            suit={item?.suit}
         />
     ))
 
