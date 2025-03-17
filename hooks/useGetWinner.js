@@ -142,7 +142,7 @@ const getScores = (cards) => {
     return scores_tmp
 }
 
-const useGetWinner = (gamers, TableCards) => {
+const getWinner = (gamers, TableCards) => {
     let gamers_tmp = []
 
     console.log('-----------------')
@@ -189,6 +189,10 @@ const useGetWinner = (gamers, TableCards) => {
         }
     }
     return gamers_tmp
+}
+
+const useGetWinner = () => { 
+    return { getWinner } 
 }
 
 export default useGetWinner
