@@ -44,7 +44,6 @@ export default function Profile() {
         router.back()
     }
     const handleNameChange = (e) => {
-        console.log(e.target.value.length)
         if (e.target.value.length <= 9) {
             setPlayerName(e.target.value)
         }

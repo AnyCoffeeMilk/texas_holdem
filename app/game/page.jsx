@@ -20,8 +20,9 @@ import GoBackSVG from "../_components/GoBackSVG";
 import SettingsSVG from "../_components/SettingsSVG";
 import PokerCard from "./_components/_components/PokerCard";
 
-export default function Home() {
+export default function Game() {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
+    const { getWinner } = useGetWinner()
 
     const [playerName, setPlayerName] = useState("Bishop")
     const [playerAvatar, setPlayerAvatar] = useState()
@@ -84,7 +85,7 @@ export default function Home() {
                 tableCard_tmp.push(drawCard(pokerDeck))
                 setTableCards(tableCard_tmp)
             } else {
-                const winner_name = useGetWinner([
+                const winner_name = getWinner([
                     { name: playerName, cards: playerCards },
                     { name: opponents[0].name, cards: opponents[0].cards },
                     { name: opponents[1].name, cards: opponents[1].cards },

@@ -6,9 +6,10 @@
     font-weight: bold;
     border-radius: 4px;
     margin-right: 3px;
+    margin-bottom: 3px;
     border-top: 2px solid var(--prime-dark);
     border-left: 2px solid var(--prime-dark);
-    box-shadow: 1.5px 1.5px 0px 1.5px var(--prime-dark);
+    box-shadow: 1.75px 1.75px 0px 1.75px var(--prime-dark);
 
     .innerContainer {
         flex: 1;

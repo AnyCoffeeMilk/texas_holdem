@@ -12,6 +12,8 @@
     grid-row: 1;
     display: flex;
     justify-content: space-between;
+    margin-right: 3px;
+    margin-bottom: 3px;
 
     .link div {
       padding: 0.25em 0.5em;
@@ -261,6 +263,12 @@
       box-shadow: 2px 2px 0px 2px var(--prime-dark);
     }
 
+    .centerArea {
+      .tableCardsArea {
+        font-size: 1.3em;
+      }
+    }
+
     .playerArea {
       .playerNameText {
         font-size: 1.1em;
@@ -295,6 +303,13 @@
       font-size: smaller;
     }
 
+    .centerArea {
+      .tableCardsArea {
+        font-size: 1em;
+        gap: 0.5em;
+      }
+    }
+
     .playerArea {
       margin-right: 0;
       margin-bottom: 0;
@@ -307,14 +322,14 @@
       }
 
       .playerAvatar {
-        height: 108px;
-        width: 90px;
+        height: 120px;
+        width: 100px;
       }
 
       .playerHandArea {
         padding: 0 0.5em;
         gap: 0.5em;
-        font-size: 1.1em;
+        font-size: 1em;
       }
 
       .playerBets {

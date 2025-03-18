@@ -21,7 +21,6 @@ export default function Profile() {
     useEffect(() => {
         read_player_profile()
             .then(({ player_bank }) => {
-                console.log(player_bank)
                 setPlayerBank(player_bank)
             })
     }, [])
