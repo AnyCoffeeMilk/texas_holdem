@@ -3,12 +3,13 @@ import { useEffect, useState } from "react"
 import usePokerDeck from "./usePokerDeck"
 import useGetWinner from "./useGetWinner"
 
-const useTurnHandler = (gamers, gameTable) => {
+const useTurnHandler = (gamers_list, gameTable) => {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
     const { getWinner } = useGetWinner()
 
+    const [gamers, setGamers] = useState([...gamers_list])
     const [smallBlind, setSmallBlind] = useState(0)
-    const [gameStateId, setGameStateId] = useState(0)
+    const [gameStateId, setGameStateId] = useState(-1) // -1 mean not initiated
     const [turnQueue, setTurnQueue] = useState([0, 1, 2, 3])
     const [turnCounter, setTurnCounter] = useState(0)
 
@@ -60,6 +61,12 @@ const useTurnHandler = (gamers, gameTable) => {
                 gamers[turnQueue[1]].setBB()
                 queue_tmp.push(queue_tmp.shift())
                 queue_tmp.push(queue_tmp.shift())
+                const gamers_tmp = [...gamers_list]
+                for (let i = 0; i < smallBlind; i++) {
+                    gamers_tmp.push(gamers_tmp.shift())
+                }
+                setGamers(gamers_tmp)
+                setGamers(gamers_tmp)
                 setTurnQueue(queue_tmp)
                 setTurnCounter(2)
                 break
@@ -95,7 +102,12 @@ const useTurnHandler = (gamers, gameTable) => {
 
     const inTurnGamer = gamers[turnQueue[0]]
 
-    return { turnCounter, inTurnGamer, turnQueue, gameStateId, roundForward }
+    const newRound = () => {
+        setTurnCounter(0)
+        setGameStateId(0)
+    }
+
+    return { turnCounter, inTurnGamer, turnQueue, gameStateId, roundForward, newRound }
 }
 
 export default useTurnHandler

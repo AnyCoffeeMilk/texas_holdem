@@ -49,7 +49,15 @@ Update Turn Controller logic to better fit the implement of bots api and online 
 ### Day 9
 Game page mobile and tablet viewport layout bug fix (when full card in center).
 Turn Controller (WIP).
-ThemeBtn design update for better clearity.
+ThemeBtn design update for better clarity.
+
+### Day 10
+Complete rework of the turn/player state handling system.
+Turn Controller Complete (now it is ready for online game and using bots api).
+Game player controller Complete (now it is ready for online game and using bots api).
+The game now only start after player click the "NEW ROUND" button.
+Add placeHolder to "empty" hand of players.
+Small updated to some components for better clarity.
 
 ## Getting Started
 

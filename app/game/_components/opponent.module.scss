@@ -44,7 +44,15 @@
     .bets {
         grid-column: 2 / 3;
         grid-row: 2 / 3;
-        font-size: 1em;
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 1440px) {
+    .container {
+        .bets {
+            font-size: 1em;
+        }
     }
 }
 

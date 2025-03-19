@@ -3,7 +3,7 @@ import { useState } from "react"
 const useGamer = () => {
     const [name, setName] = useState()
     const [avatar, setAvatar] = useState()
-    const [cards, setCards] = useState([])
+    const [cards, setCards] = useState([null, null])
     const [bets, setBets] = useState(0)
 
     const setSB = () => setBets(2) // Small Blind Bets

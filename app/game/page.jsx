@@ -25,7 +25,7 @@ export default function Game() {
     const gamerC = useGamer()
     const opponents = [gamerA, gamerB, gamerC]
 
-    const { turnCounter, inTurnGamer, turnQueue, gameStateId, roundForward } = useTurnHandler([player, ...opponents], gameTable)
+    const { turnCounter, inTurnGamer, turnQueue, gameStateId, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
 
     const [playerBank, setPlayerBank] = useState(0)
     const [btnDisabled, setBtnDisabled] = useState(true)
@@ -48,15 +48,15 @@ export default function Game() {
                 gamerC.setName(gamer_c.name)
                 gamerC.setAvatar(gamer_c.avatar)
             })
-        handleNewGame()
     }, [])
 
-    const handleNewGame = () => {
+    const handleNewRound = () => {
         clearTimeout(aiTimeout.current)
         gameTable.setIsNewGame(false)
+        newRound()
     }
 
-    const getTopBets = () => Math.max(...[player, ...opponents].map(gamer => gamer.bets))
+    const getTopBets = () => Math.max(...[...opponents, player].map(gamer => gamer.bets))
 
     const handleAIAction = (actionId) => {
         clearTimeout(aiTimeout.current)
@@ -184,8 +184,8 @@ export default function Game() {
                         />
                     ))}
                 </div>
-                <ThemeBtn className={styles.newGameBtn} onClick={handleNewGame}>
-                    NEW GAME
+                <ThemeBtn className={styles.newGameBtn} disabled={!gameTable.isNewGame} onClick={handleNewRound}>
+                    NEW ROUND
                 </ThemeBtn>
             </div>
         </div >
