@@ -25,11 +25,17 @@ const useGamer = () => {
         return bets
     }
 
+    const newRound = () => {
+        setCards([null, null])
+        setBets(0)
+    }
+
     return { 
         name, avatar, cards, bets, 
         setName, setAvatar, setCards, 
         setSB, setBB, 
-        call, raise, fold 
+        call, raise, fold,
+        newRound
     }
 }
 

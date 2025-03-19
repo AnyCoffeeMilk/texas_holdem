@@ -20,10 +20,16 @@ const useGameTable = () => {
         setGameText(`Winner is ${winnerName}. Press "NEW ROUND" to continue.`)
     }
 
+    const newRound = () => {
+        setCards([])
+        setIsNewGame(false)
+    }
+
     return { 
         isNewGame, cards, gameText, isFull,
         setIsNewGame, setCards, addCard, 
-        showPlayerTurn, showOpponentTurn, showWinner 
+        showPlayerTurn, showOpponentTurn, showWinner,
+        newRound
     }
 }
 

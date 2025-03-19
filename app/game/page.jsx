@@ -25,10 +25,9 @@ export default function Game() {
     const gamerC = useGamer()
     const opponents = [gamerA, gamerB, gamerC]
 
-    const { turnCounter, inTurnGamer, turnQueue, gameStateId, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
+    const { sbBetsGamer, bbBetsGamer, inTurnGamer, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
 
     const [playerBank, setPlayerBank] = useState(0)
-    const [btnDisabled, setBtnDisabled] = useState(true)
 
     const aiTimeout = useRef(null)
 
@@ -49,12 +48,6 @@ export default function Game() {
                 gamerC.setAvatar(gamer_c.avatar)
             })
     }, [])
-
-    const handleNewRound = () => {
-        clearTimeout(aiTimeout.current)
-        gameTable.setIsNewGame(false)
-        newRound()
-    }
 
     const getTopBets = () => Math.max(...[...opponents, player].map(gamer => gamer.bets))
 
@@ -88,25 +81,13 @@ export default function Game() {
                     .then(handleAIAction)
             } else if (!gameTable.isNewGame) {
                 gameTable.showPlayerTurn()
-                setBtnDisabled(false)
             }
         }
     }, [inTurnGamer.name])
 
-    const handleCall = () => {
-        setBtnDisabled(true)
-        roundForward(0, player.call(getTopBets()))
-    }
-
-    const handleRaise = () => {
-        setBtnDisabled(true)
-        roundForward(1, player.raise(getTopBets()))
-    }
-
-    const handleFold = () => {
-        setBtnDisabled(true)
-        roundForward(2, player.fold())
-    }
+    const handleCall = () =>  roundForward(0, player.call(getTopBets()))
+    const handleRaise = () =>  roundForward(1, player.raise(getTopBets()))
+    const handleFold = () => roundForward(2, player.fold())
 
     return !player.avatar ? null : (
         <div className={styles.container}>
@@ -140,13 +121,13 @@ export default function Game() {
                     ))}
                 </div>
                 <div className={styles.playerBtnArea}>
-                    <ThemeBtn onClick={handleCall} disabled={btnDisabled || gameTable.isNewGame}>
+                    <ThemeBtn onClick={handleCall} disabled={inTurnGamer.name !== player.name}>
                         CALL
                     </ThemeBtn>
-                    <ThemeBtn onClick={handleRaise} disabled={btnDisabled || gameTable.isNewGame}>
+                    <ThemeBtn onClick={handleRaise} disabled={inTurnGamer.name !== player.name}>
                         RAISE
                     </ThemeBtn>
-                    <ThemeBtn onClick={handleFold} disabled={btnDisabled || gameTable.isNewGame}>
+                    <ThemeBtn onClick={handleFold} disabled={inTurnGamer.name !== player.name}>
                         FOLD
                     </ThemeBtn>
                 </div>
@@ -168,12 +149,6 @@ export default function Game() {
             <div className={styles.centerArea}>
                 <div className={styles.gameText}>
                     {gameTable.gameText}
-                    <div>
-                        {turnQueue} :: {inTurnGamer.name}
-                    </div>
-                    <div>
-                        state: {gameStateId} [{turnCounter}]
-                    </div>
                 </div>
                 <div className={styles.tableCardsArea}>
                     {gameTable.cards.map((item, index) => (
@@ -184,7 +159,7 @@ export default function Game() {
                         />
                     ))}
                 </div>
-                <ThemeBtn className={styles.newGameBtn} disabled={!gameTable.isNewGame} onClick={handleNewRound}>
+                <ThemeBtn className={styles.newGameBtn} disabled={!gameTable.isNewGame} onClick={newRound}>
                     NEW ROUND
                 </ThemeBtn>
             </div>
