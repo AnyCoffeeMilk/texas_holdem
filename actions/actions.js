@@ -53,7 +53,23 @@ async function read_player_profile() {
     return { player_name, player_avatar, player_bank }
 }
 
+// TODO
+async function read_opponents_profile() {
+    return [
+        { avatar: PawnSVG, name: 'Pawn' },
+        { avatar: QueenSVG, name: 'Queen' },
+        { avatar: KnightSVG, name: 'Knight' },
+    ]
+}
+
+// TODO
+async function get_opponent_action() {
+    return 0
+}
+
 export {
     set_player_profile,
-    read_player_profile
+    read_player_profile,
+    read_opponents_profile,
+    get_opponent_action,
 }

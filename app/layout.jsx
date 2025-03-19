@@ -1,5 +1,5 @@
 import { Tektur } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 
 const font = Tektur({
     variable: "--font-prime",
