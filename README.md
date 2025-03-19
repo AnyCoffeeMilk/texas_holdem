@@ -58,6 +58,7 @@ Game player controller Complete (now it is ready for online game and using bots 
 The game now only start after player click the "NEW ROUND" button.
 Add placeHolder to "empty" hand of players.
 Small updated to some components for better clarity.
+Now blinds (BB, SB) can pass to next player upon new round.
 
 ## Getting Started
 
