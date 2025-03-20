@@ -65,6 +65,7 @@ Add bank state to useGamer and return structure change.
 Add a tag above Avatars to show SB and BB.
 Now bets reduce currency in bank.
 Now winner add total bets to bank.
+Add animation to clickable buttons.
 
 ## Getting Started
 

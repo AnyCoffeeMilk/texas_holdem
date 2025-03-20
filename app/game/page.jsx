@@ -106,11 +106,13 @@ export default function Game() {
             roundForward(1)
         }
     }
-    
+
     const handleFold = () => {
         player.gameAction.fold()
         roundForward(2)
     }
+
+    const isBtnDisabled = inTurnGamer.name !== player.name || gameTable.isNewGame
 
     return !player.avatar ? null : (
         <div className={styles.container}>
@@ -148,13 +150,13 @@ export default function Game() {
                     ))}
                 </div>
                 <div className={styles.playerBtnArea}>
-                    <ThemeBtn onClick={handleCall} disabled={inTurnGamer.name !== player.name}>
+                    <ThemeBtn onClick={handleCall} disabled={isBtnDisabled}>
                         CALL
                     </ThemeBtn>
-                    <ThemeBtn onClick={handleRaise} disabled={inTurnGamer.name !== player.name}>
+                    <ThemeBtn onClick={handleRaise} disabled={isBtnDisabled}>
                         RAISE
                     </ThemeBtn>
-                    <ThemeBtn onClick={handleFold} disabled={inTurnGamer.name !== player.name}>
+                    <ThemeBtn onClick={handleFold} disabled={isBtnDisabled}>
                         FOLD
                     </ThemeBtn>
                 </div>
