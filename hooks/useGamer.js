@@ -1,3 +1,4 @@
+import { add_bank } from "@/actions/actions"
 import { useState } from "react"
 
 const useGamer = () => {
@@ -39,7 +40,7 @@ const useGamer = () => {
 
     return {
         name, avatar, cards, bets, bank,
-        setInfo, setCards, setSB, setBB,
+        setInfo, setBank, setCards, setSB, setBB,
         gameAction, newRound
     }
 }

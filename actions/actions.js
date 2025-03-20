@@ -53,6 +53,14 @@ async function read_player_profile() {
     return { player_name, player_avatar, player_bank }
 }
 
+async function add_bank (amount) {
+    const cookieStore = await cookies()
+    const player_bank = parseInt(cookieStore.get('player_bank').value)
+    cookieStore.set('player_bank', Math.min(Math.max(player_bank + amount, 0), 99999).toString())
+
+    return Math.min(Math.max(player_bank + amount, 0), 99999)
+}
+
 // TODO
 async function read_opponents_profile() {
     return [
@@ -72,4 +80,5 @@ export {
     read_player_profile,
     read_opponents_profile,
     get_opponent_action,
+    add_bank
 }

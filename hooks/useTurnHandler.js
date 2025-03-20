@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import usePokerDeck from "./usePokerDeck"
 import useGetWinner from "./useGetWinner"
+import { add_bank } from "@/actions/actions"
 
 const useTurnHandler = (gamers_list, gameTable) => {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
@@ -62,13 +63,21 @@ const useTurnHandler = (gamers_list, gameTable) => {
                 }
 
                 setSmallBlind(new_smallBlind)
+                if (new_smallBlind === 0) { // TODO, now only reduce the bank of player
+                    add_bank(-2)
+                        .then((new_bank) => gamers_list[0].setBank(new_bank))
+                }
                 gamers_list[new_smallBlind].setSB()
                 queue_tmp.push(queue_tmp.shift())
-                
+
                 const new_bigBlind = new_smallBlind < 3 ? new_smallBlind + 1 : 0
+                if (new_bigBlind === 0) { // TODO, now only reduce the bank of player
+                    add_bank(-4)
+                        .then((new_bank) => gamers_list[0].setBank(new_bank))
+                }
                 gamers_list[new_bigBlind].setBB()
                 queue_tmp.push(queue_tmp.shift())
-                
+
                 setTurnQueue(queue_tmp)
                 setTurnCounter(2)
                 break

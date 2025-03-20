@@ -12,7 +12,7 @@ import GoBackSVG from "../_components/GoBackSVG";
 import SettingsSVG from "../_components/SettingsSVG";
 import PokerCard from "./_components/_components/PokerCard";
 
-import { read_player_profile, read_opponents_profile, get_opponent_action } from "@/actions/actions";
+import { read_player_profile, read_opponents_profile, get_opponent_action, add_bank } from "@/actions/actions";
 import useGamer from "@/hooks/useGamer";
 import useGameTable from "@/hooks/useGameTable";
 import useTurnHandler from "@/hooks/useTurnHandler";
