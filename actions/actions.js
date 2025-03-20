@@ -56,9 +56,9 @@ async function read_player_profile() {
 // TODO
 async function read_opponents_profile() {
     return [
-        { avatar: PawnSVG, name: 'Pawn' },
-        { avatar: QueenSVG, name: 'Queen' },
-        { avatar: KnightSVG, name: 'Knight' },
+        { avatar: PawnSVG, name: 'Pawn', bank: 1000 },
+        { avatar: QueenSVG, name: 'Queen', bank: 1000 },
+        { avatar: KnightSVG, name: 'Knight', bank: 1000 },
     ]
 }
 

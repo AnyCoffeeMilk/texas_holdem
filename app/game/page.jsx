@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./page.module.scss";
 
 import Opponent from "./_components/Opponent";
@@ -27,25 +27,18 @@ export default function Game() {
 
     const { sbBetsGamer, bbBetsGamer, inTurnGamer, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
 
-    const [playerBank, setPlayerBank] = useState(0)
-
     const aiTimeout = useRef(null)
 
     useEffect(() => {
         read_player_profile()
             .then(({ player_name, player_avatar, player_bank }) => {
-                player.setName(player_name)
-                player.setAvatar(player_avatar)
-                setPlayerBank(player_bank)
+                player.setInfo(player_name, player_avatar, player_bank)
             })
         read_opponents_profile()
             .then(([gamer_a, gamer_b, gamer_c]) => {
-                gamerA.setName(gamer_a.name)
-                gamerA.setAvatar(gamer_a.avatar)
-                gamerB.setName(gamer_b.name)
-                gamerB.setAvatar(gamer_b.avatar)
-                gamerC.setName(gamer_c.name)
-                gamerC.setAvatar(gamer_c.avatar)
+                gamerA.setInfo(gamer_a.name, gamer_a.avatar, gamer_a.bank)
+                gamerB.setInfo(gamer_b.name, gamer_b.avatar, gamer_b.bank)
+                gamerC.setInfo(gamer_c.name, gamer_c.avatar, gamer_c.bank)
             })
     }, [])
 
@@ -57,17 +50,17 @@ export default function Game() {
         switch (actionId) {
             case 0:
                 aiTimeout.current = setTimeout(() => {
-                    roundForward(actionId, inTurnGamer.call(top_bets))
+                    roundForward(actionId, inTurnGamer.gameAction.call(top_bets))
                 }, 1000);
                 break
             case 1:
                 aiTimeout.current = setTimeout(() => {
-                    roundForward(actionId, inTurnGamer.raise(top_bets))
+                    roundForward(actionId, inTurnGamer.gameAction.raise(top_bets))
                 }, 1000)
                 break
             case 2:
                 aiTimeout.current = setTimeout(() => {
-                    roundForward(actionId, inTurnGamer.fold())
+                    roundForward(actionId, inTurnGamer.gameAction.fold())
                 }, 1000)
                 break
         }
@@ -85,9 +78,9 @@ export default function Game() {
         }
     }, [inTurnGamer.name])
 
-    const handleCall = () =>  roundForward(0, player.call(getTopBets()))
-    const handleRaise = () =>  roundForward(1, player.raise(getTopBets()))
-    const handleFold = () => roundForward(2, player.fold())
+    const handleCall = () =>  roundForward(0, player.gameAction.call(getTopBets()))
+    const handleRaise = () =>  roundForward(1, player.gameAction.raise(getTopBets()))
+    const handleFold = () => roundForward(2, player.gameAction.fold())
 
     return !player.avatar ? null : (
         <div className={styles.container}>
@@ -108,7 +101,7 @@ export default function Game() {
                 <div className={styles.playerNameText}>
                     {player.name}
                 </div>
-                <ChipLabel className={styles.playerBank} chips={playerBank} digits={5}>
+                <ChipLabel className={styles.playerBank} chips={player.bank} digits={5}>
                     BANK
                 </ChipLabel>
                 <div className={styles.playerHandArea}>
