@@ -64,6 +64,7 @@ Now blinds (BB, SB) can pass to next player upon new round.
 Add bank state to useGamer and return structure change.
 Add a tag above Avatars to show SB and BB.
 Now bets reduce currency in bank.
+Now winner add total bets to bank.
 
 ## Getting Started
 

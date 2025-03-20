@@ -18,10 +18,19 @@
         align-items: center;
         color: var(--prime-dark);
         letter-spacing: 0.1em;
-        margin: 2px;
         padding: 0.5em 2em;
         border-radius: 2px;
         background-color: var(--prime-light);
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            margin-bottom: 3px;
+        }
     }
 
     .innerContainer:hover {
@@ -29,7 +38,7 @@
         -webkit-text-stroke: 1px var(--prime-dark);
     }
 
-    .innerContainer:hover > svg {
+    .innerContainer:hover>svg {
         fill: var(--prime-light);
         stroke: var(--prime-dark);
     }
@@ -40,10 +49,39 @@
     -webkit-text-stroke-color: var(--prime-light);
     background-color: var(--prime-dark);
 
-    div > svg {
+    div>svg {
         fill: var(--prime-light);
         stroke: var(--prime-light);
     }
+}
+
+@keyframes slidein {
+    45% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    55% {
+        transform: scale(1);
+    }
+
+    60% {
+        transform: scale(1.05);
+    }
+
+    65% {
+        transform: scale(1);
+    }
+}
+
+.container:enabled .innerContainer div {
+    animation-name: slidein;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
 }
 
 .container:disabled {

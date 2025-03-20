@@ -93,6 +93,7 @@ export default function Game() {
             roundForward(0)
         }
     }
+
     const handleRaise = () => {
         const cost = -(player.gameAction.raise(getTopBets()) - player.bets)
         if (cost !== 0) {
@@ -105,6 +106,7 @@ export default function Game() {
             roundForward(1)
         }
     }
+    
     const handleFold = () => {
         player.gameAction.fold()
         roundForward(2)
@@ -117,7 +119,7 @@ export default function Game() {
                     HOME <GoBackSVG />
                 </ThemeLink>
                 <ThemeLink href="/game" className={styles.link}>
-                    SETTINGS <SettingsSVG />
+                    RULESETS <SettingsSVG />
                 </ThemeLink>
             </div>
             <div className={styles.playerArea}>
