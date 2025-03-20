@@ -25,7 +25,7 @@ export default function Game() {
     const gamerC = useGamer()
     const opponents = [gamerA, gamerB, gamerC]
 
-    const { sbBetsName, bbBetsName, inTurnGamer, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
+    const { sbBetsName, bbBetsName, turnQueue, inTurnGamer, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
 
     const aiTimeout = useRef(null)
 
@@ -76,7 +76,7 @@ export default function Game() {
                 gameTable.showPlayerTurn()
             }
         }
-    }, [inTurnGamer.name])
+    }, [turnQueue])
 
     const handleCall = () => roundForward(0, player.gameAction.call(getTopBets()))
     const handleRaise = () => roundForward(1, player.gameAction.raise(getTopBets()))
@@ -109,11 +109,12 @@ export default function Game() {
                 </ChipLabel>
                 <div className={styles.playerHandArea}>
                     {player.cards.map((item, index) => (
-                        <PokerCard
-                            key={index}
-                            rank={item?.rank}
-                            suit={item?.suit}
-                        />
+                        <div key={index} className={styles.cardArea}>
+                            <PokerCard
+                                rank={item?.rank}
+                                suit={item?.suit}
+                            />
+                        </div>
                     ))}
                 </div>
                 <div className={styles.playerBtnArea}>
