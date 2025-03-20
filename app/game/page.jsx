@@ -25,7 +25,7 @@ export default function Game() {
     const gamerC = useGamer()
     const opponents = [gamerA, gamerB, gamerC]
 
-    const { sbBetsGamer, bbBetsGamer, inTurnGamer, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
+    const { sbBetsName, bbBetsName, inTurnGamer, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
 
     const aiTimeout = useRef(null)
 
@@ -78,8 +78,8 @@ export default function Game() {
         }
     }, [inTurnGamer.name])
 
-    const handleCall = () =>  roundForward(0, player.gameAction.call(getTopBets()))
-    const handleRaise = () =>  roundForward(1, player.gameAction.raise(getTopBets()))
+    const handleCall = () => roundForward(0, player.gameAction.call(getTopBets()))
+    const handleRaise = () => roundForward(1, player.gameAction.raise(getTopBets()))
     const handleFold = () => roundForward(2, player.gameAction.fold())
 
     return !player.avatar ? null : (
@@ -98,6 +98,9 @@ export default function Game() {
                     src={player.avatar}
                     name={player.name}
                 />
+                <div className={styles.blindTag}>
+                    {sbBetsName === player.name ? "SB" : bbBetsName === player.name ? "BB" : null}
+                </div>
                 <div className={styles.playerNameText}>
                     {player.name}
                 </div>
@@ -136,6 +139,7 @@ export default function Game() {
                         name={item.name}
                         cards={item.cards}
                         bets={item.bets}
+                        blindTag={sbBetsName === item.name ? "SB" : bbBetsName === item.name ? "BB" : null}
                     />
                 ))}
             </div>

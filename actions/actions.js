@@ -27,10 +27,10 @@ async function set_player_profile(name = null, avatar = null, bank = null) {
         cookieStore.set('player_avatar', Object.keys(avatar_dict).find(key => avatar_dict[key].src === avatar.src))
     }
     if (bank) {
-        cookieStore.set('player_bank', (bank > 0 ? bank : 0).toString())
+        cookieStore.set('player_bank', Math.min(Math.max(bank, 0), 99999).toString())
     }
 
-    return { name, avatar, bank: (bank > 0 ? bank : 0) }
+    return { name, avatar, bank: Math.min(Math.max(bank, 0), 99999) }
 }
 
 async function read_player_profile() {

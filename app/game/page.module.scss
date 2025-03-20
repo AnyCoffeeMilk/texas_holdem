@@ -21,6 +21,7 @@
   }
 
   .playerArea {
+    position: relative;
     grid-column: 1 / 2;
     grid-row: 2 / 4;
     display: grid;
@@ -40,6 +41,17 @@
       grid-row: 1 / 3;
       height: 120px;
       width: 100px;
+    }
+
+    .blindTag {
+      position: absolute;
+      top: 0.7em;
+      left: 0.6em;
+      padding: 0 0.5em;
+      color: var(--prime-light);
+      border-radius: 2px;
+      background-color: var(--prime-dark);
+      transform: rotateZ(-20deg);
     }
 
     .playerNameText {
@@ -324,6 +336,11 @@
       .playerAvatar {
         height: 120px;
         width: 100px;
+      }
+
+      .blindTag {
+        top: -0.2em;
+        left: -0.2em;
       }
 
       .playerHandArea {

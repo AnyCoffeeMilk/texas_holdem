@@ -13,6 +13,7 @@
     box-shadow: 2px 2px 0px 2px var(--prime-dark);
 
     .infoArea {
+        position: relative;
         grid-column: 1 / 2;
         grid-row: 1 / 3;
         display: grid;
@@ -31,6 +32,17 @@
             color: var(--prime-light);
             border-radius: 4px;
             background-color: var(--prime-dark);
+        }
+
+        .blindTag {
+            position: absolute;
+            top: -0.3em;
+            left: -0.4em;
+            padding: 0 0.5em;
+            color: var(--prime-light);
+            border-radius: 2px;
+            background-color: var(--prime-dark);
+            transform: rotateZ(-20deg);
         }
     }
 

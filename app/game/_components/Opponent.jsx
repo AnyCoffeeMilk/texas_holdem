@@ -4,16 +4,7 @@ import PokerCard from './_components/PokerCard'
 import ChipLabel from '@/app/_components/ChipLabel'
 import Avatar from '@/app/_components/Avatar'
 
-export default function Opponent({ name, avatar, cards, bets }) {
-    const cardsMap = cards.map((item, index) => (
-        <PokerCard
-            key={index}
-            rank={item?.rank}
-            suit={item?.suit}
-            isFacedown={true}
-        />
-    ))
-
+export default function Opponent({ name, avatar, cards, bets, blindTag }) {
     return (
         <div className={styles.container}>
             <div className={styles.infoArea}>
@@ -25,9 +16,19 @@ export default function Opponent({ name, avatar, cards, bets }) {
                 <div className={styles.nameText}>
                     {name}
                 </div>
+                <div className={styles.blindTag}>
+                    {blindTag}
+                </div>
             </div>
             <div className={styles.cardArea}>
-                {cardsMap}
+                {cards.map((item, index) => (
+                    <PokerCard
+                        key={index}
+                        rank={item?.rank}
+                        suit={item?.suit}
+                        isFacedown={true}
+                    />
+                ))}
             </div>
             <ChipLabel className={styles.bets} chips={bets} digits={3}>
                 BETS

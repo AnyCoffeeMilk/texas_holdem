@@ -60,6 +60,10 @@ Add placeHolder to "empty" hand of players.
 Small updated to some components for better clarity.
 Now blinds (BB, SB) can pass to next player upon new round.
 
+### Day 11
+Add bank state to useGamer and return structure change.
+Add a tag above Avatars to show SB and BB.
+
 ## Getting Started
 
 First, run the development server:

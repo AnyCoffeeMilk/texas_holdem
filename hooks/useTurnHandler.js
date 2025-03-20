@@ -114,10 +114,10 @@ const useTurnHandler = (gamers_list, gameTable) => {
         gamers.forEach(gamer => gamer.newRound())
     }
 
-    const sbBetsGamer = gamers[smallBlind]
-    const bbBetsGamer = gamers[smallBlind < 4 ? smallBlind + 1 : 0]
+    const sbBetsName = gamers[smallBlind]?.name
+    const bbBetsName = gamers[smallBlind < 4 ? smallBlind + 1 : 0]?.name
 
-    return { sbBetsGamer, bbBetsGamer, inTurnGamer, roundForward, newRound }
+    return { sbBetsName, bbBetsName, inTurnGamer, roundForward, newRound }
 }
 
 export default useTurnHandler
