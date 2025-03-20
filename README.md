@@ -63,6 +63,7 @@ Now blinds (BB, SB) can pass to next player upon new round.
 ### Day 11
 Add bank state to useGamer and return structure change.
 Add a tag above Avatars to show SB and BB.
+Now bets reduce currency in bank.
 
 ## Getting Started
 

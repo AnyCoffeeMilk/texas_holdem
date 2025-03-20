@@ -50,17 +50,20 @@ export default function Game() {
         switch (actionId) {
             case 0:
                 aiTimeout.current = setTimeout(() => {
-                    roundForward(actionId, inTurnGamer.gameAction.call(top_bets))
+                    inTurnGamer.gameAction.call(top_bets)
+                    roundForward(actionId,)
                 }, 1000);
                 break
             case 1:
                 aiTimeout.current = setTimeout(() => {
-                    roundForward(actionId, inTurnGamer.gameAction.raise(top_bets))
+                    inTurnGamer.gameAction.raise(top_bets)
+                    roundForward(actionId)
                 }, 1000)
                 break
             case 2:
                 aiTimeout.current = setTimeout(() => {
-                    roundForward(actionId, inTurnGamer.gameAction.fold())
+                    inTurnGamer.gameAction.fold()
+                    roundForward(actionId)
                 }, 1000)
                 break
         }
@@ -78,9 +81,34 @@ export default function Game() {
         }
     }, [turnQueue])
 
-    const handleCall = () => roundForward(0, player.gameAction.call(getTopBets()))
-    const handleRaise = () => roundForward(1, player.gameAction.raise(getTopBets()))
-    const handleFold = () => roundForward(2, player.gameAction.fold())
+    const handleCall = () => {
+        const cost = -(player.gameAction.call(getTopBets()) - player.bets)
+        if (cost !== 0) {
+            add_bank(cost)
+                .then((new_bank) => {
+                    player.setBank(new_bank)
+                    roundForward(0)
+                })
+        } else {
+            roundForward(0)
+        }
+    }
+    const handleRaise = () => {
+        const cost = -(player.gameAction.raise(getTopBets()) - player.bets)
+        if (cost !== 0) {
+            add_bank(cost)
+                .then((new_bank) => {
+                    player.setBank(new_bank)
+                    roundForward(1)
+                })
+        } else {
+            roundForward(1)
+        }
+    }
+    const handleFold = () => {
+        player.gameAction.fold()
+        roundForward(2)
+    }
 
     return !player.avatar ? null : (
         <div className={styles.container}>

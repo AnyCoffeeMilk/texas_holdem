@@ -14,7 +14,7 @@ const useTurnHandler = (gamers_list, gameTable) => {
     const [turnQueue, setTurnQueue] = useState([0, 1, 2, 3])
     const [turnCounter, setTurnCounter] = useState(0)
 
-    const roundForward = (actionId, newBets) => {
+    const roundForward = (actionId) => {
         let new_turnCounter = turnCounter
 
         let queue_tmp = [...turnQueue]
