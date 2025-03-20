@@ -17,7 +17,7 @@ const useGameTable = () => {
     const showOpponentTurn = (opponentName) => setGameText(`${opponentName}'s turn.`)
     const showWinner = (winnerName) => {
         setIsNewGame(true)
-        setGameText(`Winner is ${winnerName}.\n Press "NEW ROUND" to continue.`)
+        setGameText(`Winner is ${winnerName}.`)
     }
 
     const newRound = () => {

@@ -8,7 +8,6 @@ const useTurnHandler = (gamers_list, gameTable) => {
     const { pokerDeck, drawCard, drawCards, getNewDeck } = usePokerDeck()
     const { getWinner } = useGetWinner()
 
-    const [gamers, setGamers] = useState([...gamers_list])
     const [smallBlind, setSmallBlind] = useState(-1)
     const [gameStateId, setGameStateId] = useState(-1) // -1 mean not initiated
     const [turnQueue, setTurnQueue] = useState([0, 1, 2, 3])
@@ -94,8 +93,15 @@ const useTurnHandler = (gamers_list, gameTable) => {
                 }
                 break
             case 5: // Check Winner State
-                console.log(gamers_list, turnQueue, smallBlind)
                 const winner_id = getWinner(turnQueue.map(id => ({ name: id, cards: gamers_list[id].cards })), gameTable.cards)
+                if (winner_id === 0) {
+                    let total_bets = 0
+                    for (let i=0; i<4; i++) {
+                        total_bets += gamers_list[i].bets
+                    }
+                    add_bank(total_bets)
+                        .then((new_bank) => gamers_list[0].setBank(new_bank))
+                }
                 gameTable.showWinner(gamers_list[winner_id].name)
                 break
         }
