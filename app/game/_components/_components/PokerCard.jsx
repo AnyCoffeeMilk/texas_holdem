@@ -4,13 +4,9 @@ import Image from 'next/image'
 import IconSVG from '@/public/icon.svg'
 
 function PokerCard({ rank, suit, isFacedown }) {
-    const [flip, setFlip] = useState(isFacedown)
-
-    const container_style = !flip ? null : {
+    const container_style = !isFacedown ? null : {
         transform: 'rotateY(180deg)'
     }
-
-    const handleFlip = () => setFlip(cur => !cur)
 
     const iconSVG = useMemo(() => (
         <Image
@@ -21,8 +17,10 @@ function PokerCard({ rank, suit, isFacedown }) {
         />
     ), [])
 
+    console.log("first")
+
     return rank === undefined ? <div className={styles.placeholder} /> : (
-        <div className={styles.container} onClick={handleFlip}>
+        <div className={styles.container}>
             <div className={styles.innerContainer} style={container_style}>
                 <div className={styles.cardFront}>
                     <div className={styles.textArea}>

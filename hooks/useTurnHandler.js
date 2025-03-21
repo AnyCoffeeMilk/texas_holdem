@@ -74,7 +74,6 @@ const useTurnHandler = (gamers_list, gameTable) => {
                 }
                 gamers_list[new_smallBlind].setSB()
 
-
                 const new_bigBlind = new_smallBlind < 3 ? new_smallBlind + 1 : 0
                 if (new_bigBlind === 0) { // TODO, now only reduce the bank of player
                     add_bank(-4)
@@ -123,7 +122,6 @@ const useTurnHandler = (gamers_list, gameTable) => {
                     total_bets += gamers_list[i].bets
                 }
                 if (winner_id.length > 1) { // When there is two or more winners
-                    console.log(winner_id, gamers_list, gamers_list[winner_id[0]])
                     let winners_name_list = [gamers_list[winner_id[0]].name]
                     for (let i = 1; i < winner_id.length; i++) {
                         winners_name_list.push(gamers_list[winner_id[i]].name)

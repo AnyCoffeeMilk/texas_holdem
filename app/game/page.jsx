@@ -193,6 +193,7 @@ export default function Game() {
                 {opponents.map((item, index) => (
                     <Opponent
                         key={index}
+                        flipCard={!gameTable.isNewGame}
                         avatar={item.avatar}
                         name={item.name}
                         cards={item.cards}

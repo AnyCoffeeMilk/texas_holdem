@@ -4,7 +4,7 @@ import PokerCard from './_components/PokerCard'
 import ChipLabel from '@/app/_components/ChipLabel'
 import Avatar from '@/app/_components/Avatar'
 
-export default function Opponent({ name, avatar, cards, bets, blindTag }) {
+export default function Opponent({ flipCard, name, avatar, cards, bets, blindTag }) {
     return (
         <div className={styles.container}>
             <div className={styles.infoArea}>
@@ -26,7 +26,7 @@ export default function Opponent({ name, avatar, cards, bets, blindTag }) {
                         key={index}
                         rank={item?.rank}
                         suit={item?.suit}
-                        isFacedown={true}
+                        isFacedown={flipCard}
                     />
                 ))}
             </div>
