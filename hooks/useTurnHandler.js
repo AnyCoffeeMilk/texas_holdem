@@ -65,7 +65,6 @@ const useTurnHandler = (gamers_list, gameTable) => {
         let queue_tmp = []
         switch (gameStateId) {
             case 0: // Draw Hands State
-                queue_tmp = [0, 1, 2, 3]
                 const new_smallBlind = smallBlind !== -1 ? smallBlind < 3 ? smallBlind + 1 : 0 : Math.floor(Math.random() * 4)
                 gameTable.showText.blind(gamers_list[new_smallBlind].name)
                 setSmallBlind(new_smallBlind)
