@@ -72,6 +72,8 @@ Many Major bug fix (including bugs of blind picking and player buttons).
 Add more game text on each game state change.
 Add React Memo to many components in Game Page.
 Add flip card on round end.
+Fix ChipLabel shake on chip change.
+Now cards in center stack together in mobile viewport.
 
 ## Getting Started
 

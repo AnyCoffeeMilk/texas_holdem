@@ -165,8 +165,6 @@
   }
 }
 
-
-
 @media (max-width: 1440px) {
   .container {
     grid-template-columns: 1fr;
@@ -317,11 +315,16 @@
     }
 
     .centerArea {
+      padding: 0;
       .tableCardsArea {
+        display: grid;
+        grid-template-columns: repeat(5, calc(2.5em + ((100vw - 390px) / 210) * 30));
         min-width: calc(80vw - 1em);
-        font-size: 1em;
+        font-size: 1.4em;
         padding: 0;
-        gap: 0.5em;
+        >div {
+          margin-left: -1.25em;
+        }
       }
     }
 
@@ -330,6 +333,7 @@
       margin-right: 0;
       margin-bottom: 0;
       padding: 0;
+      gap: 0.25em;
       border: none;
       box-shadow: none;
 
