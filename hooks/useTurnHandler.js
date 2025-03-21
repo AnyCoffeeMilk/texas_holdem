@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import usePokerDeck from "./usePokerDeck"
 import useGetWinner from "./useGetWinner"
 import { add_bank } from "@/actions/actions"
@@ -10,8 +10,10 @@ const useTurnHandler = (gamers_list, gameTable) => {
 
     const [smallBlind, setSmallBlind] = useState(-1)
     const [gameStateId, setGameStateId] = useState(-1) // -1 mean not initiated
-    const [turnQueue, setTurnQueue] = useState([0, 1, 2, 3])
+    const [turnQueue, setTurnQueue] = useState([])
     const [turnCounter, setTurnCounter] = useState(0)
+
+    const timeoutBin = useRef()
 
     const roundForward = (actionId) => {
         let new_turnCounter = turnCounter
@@ -35,10 +37,20 @@ const useTurnHandler = (gamers_list, gameTable) => {
 
         if (new_turnCounter >= queue_tmp.length) {
             setTurnCounter(0)
-            setGameStateId(cur => cur + 1)
             if (!gameTable.isFull) {
-                setTurnQueue(queue_tmp)
+                setTurnQueue([])
+                gameTable.showText.drawCenter()
+            } else {
+                gameTable.showText.calcWinner()
             }
+            timeoutBin.current = setTimeout(() => {
+                setGameStateId(cur => cur + 1)
+                timeoutBin.current = setTimeout(() => {
+                    if (!gameTable.isFull) {
+                        setTurnQueue(queue_tmp)
+                    }
+                }, 1500)
+            }, 1500)
         } else {
             setTurnCounter(new_turnCounter)
             setTurnQueue(queue_tmp)
@@ -52,7 +64,7 @@ const useTurnHandler = (gamers_list, gameTable) => {
                 const new_deck = getNewDeck()
                 const cards_tmp = drawCards(new_deck, 8)
                 gamers_list.forEach(gamer => gamer.setCards([cards_tmp.pop(), cards_tmp.pop()]))
-                setGameStateId(1)
+                timeoutBin.current = setTimeout(() => setGameStateId(1), 1500)
                 break
             case 1: // BB and SB Set Bets State
                 queue_tmp = [0, 1, 2, 3]
@@ -77,8 +89,11 @@ const useTurnHandler = (gamers_list, gameTable) => {
                 gamers_list[new_bigBlind].setBB()
                 queue_tmp.push(queue_tmp.shift())
 
-                setTurnQueue(queue_tmp)
-                setTurnCounter(2)
+                gameTable.showText.pickBlind(gamers_list[new_smallBlind].name)
+                timeoutBin.current = setTimeout(() => {
+                    setTurnQueue(queue_tmp)
+                    setTurnCounter(1)
+                }, 1500)
                 break
             case 2: // Center Draw 3 Cards State
                 gameTable.setCards(drawCards(pokerDeck, 3))
@@ -94,15 +109,28 @@ const useTurnHandler = (gamers_list, gameTable) => {
                 break
             case 5: // Check Winner State
                 const winner_id = getWinner(turnQueue.map(id => ({ name: id, cards: gamers_list[id].cards })), gameTable.cards)
-                if (winner_id === 0) {
-                    let total_bets = 0
-                    for (let i=0; i<4; i++) {
-                        total_bets += gamers_list[i].bets
-                    }
-                    add_bank(total_bets)
-                        .then((new_bank) => gamers_list[0].setBank(new_bank))
+                let total_bets = 0
+                for (let i = 0; i < 4; i++) {
+                    total_bets += gamers_list[i].bets
                 }
-                gameTable.showWinner(gamers_list[winner_id].name)
+                if (winner_id.length > 1) { // When there is two or more winners
+                    console.log(winner_id, gamers_list, gamers_list[winner_id[0]])
+                    let winners_name_list = [gamers_list[winner_id[0]].name]
+                    for (let i = 1; i < winner_id.length; i++) {
+                        winners_name_list.push(gamers_list[winner_id[i]].name)
+                    }
+                    gameTable.showText.winners(winners_name_list)
+                    if (winner_id === 0) { // TODO, now only add to the bank of player
+                        add_bank(total_bets / winner_id.length)
+                            .then((new_bank) => gamers_list[0].setBank(new_bank))
+                    }
+                } else { // When there is only one winner 
+                    gameTable.showText.winner(gamers_list[winner_id].name)
+                    if (winner_id === 0) { // TODO, now only add to the bank of player
+                        add_bank(total_bets)
+                            .then((new_bank) => gamers_list[0].setBank(new_bank))
+                    }
+                }
                 break
         }
     }, [gameStateId])
@@ -111,9 +139,11 @@ const useTurnHandler = (gamers_list, gameTable) => {
 
     const newRound = () => {
         setTurnCounter(0)
-        setGameStateId(0)
+        setTurnQueue([])
         gameTable.newRound()
         gamers_list.forEach(gamer => gamer.newRound())
+        gameTable.showText.drawHand()
+        timeoutBin.current = setTimeout(() => setGameStateId(0), 1000)
     }
 
     const sbBetsName = gamers_list[smallBlind]?.name

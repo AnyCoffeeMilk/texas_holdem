@@ -164,8 +164,6 @@ const getWinner = (gamers, TableCards) => {
             })
         })
 
-        console.log(i, ...i_gamer_tmp.map(item => item.name))
-
         if (i_gamer_tmp.length > 1) {
             if (i === 2) {
                 for (let j = 0; j < 2; j++) {
@@ -183,12 +181,14 @@ const getWinner = (gamers, TableCards) => {
             }
             gamers_tmp = gamers_tmp.filter(gamer => i_gamer_tmp.find(i_gamer => i_gamer.name === gamer.name))
         }
+
+        console.log(i, `Gamers: ${[...i_gamer_tmp.map(item => item.name)]}`)
         
         if (i_gamer_tmp.length === 1) {
             return i_gamer_tmp[0].name
         }
     }
-    return gamers_tmp
+    return gamers_tmp.map(gamer => gamer.name)
 }
 
 const useGetWinner = () => { 

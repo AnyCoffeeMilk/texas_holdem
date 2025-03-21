@@ -70,13 +70,13 @@ export default function Game() {
     }
 
     useEffect(() => {
-        if (inTurnGamer.name !== undefined) {
+        if (inTurnGamer?.name !== undefined) {
             if (inTurnGamer.name !== player.name) {
-                gameTable.showOpponentTurn(inTurnGamer.name)
+                gameTable.showText.opponentTurn(inTurnGamer.name)
                 get_opponent_action()
                     .then(handleAIAction)
             } else if (!gameTable.isNewGame) {
-                gameTable.showPlayerTurn()
+                gameTable.showText.playerTurn()
             }
         }
     }, [turnQueue])
@@ -112,7 +112,7 @@ export default function Game() {
         roundForward(2)
     }
 
-    const isBtnDisabled = inTurnGamer.name !== player.name || gameTable.isNewGame
+    const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
     return !player.avatar ? null : (
         <div className={styles.container}>

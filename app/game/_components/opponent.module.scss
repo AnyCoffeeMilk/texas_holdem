@@ -87,8 +87,8 @@
             .avatar {
                 grid-column: 1;
                 grid-row: 1;
-                height: calc(6em + 3.25px);
-                width: calc(5em + 3.25px);
+                height: calc(6em + 3.75px);
+                width: calc(5em + 3.75px);
             }
 
             .nameText {
@@ -123,9 +123,16 @@
         max-width: 130px;
         margin-right: 0;
         margin-bottom: 0;
+        gap: 0.25em;
 
         .infoArea {
+            gap: 0.25em;
             grid-template-columns: 1fr;
+
+            .avatar {
+                height: 5.9em;
+                width: 4.9em;
+            }
         }
 
         .bets {
@@ -133,9 +140,10 @@
         }
 
         .cardArea {
-            top: 0em;
-            right: 0em;
-            grid-template-columns: calc(1em - 2px) 1fr;
+            top: 0;
+            right: 0;
+            font-size: 0.95em;
+            grid-template-columns: 1.5em 1fr;
             grid-template-rows: 1fr;
         }
     }
