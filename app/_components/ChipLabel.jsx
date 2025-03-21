@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import styles from './chipLabel.module.scss'
 import Image from 'next/image'
 import ChipSVG from '@/public/chip.svg'
@@ -18,7 +18,7 @@ function ChipLabel({ className, chips, digits, children }) {
             <div className={styles.label}>
                 {children}
             </div>
-            <div className={styles.currency}>
+            <div className={styles.currency} style={{ width: `calc(${(digits + 1.4 - 0.3 * digits)}em + ${(digits - 1) * 2}px)` }}>
                 {chipSVG}
                 {chips.toString().padStart(digits, "0")}
             </div>

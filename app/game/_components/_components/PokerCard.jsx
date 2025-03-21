@@ -17,8 +17,6 @@ function PokerCard({ rank, suit, isFacedown }) {
         />
     ), [])
 
-    console.log("first")
-
     return rank === undefined ? <div className={styles.placeholder} /> : (
         <div className={styles.container}>
             <div className={styles.innerContainer} style={container_style}>
