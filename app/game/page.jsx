@@ -27,7 +27,7 @@ export default function Game() {
 
     const { sbBetsName, bbBetsName, turnQueue, inTurnGamer, roundForward, newRound } = useTurnHandler([player, ...opponents], gameTable)
 
-    const aiTimeout = useRef(null)
+    const timeoutBin = useRef(null)
 
     useEffect(() => {
         read_player_profile()
@@ -42,28 +42,40 @@ export default function Game() {
             })
     }, [])
 
-    const getTopBets = () => Math.max(...[...opponents, player].map(gamer => gamer.bets))
+    const top_bets = Math.max(...[...opponents, player].map(gamer => gamer.bets))
 
     const handleAIAction = (actionId) => {
-        clearTimeout(aiTimeout.current)
-        const top_bets = getTopBets()
+        clearTimeout(timeoutBin.current)
         switch (actionId) {
             case 0:
-                aiTimeout.current = setTimeout(() => {
-                    inTurnGamer.gameAction.call(top_bets)
-                    roundForward(actionId,)
+                timeoutBin.current = setTimeout(() => {
+                    if (inTurnGamer.bets === top_bets) {
+                        gameTable.showText.opponentCheck(inTurnGamer.name)
+                    } else {
+                        gameTable.showText.opponentCall(inTurnGamer.name)
+                    }
+                    timeoutBin.current = setTimeout(() => {
+                        inTurnGamer.gameAction.call(top_bets)
+                        roundForward(actionId)
+                    }, 1500)
                 }, 1000);
                 break
             case 1:
-                aiTimeout.current = setTimeout(() => {
-                    inTurnGamer.gameAction.raise(top_bets)
-                    roundForward(actionId)
+                timeoutBin.current = setTimeout(() => {
+                    gameTable.showText.opponentRaise(inTurnGamer.name)
+                    timeoutBin.current = setTimeout(() => {
+                        inTurnGamer.gameAction.raise(top_bets)
+                        roundForward(actionId)
+                    }, 1500)
                 }, 1000)
                 break
             case 2:
-                aiTimeout.current = setTimeout(() => {
-                    inTurnGamer.gameAction.fold()
-                    roundForward(actionId)
+                timeoutBin.current = setTimeout(() => {
+                    gameTable.showText.opponentFold(inTurnGamer.name)
+                    timeoutBin.current = setTimeout(() => {
+                        inTurnGamer.gameAction.fold()
+                        roundForward(actionId)
+                    }, 1500)
                 }, 1000)
                 break
         }
@@ -82,34 +94,47 @@ export default function Game() {
     }, [turnQueue])
 
     const handleCall = () => {
-        const cost = -(player.gameAction.call(getTopBets()) - player.bets)
-        if (cost !== 0) {
-            add_bank(cost)
-                .then((new_bank) => {
-                    player.setBank(new_bank)
-                    roundForward(0)
-                })
+        const cost = -(player.gameAction.call(top_bets) - player.bets)
+        if (cost === 0) {
+            gameTable.showText.playerCheck()
         } else {
-            roundForward(0)
+            gameTable.showText.playerCall(-cost)
         }
+        timeoutBin.current = setTimeout(() => {
+            if (cost !== 0) {
+                add_bank(cost)
+                    .then((new_bank) => {
+                        player.setBank(new_bank)
+                        roundForward(0)
+                    })
+            } else {
+                roundForward(0)
+            }
+        }, 1500)
     }
 
     const handleRaise = () => {
-        const cost = -(player.gameAction.raise(getTopBets()) - player.bets)
-        if (cost !== 0) {
-            add_bank(cost)
-                .then((new_bank) => {
-                    player.setBank(new_bank)
-                    roundForward(1)
-                })
-        } else {
-            roundForward(1)
-        }
+        const cost = -(player.gameAction.raise(top_bets) - player.bets)
+        gameTable.showText.playerRaise(-cost)
+        timeoutBin.current = setTimeout(() => {
+            if (cost !== 0) {
+                add_bank(cost)
+                    .then((new_bank) => {
+                        player.setBank(new_bank)
+                        roundForward(1)
+                    })
+            } else {
+                roundForward(1)
+            }
+        }, 1500)
     }
 
     const handleFold = () => {
-        player.gameAction.fold()
-        roundForward(2)
+        gameTable.showText.playerFold()
+        timeoutBin.current = setTimeout(() => {
+            player.gameAction.fold()
+            roundForward(2)
+        }, 1500)
     }
 
     const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
@@ -151,7 +176,7 @@ export default function Game() {
                 </div>
                 <div className={styles.playerBtnArea}>
                     <ThemeBtn onClick={handleCall} disabled={isBtnDisabled}>
-                        CALL
+                        {player.bets === top_bets ? 'CHECK' : 'CALL'}
                     </ThemeBtn>
                     <ThemeBtn onClick={handleRaise} disabled={isBtnDisabled}>
                         RAISE

@@ -19,7 +19,9 @@ const useGameTable = () => {
 
     const showText = {
         drawHand: () => setGameText("Draw two cards to each players..."),
-        pickBlind: (name) => setGameText(`${name} is the Small Blind.`),
+        drawBlind: () => setGameText("Picking a random Small Blind..."),
+        passBlind: () => setGameText("Passing Blinds to next players..."),
+        blind: (name) => setGameText(`${name} is the Small Blind.`),
         drawCenter: () => setGameText("Draw to center..."),
         playerTurn: () => {
             setNoAction(false)
@@ -40,6 +42,26 @@ const useGameTable = () => {
             setNoAction(true)
             setGameText(`Winners are ${winners_name_list.join(', ')}!`)
         },
+        playerCheck: () => {
+            setNoAction(true)
+            setGameText("You CHECK.")
+        },
+        playerCall: (cost_bets) => {
+            setNoAction(true)
+            setGameText(`You CALL with ${cost_bets} Bets.`)
+        },
+        playerRaise: (cost_bets) => {
+            setNoAction(true)
+            setGameText(`You PRAISE by ${cost_bets} Bets.`)
+        },
+        playerFold: () => {
+            setNoAction(true)
+            setGameText("You FOLD.")
+        },
+        opponentCheck: (opponent_name) => setGameText(`${opponent_name} CHECK.`),
+        opponentCall: (opponent_name) => setGameText(`${opponent_name} CALL.`),
+        opponentRaise: (opponent_name) => setGameText(`${opponent_name} PRAISE.`),
+        opponentFold: (opponent_name) => setGameText(`${opponent_name} FOLD.`),
     }
 
     return { 

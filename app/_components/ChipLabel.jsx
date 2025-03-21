@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 import styles from './chipLabel.module.scss'
 import Image from 'next/image'
 import ChipSVG from '@/public/chip.svg'
 
-export default function ChipLabel({ className, chips, digits, children }) {
+function ChipLabel({ className, chips, digits, children }) {
     const chipSVG = useMemo(() => (
         <Image
             className={styles.chipImg}
@@ -25,3 +25,10 @@ export default function ChipLabel({ className, chips, digits, children }) {
         </div>
     )
 }
+
+export default memo(ChipLabel, (prevProps, nextProps) => (
+    prevProps.className === nextProps.className &&
+    prevProps.chips === nextProps.chips &&
+    prevProps.digits === nextProps.digits &&
+    prevProps.children === nextProps.children
+))

@@ -21,6 +21,7 @@ const useTurnHandler = (gamers_list, gameTable) => {
         let queue_tmp = [...turnQueue]
         const inTurn_id = queue_tmp.shift()
 
+
         switch (actionId) {
             case 0: // Call
                 new_turnCounter += 1
@@ -47,6 +48,9 @@ const useTurnHandler = (gamers_list, gameTable) => {
                 setGameStateId(cur => cur + 1)
                 timeoutBin.current = setTimeout(() => {
                     if (!gameTable.isFull) {
+                        while (queue_tmp[0] !== smallBlind) {
+                            queue_tmp.push(queue_tmp.shift())
+                        }
                         setTurnQueue(queue_tmp)
                     }
                 }, 1500)
@@ -61,25 +65,16 @@ const useTurnHandler = (gamers_list, gameTable) => {
         let queue_tmp = []
         switch (gameStateId) {
             case 0: // Draw Hands State
-                const new_deck = getNewDeck()
-                const cards_tmp = drawCards(new_deck, 8)
-                gamers_list.forEach(gamer => gamer.setCards([cards_tmp.pop(), cards_tmp.pop()]))
-                timeoutBin.current = setTimeout(() => setGameStateId(1), 1500)
-                break
-            case 1: // BB and SB Set Bets State
                 queue_tmp = [0, 1, 2, 3]
-                const new_smallBlind = smallBlind < 3 ? smallBlind + 1 : 0
-                while (queue_tmp[0] !== new_smallBlind) {
-                    queue_tmp.push(queue_tmp.shift())
-                }
-
+                const new_smallBlind = smallBlind !== -1 ? smallBlind < 3 ? smallBlind + 1 : 0 : Math.floor(Math.random() * 4)
+                gameTable.showText.blind(gamers_list[new_smallBlind].name)
                 setSmallBlind(new_smallBlind)
                 if (new_smallBlind === 0) { // TODO, now only reduce the bank of player
                     add_bank(-2)
                         .then((new_bank) => gamers_list[0].setBank(new_bank))
                 }
                 gamers_list[new_smallBlind].setSB()
-                queue_tmp.push(queue_tmp.shift())
+
 
                 const new_bigBlind = new_smallBlind < 3 ? new_smallBlind + 1 : 0
                 if (new_bigBlind === 0) { // TODO, now only reduce the bank of player
@@ -87,9 +82,24 @@ const useTurnHandler = (gamers_list, gameTable) => {
                         .then((new_bank) => gamers_list[0].setBank(new_bank))
                 }
                 gamers_list[new_bigBlind].setBB()
+
+                timeoutBin.current = setTimeout(() => {
+                    gameTable.showText.drawHand()
+                    timeoutBin.current = setTimeout(() => setGameStateId(1), 1500)
+                }, 1500)
+                break
+            case 1: // BB and SB Set Bets State
+                queue_tmp = [0, 1, 2, 3]
+                while (queue_tmp[0] !== smallBlind) {
+                    queue_tmp.push(queue_tmp.shift())
+                }
+                queue_tmp.push(queue_tmp.shift())
                 queue_tmp.push(queue_tmp.shift())
 
-                gameTable.showText.pickBlind(gamers_list[new_smallBlind].name)
+                const new_deck = getNewDeck()
+                const cards_tmp = drawCards(new_deck, 8)
+                gamers_list.forEach(gamer => gamer.setCards([cards_tmp.pop(), cards_tmp.pop()]))
+
                 timeoutBin.current = setTimeout(() => {
                     setTurnQueue(queue_tmp)
                     setTurnCounter(1)
@@ -141,9 +151,13 @@ const useTurnHandler = (gamers_list, gameTable) => {
         setTurnCounter(0)
         setTurnQueue([])
         gameTable.newRound()
+        if (smallBlind === -1) {
+            gameTable.showText.drawBlind()
+        } else {
+            gameTable.showText.passBlind()
+        }
         gamers_list.forEach(gamer => gamer.newRound())
-        gameTable.showText.drawHand()
-        timeoutBin.current = setTimeout(() => setGameStateId(0), 1000)
+        timeoutBin.current = setTimeout(() => setGameStateId(0), 1500)
     }
 
     const sbBetsName = gamers_list[smallBlind]?.name

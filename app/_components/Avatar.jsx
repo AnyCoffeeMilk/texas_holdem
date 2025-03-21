@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 import Image from 'next/image'
 import styles from './avatar.module.scss'
 
-export default function Avatar({ className, src, name }) {
+function Avatar({ className, src, name }) {
     const avatarSVG = useMemo(() => src === undefined ? null : (
         <Image
             priority
@@ -19,3 +19,9 @@ export default function Avatar({ className, src, name }) {
         </div>
     )
 }
+
+export default memo(Avatar, (prevProps, nextProps) => (
+    prevProps.className === nextProps.className &&
+    prevProps?.src?.src === nextProps?.src?.src &&
+    prevProps.name === nextProps.name
+))

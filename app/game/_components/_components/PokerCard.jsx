@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from 'react'
+import React, { memo, useMemo, useState } from 'react'
 import styles from './pokerCard.module.scss'
 import Image from 'next/image'
 import IconSVG from '@/public/icon.svg'
 
-export default function PokerCard({ rank, suit, isFacedown }) {
+function PokerCard({ rank, suit, isFacedown }) {
     const [flip, setFlip] = useState(isFacedown)
 
     const container_style = !flip ? null : {
@@ -43,3 +43,9 @@ export default function PokerCard({ rank, suit, isFacedown }) {
         </div>
     )
 }
+
+export default memo(PokerCard, (prevProps, nextProps) => (
+    prevProps.rank === nextProps.rank &&
+    prevProps.suit === nextProps.suit &&
+    prevProps.isFacedown === nextProps.isFacedown
+))

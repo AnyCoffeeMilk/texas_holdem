@@ -40,8 +40,8 @@ export default function Profile() {
 
     const handleAvatarClick = (src) => setPlayerAvatar(src)
     const handleSave = () => {
-        set_player_profile(playerName, playerAvatar)
-        router.back()
+        set_player_profile(playerName, playerAvatar, null)
+            .then(() => router.back())
     }
     const handleNameChange = (e) => {
         if (e.target.value.length <= 9) {

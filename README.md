@@ -67,6 +67,11 @@ Now bets reduce currency in bank.
 Now winner add total bets to bank.
 Add animation to clickable buttons.
 
+### Day 12
+Many Major bug fix (including bugs of blind picking and player buttons).
+Add more game text on each game state change.
+Add React Memo to many components in Game Page.
+
 ## Getting Started
 
 First, run the development server:
