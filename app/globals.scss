@@ -21,7 +21,7 @@ body {
 body {
   color: var(--prime-dark);
   background: var(--prime-light);
-  font-family: var(--font-prime);
+  font-family: var(--font-prime), Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
