@@ -25,7 +25,7 @@ function PokerCard({ rank, suit, isFacedown }) {
                         <div>
                             {rank}
                         </div>
-                        <div>
+                        <div className={styles.suit}>
                             {suit}
                         </div>
                     </div>

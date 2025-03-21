@@ -51,6 +51,10 @@
             color: var(--prime-light);
             background-color: var(--prime-dark);
             border-radius: 2px;
+
+            .suit {
+                font-family: Arial, Helvetica, sans-serif;
+            }
         }
     }
 
