@@ -64,7 +64,7 @@ const useTurnHandler = (gamers_list, gameTable) => {
     useEffect(() => {
         let queue_tmp = []
         switch (gameStateId) {
-            case 0: // Draw Hands State
+            case 0: // BB and SB Set Bets State
                 const new_smallBlind = smallBlind !== -1 ? smallBlind < 3 ? smallBlind + 1 : 0 : Math.floor(Math.random() * 4)
                 gameTable.showText.blind(gamers_list[new_smallBlind].name)
                 setSmallBlind(new_smallBlind)
@@ -86,7 +86,7 @@ const useTurnHandler = (gamers_list, gameTable) => {
                     timeoutBin.current = setTimeout(() => setGameStateId(1), 1500)
                 }, 1500)
                 break
-            case 1: // BB and SB Set Bets State
+            case 1: // Draw Hands State 
                 queue_tmp = [0, 1, 2, 3]
                 while (queue_tmp[0] !== smallBlind) {
                     queue_tmp.push(queue_tmp.shift())
