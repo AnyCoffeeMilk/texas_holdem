@@ -9,7 +9,7 @@ import ShopSVG from "./_components/ShopSVG";
 import SettingsSVG from "../_components/SettingsSVG";
 import OnlineMatchSVG from "./_components/OnlineMatchSVG";
 import AIMatchSVG from "./_components/AIMatchSVG";
-import { read_player_profile, set_player_profile } from "../../actions/actions";
+import { read_player_profile } from "../../actions/actions";
 import ThemeLink from "../_components/ThemeLink";
 import GameTitle from "./_components/GameTitle";
 
@@ -25,6 +25,19 @@ export default function Home() {
                 setPlayerAvatar(player_avatar)
                 setPlayerBank(player_bank)
             })
+    }, [])
+
+    useEffect(() => {
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('1d38d82007e0a12947a2', {
+            cluster: 'ap3'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function (data) {
+            alert(JSON.stringify(data));
+        });
     }, [])
 
     return !playerAvatar ? null : (

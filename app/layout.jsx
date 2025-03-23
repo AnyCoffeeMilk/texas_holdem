@@ -14,6 +14,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
+            <head>
+                <script src="https://js.pusher.com/8.2.0/pusher.min.js" />
+            </head>
             <body className={`${font.variable}`}>
                 <main>
                     {children}
