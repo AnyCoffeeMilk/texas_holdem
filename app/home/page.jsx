@@ -12,6 +12,8 @@ import AIMatchSVG from "./_components/AIMatchSVG";
 import { read_player_profile } from "../../actions/actions";
 import ThemeLink from "../_components/ThemeLink";
 import GameTitle from "./_components/GameTitle";
+import { pushData } from "@/actions/pushData";
+import pusherClient from "@/lib/pusher";
 
 export default function Home() {
     const [playerName, setPlayerName] = useState('Loading...')
@@ -28,16 +30,12 @@ export default function Home() {
     }, [])
 
     useEffect(() => {
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('1d38d82007e0a12947a2', {
-            cluster: 'ap3'
-        });
-
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function (data) {
+        var channel = pusherClient.subscribe('my-channel');
+        channel.bind('my-event', (data) => {
             alert(JSON.stringify(data));
         });
+        pushData({ message: 'testing message' })
+            .then((res) => console.log(res))
     }, [])
 
     return !playerAvatar ? null : (
