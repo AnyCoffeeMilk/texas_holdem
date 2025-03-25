@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import Avatar from "@/app/_components/Avatar";
 import ChipLabel from "@/app/_components/ChipLabel";
-import EditSVG from "./_components/EditSVG";
-import ShopSVG from "./_components/ShopSVG";
-import SettingsSVG from "../_components/SettingsSVG";
-import OnlineMatchSVG from "./_components/OnlineMatchSVG";
-import AIMatchSVG from "./_components/AIMatchSVG";
-import { read_player_profile } from "../../actions/actions";
+import EditSVG from "@/app/_svgs/EditSVG";
+import ShopSVG from "@/app/_svgs/ShopSVG";
+import SettingsSVG from "@/app/_svgs/SettingsSVG";
+import OnlineMatchSVG from "@/app/_svgs/OnlineMatchSVG";
+import AIMatchSVG from "@/app/_svgs/AIMatchSVG";
+import { read_player_profile } from "@/actions/actions";
 import ThemeLink from "../_components/ThemeLink";
 import GameTitle from "./_components/GameTitle";
 import { pushData } from "@/actions/pushData";
@@ -29,14 +29,13 @@ export default function Home() {
             })
     }, [])
 
-    useEffect(() => {
-        var channel = pusherClient.subscribe('my-channel');
-        channel.bind('my-event', (data) => {
-            alert(JSON.stringify(data));
-        });
-        pushData({ message: 'testing message' })
-            .then((res) => console.log(res))
-    }, [])
+    // useEffect(() => {
+    //     var channel = pusherClient.subscribe('my-channel');
+    //     channel.bind('my-event', (data) => {
+    //         alert(JSON.stringify(data));
+    //     });
+    //     pushData({ message: 'testing message' })
+    // }, [])
 
     return !playerAvatar ? null : (
         <div className={styles.container}>
@@ -77,7 +76,7 @@ export default function Home() {
                     <ThemeLink href="/home/shop">
                         SHOP <ShopSVG />
                     </ThemeLink>
-                    <ThemeLink href="/settings" className={styles.settingsBtn}>
+                    <ThemeLink href="/home/settings" className={styles.settingsBtn}>
                         SETTINGS <SettingsSVG />
                     </ThemeLink>
                 </div>

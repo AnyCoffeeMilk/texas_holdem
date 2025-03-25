@@ -5,7 +5,7 @@ import styles from "./page.module.scss";
 import { read_player_profile, set_player_profile } from "@/actions/actions";
 import ThemeBtn from "@/app/_components/ThemeBtn";
 import ThemeLink from "@/app/_components/ThemeLink";
-import GoBackSVG from "@/app/_components/GoBackSVG";
+import GoBackSVG from "@/app/_svgs/GoBackSVG";
 
 import BishopSVG from "@/public/avatar/bishop.svg";
 import KingSVG from "@/public/avatar/king.svg";
@@ -63,10 +63,10 @@ export default function Profile() {
     return !playerAvatar ? null : (
         <div className={styles.container}>
             <div className={styles.headerArea}>
-                <ThemeLink href="/home" className={styles.goback}>
+                <ThemeLink href="/home" className="px-2 py-1">
                     HOME <GoBackSVG />
                 </ThemeLink>
-                <div className={styles.headerText}>
+                <div className="flex items-center rounded-xs text-2xl font-extrabold tracking-wider uppercase">
                     EDIT PROFILE
                 </div>
             </div>

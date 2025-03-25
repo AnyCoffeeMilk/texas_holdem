@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { read_player_profile, set_player_profile } from "@/actions/actions";
 import ThemeLink from "@/app/_components/ThemeLink";
-import GoBackSVG from "@/app/_components/GoBackSVG";
+import GoBackSVG from "@/app/_svgs/GoBackSVG";
 import ChipLabel from "@/app/_components/ChipLabel";
 import LoanItem from "./_components/LoanItem";
 

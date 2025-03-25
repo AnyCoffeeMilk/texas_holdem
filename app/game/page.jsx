@@ -8,8 +8,8 @@ import ChipLabel from "../_components/ChipLabel";
 import Avatar from "../_components/Avatar";
 import ThemeBtn from "../_components/ThemeBtn";
 import ThemeLink from "../_components/ThemeLink";
-import GoBackSVG from "../_components/GoBackSVG";
-import SettingsSVG from "../_components/SettingsSVG";
+import GoBackSVG from "../_svgs/GoBackSVG";
+import SettingsSVG from "../_svgs/SettingsSVG";
 import PokerCard from "./_components/_components/PokerCard";
 
 import { read_player_profile, read_opponents_profile, get_opponent_action, add_bank } from "@/actions/actions";
