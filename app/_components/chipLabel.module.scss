@@ -41,43 +41,10 @@
     }
 }
 
-@keyframes slidein {
-    45% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-
-    55% {
-        transform: scale(1);
-    }
-
-    60% {
-        transform: scale(1.05);
-    }
-
-    65% {
-        transform: scale(1);
-    }
-}
-
-.animate {
-    animation-name: slidein;
-    animation-duration: 2.5s;
-    animation-iteration-count: 1;
-    animation-fill-mode: both;
-}
-
 @media (max-width: 600px) {
     .container {
         .label {
             padding: 0.25em;
-        }
-
-        .currency {
-            // padding: 0 0.1em;
         }
     }
 }

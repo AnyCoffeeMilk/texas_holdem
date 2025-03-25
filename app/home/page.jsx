@@ -72,11 +72,11 @@ export default function Home() {
                 <ThemeLink href="/game">
                     START AI MATCH <AIMatchSVG />
                 </ThemeLink>
-                <div className={styles.btnBottomArea}>
+                <div className="grid grid-cols-[auto_1fr] gap-4">
                     <ThemeLink href="/home/shop">
                         SHOP <ShopSVG />
                     </ThemeLink>
-                    <ThemeLink href="/home/settings" className={styles.settingsBtn}>
+                    <ThemeLink href="/home/settings">
                         SETTINGS <SettingsSVG />
                     </ThemeLink>
                 </div>

@@ -1,68 +1,73 @@
 @import 'tailwindcss';
 
 @theme {
-    --color-light: #e9cbb1;
-    --color-dark: #2b1e1a;
-    --shadow-sm: 1.5px 1.5px 0px 1.5px var(--color-dark);
-    --shadow-md: 2px 2px 0px 2px var(--color-dark);
+  --color-light: #e9cbb1;
+  --color-dark: #2b1e1a;
+  --shadow-sm: 1.5px 1.5px 0px 1.5px var(--color-dark);
+  --shadow-md: 2px 2px 0px 2px var(--color-dark);
 }
 
 @utility container-sm {
-    @apply border-dark mr-[3px] mb-[3px] border-t-2 border-l-2 shadow-sm;
+  @apply border-dark mr-[3px] mb-[3px] border-t-2 border-l-2 shadow-sm;
 }
 
 @utility container-md {
-    @apply border-dark mr-1 mb-1 border-t-2 border-l-2 shadow-md;
+  @apply border-dark mr-1 mb-1 border-t-2 border-l-2 shadow-md;
 }
 
 @utility flex-center {
-    @apply flex items-center justify-center;
+  @apply flex items-center justify-center;
+}
+
+@utility text-stroke-* {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: --value(--color- *);
 }
 
 svg {
-    @apply fill-current stroke-current;
+  @apply fill-current stroke-current;
 }
 
 main {
-    min-height: 100svh;
-    @apply flex-center p-2 sm:p-0;
+  min-height: 100svh;
+  @apply flex-center p-2 sm:p-0;
 }
 
 body {
-    font-family: var(--font-prime), Arial;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    @apply text-dark bg-light;
+  font-family: var(--font-prime), Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply text-dark bg-light;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 :root {
-    --prime-light: #e9cbb1;
-    --prime-dark: #2b1e1a;
+  --prime-light: #e9cbb1;
+  --prime-dark: #2b1e1a;
 }
 
 html,
 body {
-    max-width: 100vw;
-    overflow-x: hidden;
-    cursor: default;
-    user-select: none;
+  max-width: 100vw;
+  overflow-x: hidden;
+  cursor: default;
+  user-select: none;
 }
 
 button {
-    padding: 0;
-    cursor: pointer;
-    outline: inherit;
-    border: none;
-    background: none;
-    font-family: var(--font-prime);
+  cursor: pointer;
+  outline: inherit;
+  font-family: var(--font-prime);
 }
 
 input {
-    padding: 0;
-    outline: inherit;
-    border: none;
-    background: none;
-    font-family: var(--font-prime);
+  padding: 0;
+  outline: inherit;
+  border: none;
+  font-family: var(--font-prime);
 }
 
 /* @media (prefers-color-scheme: dark) {

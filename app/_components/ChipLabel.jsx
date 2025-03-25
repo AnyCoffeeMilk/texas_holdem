@@ -15,9 +15,9 @@ function ChipLabel({ className, chips, digits, children }) {
 
     return (
         <div className={`${styles.container} ${className}`}>
-            <div className={styles.label}>
+            <span className="flex-1 grid items-center text-center text-xl text-dark text-stroke-light py-1 px-2">
                 {children}
-            </div>
+            </span>
             <div className={styles.currency} style={{ width: `calc(${(digits + 1.4 - 0.3 * digits)}em + ${(digits - 1) * 2}px)` }}>
                 {chipSVG}
                 {chips.toString().padStart(digits, "0")}

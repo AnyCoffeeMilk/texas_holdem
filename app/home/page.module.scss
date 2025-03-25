@@ -77,15 +77,6 @@
     grid-row: 2 / 3;
     display: grid;
     gap: 1em;
-
-    .btnBottomArea {
-      display: flex;
-      gap: 1em;
-
-      .settingsBtn {
-        flex: 1;
-      }
-    }
   }
 }
 

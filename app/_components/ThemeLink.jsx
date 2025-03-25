@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const ThemeLink = ({ className, href, children }) => (
   <Link
-    className="container-sm group rounded-sm p-0.5"
+    className="container-sm group rounded-sm p-0.5 uppercase"
     draggable={false}
     href={href}
   >
