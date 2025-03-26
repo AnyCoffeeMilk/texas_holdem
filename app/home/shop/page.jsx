@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import styles from './page.module.scss'
 import { read_player_profile, set_player_profile } from '@/actions/actions'
 import ThemeLink from '@/app/_components/ThemeLink'
 import GoBackSVG from '@/app/_svgs/GoBackSVG'
@@ -27,15 +26,17 @@ export default function Profile() {
   }, [])
 
   const handlePurchase = (chips) => {
-    setBtnDisabled(true)
-    set_player_profile(null, null, playerBank + chips).then(({ bank }) => {
-      setPlayerBank(bank)
-      setBtnDisabled(false)
-    })
+    if (!btnDisabled) {
+      setBtnDisabled(true)
+      set_player_profile(null, null, playerBank + chips).then(({ bank }) => {
+        setPlayerBank(bank)
+        setBtnDisabled(false)
+      })
+    }
   }
 
   return playerBank === undefined ? null : (
-    <div className={styles.container}>
+    <div className="container-md grid gap-4 rounded-sm p-4 text-sm">
       <div className="flex items-center justify-between">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
@@ -43,7 +44,7 @@ export default function Profile() {
         <PageTitle>Shop</PageTitle>
       </div>
       <SectionTitle>My Bank</SectionTitle>
-      <div className="flex-center border-dark border-2 px-8 py-6 text-3xl">
+      <div className="flex-center border-dark border-2 rounded-sm py-4 px-4 sm:px-8 sm:py-6 text-2xl sm:text-3xl">
         <ChipLabel chips={playerBank} digits={5}>
           BANK
         </ChipLabel>

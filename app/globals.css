@@ -3,8 +3,22 @@
 @theme {
   --color-light: #e9cbb1;
   --color-dark: #2b1e1a;
+  --shadow-xs: 1px 1px 0px 1px var(--color-dark);
   --shadow-sm: 1.5px 1.5px 0px 1.5px var(--color-dark);
   --shadow-md: 2px 2px 0px 2px var(--color-dark);
+  --animate-pop: pop 2s linear infinite;
+
+  @keyframes pop {
+    45%,
+    55%,
+    65% {
+      transform: scale(1);
+    }
+    50%,
+    60% {
+      transform: scale(1.05);
+    }
+  }
 }
 
 @utility container-sm {
@@ -22,6 +36,18 @@
 @utility text-stroke-* {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: --value(--color- *);
+}
+
+@utility button-container {
+  @apply active:mt-[1px] active:mr-[2px] active:mb-[2px] active:ml-[1px] active:shadow-xs;
+  @apply disabled:mt-[1px] disabled:mr-[2px] disabled:mb-[2px] disabled:ml-[1px] disabled:cursor-not-allowed disabled:shadow-xs;
+}
+
+@utility button {
+  @apply animate-pop tracking-wider [&>svg]:mb-[1px];
+  @apply group-hover:text-light group-hover:bg-dark group-hover:[&>svg]:text-light;
+  @apply group-active:[&>svg]:stroke-[0.5];
+  @apply disabled:mt-[1px] disabled:mr-[2px] disabled:mb-[2px] disabled:ml-[1px] disabled:shadow-xs;
 }
 
 svg {
@@ -47,6 +73,7 @@ body {
 :root {
   --prime-light: #e9cbb1;
   --prime-dark: #2b1e1a;
+  @apply text-sm md:text-base;
 }
 
 html,

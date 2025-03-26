@@ -1,23 +1,21 @@
-import styles from './loanItem.module.scss'
-import PurchaseSVG from './_components/PurchaseSVG'
 import ChipLabel from '@/app/_components/ChipLabel'
-import ThemeBtn from '@/app/_components/ThemeBtn'
+import PurchaseBtn from './_components/PurchaseBtn'
+import ChipSVG from '@/app/_svgs/ChipSVG'
 
-export default function LoanItem({
-  chips,
-  digits,
-  disabled,
-  onPurchase,
-  children,
-}) {
+export default function LoanItem({ chips, digits, onPurchase, children }) {
   return (
-    <div className={styles.container}>
-      <ChipLabel className="flex-1 mt-0.5 [&>span]:text-stroke-light" chips={chips} digits={digits}>
+    <div className="flex items-stretch gap-2">
+      <ChipLabel
+        className="[&>span]:text-light [&>span]:text-sm flex-1 sm:[&>div>div]:text-2xl sm:[&>span]:text-lg"
+        chips={chips}
+        digits={digits}
+      >
         {children}
       </ChipLabel>
-      <ThemeBtn className={styles.btn} disabled={disabled} onClick={onPurchase}>
-        PURCHASE <PurchaseSVG />
-      </ThemeBtn>
+      <PurchaseBtn price={0} onClick={onPurchase}>
+        <ChipSVG />
+        <span className="sm:text-2xl/[1em]">-0</span>
+      </PurchaseBtn>
     </div>
   )
 }
