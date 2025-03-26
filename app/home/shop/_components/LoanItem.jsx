@@ -6,7 +6,7 @@ export default function LoanItem({ chips, digits, onPurchase, children }) {
   return (
     <div className="flex items-stretch gap-2">
       <ChipLabel
-        className="[&>span]:text-light [&>span]:text-sm flex-1 sm:[&>div>div]:text-2xl sm:[&>span]:text-lg"
+        className="[&>span]:text-light [&>span]:font-extralight flex-1 text-lg"
         chips={chips}
         digits={digits}
       >

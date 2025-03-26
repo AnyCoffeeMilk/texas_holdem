@@ -36,7 +36,7 @@ export default function Profile() {
   }
 
   return playerBank === undefined ? null : (
-    <div className="container-md grid gap-4 rounded-sm p-4 text-sm">
+    <div className="container-md min-w-[380px] sm:min-w-auto grid gap-4 rounded-sm p-2 sm:p-4 text-sm">
       <div className="flex items-center justify-between">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />

@@ -1,47 +1,54 @@
-import React, { memo, useMemo, useState } from 'react'
-import styles from './pokerCard.module.scss'
+import React, { memo, useMemo } from 'react'
 import Image from 'next/image'
 import IconSVG from '@/public/icon.svg'
 
 function PokerCard({ rank, suit, isFacedown }) {
-    const container_style = !isFacedown ? null : {
-        transform: 'rotateY(180deg)'
-    }
+  const container_style = !isFacedown
+    ? null
+    : {
+        transform: 'rotateY(180deg)',
+      }
 
-    const iconSVG = useMemo(() => (
-        <Image
-            className={styles.iconImg}
-            src={IconSVG}
-            alt="Icon of the Poker Card"
-            draggable={false}
-        />
-    ), [])
+  const iconSVG = useMemo(
+    () => (
+      <Image
+        className="border-light h-[1.5em] w-[1.5em] -rotate-45 rounded-md border-2 object-contain p-[1px]"
+        src={IconSVG}
+        alt="Icon of the Poker Card"
+        draggable={false}
+      />
+    ),
+    []
+  )
 
-    return rank === undefined ? <div className={styles.placeholder} /> : (
-        <div className={styles.container}>
-            <div className={styles.innerContainer} style={container_style}>
-                <div className={styles.cardFront}>
-                    <div className={styles.textArea}>
-                        <div>
-                            {rank}
-                        </div>
-                        <div className={styles.suit}>
-                            {suit}
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.cardBack}>
-                    <div className={styles.cardBackInner}>
-                        {iconSVG}
-                    </div>
-                </div>
-            </div>
+  return rank === undefined ? (
+    <div className="border-dark bg-light h-[6.25em] w-[5em] rounded-sm border-2" />
+  ) : (
+    <div className="h-[6.25em] w-[5em] bg-transparent perspective-[1000px]">
+      <div
+        className="h-full w-full transition-transform duration-500 transform-3d"
+        style={container_style}
+      >
+        <div className="bg-light border-dark absolute flex h-full w-full justify-stretch rounded-sm border-2 backface-hidden">
+          <div className="text-light bg-dark m-[0.185em] flex flex-1 flex-col items-start rounded-xs p-[0.5em] text-[1.2em]/[1em] font-bold">
+            <div>{rank}</div>
+            <div className="font-sans">{suit}</div>
+          </div>
         </div>
-    )
+        <div className="bg-light border-dark absolute flex h-full w-full rotate-y-180 rounded-sm border-2 backface-hidden">
+          <div className="flex-center bg-dark m-[0.185em] flex-1 rounded-xs">
+            {iconSVG}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
-export default memo(PokerCard, (prevProps, nextProps) => (
+export default memo(
+  PokerCard,
+  (prevProps, nextProps) =>
     prevProps.rank === nextProps.rank &&
     prevProps.suit === nextProps.suit &&
     prevProps.isFacedown === nextProps.isFacedown
-))
+)

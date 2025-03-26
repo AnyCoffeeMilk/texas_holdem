@@ -7,7 +7,7 @@ function ChipLabel({ className, chips, digits, children }) {
       <span className="text-dark text-stroke-light grid flex-1 items-center px-2 text-center text-[1.1em] tracking-widest">
         {children}
       </span>
-      <div className="bg-light text-dark flex items-center gap-1 rounded-xs px-1 py-1 text-[1.3em]">
+      <div className="bg-light text-dark flex items-center gap-0.5 rounded-xs p-0.5 text-[1.3em]">
         <ChipSVG />
         <div className="flex flex-1 gap-0.5">
           {chips

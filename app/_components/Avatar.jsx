@@ -17,7 +17,7 @@ function Avatar({ className, src, name }) {
 
   return (
     <div
-      className={`border-dark flex-center relative rounded-sm border-2 p-0.5 ${className}`}
+      className={`border-dark flex-center relative rounded-sm border-3 p-0.5 ${className}`}
     >
       {avatarSVG}
     </div>

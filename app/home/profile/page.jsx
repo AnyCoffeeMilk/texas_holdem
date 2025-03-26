@@ -63,7 +63,7 @@ export default function Profile() {
   )
 
   return !playerAvatar ? null : (
-    <div className="container-md grid gap-4 rounded-sm p-4">
+    <div className="container-md grid gap-2 sm:gap-4 rounded-sm p-4">
       <div className="flex items-center justify-between">
         <ThemeLink href="/home" className="px-2 py-1">
           Home <GoBackSVG />
@@ -71,7 +71,7 @@ export default function Profile() {
         <PageTitle>Edit Profile</PageTitle>
       </div>
       <SectionTitle>Avatar</SectionTitle>
-      <div className="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6">
+      <div className="grid grid-cols-4 gap-1 sm:gap-2 sm:grid-cols-5 md:grid-cols-6">
         {avatarSVGMap}
       </div>
       <SectionTitle>Username</SectionTitle>

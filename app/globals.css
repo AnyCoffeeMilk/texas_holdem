@@ -39,13 +39,13 @@
 }
 
 @utility button-container {
-  @apply active:mt-[1px] active:mr-[2px] active:mb-[2px] active:ml-[1px] active:shadow-xs;
+  @apply flex overflow-hidden active:mt-[1px] active:mr-[2px] active:mb-[2px] active:ml-[1px] active:shadow-xs;
   @apply disabled:mt-[1px] disabled:mr-[2px] disabled:mb-[2px] disabled:ml-[1px] disabled:cursor-not-allowed disabled:shadow-xs;
 }
 
 @utility button {
-  @apply animate-pop tracking-wider [&>svg]:mb-[1px];
-  @apply group-hover:text-light group-hover:bg-dark group-hover:[&>svg]:text-light;
+  @apply flex-1 animate-pop tracking-wider [&>svg]:mb-[1px];
+  @apply not-disabled:group-hover:text-light not-disabled:group-hover:bg-dark not-disabled:group-hover:[&>svg]:text-light;
   @apply group-active:[&>svg]:stroke-[0.5];
   @apply disabled:mt-[1px] disabled:mr-[2px] disabled:mb-[2px] disabled:ml-[1px] disabled:shadow-xs;
 }
