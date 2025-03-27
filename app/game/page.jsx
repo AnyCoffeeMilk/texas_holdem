@@ -178,24 +178,6 @@ export default function Game() {
             }
           />
         ))}
-        {opponents.map((item, index) => (
-          <Opponent
-            key={index}
-            inTurn={inTurnGamer?.name === item.name && !gameTable.isNewGame}
-            flipCard={!gameTable.isNewGame}
-            avatar={item.avatar}
-            name={item.name}
-            cards={item.cards}
-            bets={item.bets}
-            blindTag={
-              sbBetsName === item.name
-                ? 'SB'
-                : bbBetsName === item.name
-                  ? 'BB'
-                  : null
-            }
-          />
-        ))}
       </div>
       <div className="container-md flex-center relative col-1 row-3 lg:row-2 rounded-sm">
         <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-2xl font-bold italic">
