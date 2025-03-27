@@ -150,7 +150,7 @@ export default function Game() {
   const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
   return !player.avatar ? null : (
-    <div className="grid min-h-[100svh] w-[600px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 md:gap-3 lg:gap-4 sm:p-4 md:p-6 lg:p-8 sm:w-[620px] md:w-[630px] lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto]">
+    <div className="grid min-h-[calc(100svh-1rem)] w-[600px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 md:gap-3 lg:gap-4 sm:p-4 md:p-6 lg:p-8 sm:w-[620px] md:w-[630px] lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto]">
       <div className="col-1 row-1 flex justify-between lg:col-[1/3]">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
