@@ -13,21 +13,21 @@ export default function Opponent({
   blindTag,
 }) {
   return (
-    <div className="relative grid grid-cols-1 grid-rows-[auto_auto_auto] gap-1 lg:grid-cols-[1fr_auto] lg:grid-rows-[1fr_auto_auto]">
+    <div className="relative grid min-w-[11.75rem] grid-cols-1 grid-rows-[auto_auto_auto] gap-1 lg:grid-cols-[1fr_auto] lg:grid-rows-[1fr_auto_auto]">
       <div className="relative sm:col-1 sm:row-1 lg:col-1 lg:row-[1/3]">
         <Avatar
-          className="h-[5.9em] w-[4.9em] sm:col-1 sm:row-1 sm:h-[81px] sm:w-[70px] lg:h-[110px] lg:w-[100px]"
+          className="h-[81px] w-[70px] lg:h-[110px] lg:w-[100px]"
           src={avatar}
           name={name}
         />
         <BlindTag>{blindTag}</BlindTag>
       </div>
       <div
-        className={`text-light bg-dark ${inTurn ? 'animate-blink' : null} grid items-center rounded-sm text-center text-lg font-bold italic sm:col-[1/3] sm:row-2 lg:col-auto lg:row-3`}
+        className={`text-light bg-dark ${inTurn ? 'animate-blink' : null} col-[1/3] row-2 grid items-center rounded-sm text-center text-lg font-bold italic lg:col-auto lg:row-3`}
       >
         {name}
       </div>
-      <div className="grid grid-cols-[1em_1fr] gap-1 text-[0.85em] lg:col-2 lg:row-1 lg:flex lg:text-[0.95em]">
+      <div className="grid grid-cols-[1.5rem_1fr] gap-1 text-[0.85em] lg:col-2 lg:row-1 lg:flex lg:text-[0.95em]">
         {cards.map((item, index) => (
           <div className="h-[6.75em] w-[5.5em]">
             <PokerCard
