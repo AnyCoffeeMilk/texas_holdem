@@ -150,8 +150,8 @@ export default function Game() {
   const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
   return !player.avatar ? null : (
-    <div className="grid min-h-[100svh] w-[600px] md:w-[680px] lg:w-[1024px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] gap-4 p-8">
-      <div className="col-1 lg:col-[1/3] row-1 flex justify-between">
+    <div className="grid min-h-[100svh] w-[600px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-4 p-8 md:w-[680px] lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto]">
+      <div className="col-1 row-1 flex justify-between lg:col-[1/3]">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
         </ThemeLink>
@@ -159,7 +159,7 @@ export default function Game() {
           RULESETS <SettingsSVG />
         </ThemeLink>
       </div>
-      <div className="container-md row-2 lg:col-2 lg:row-[2/4] flex lg:h-[calc(100svh-8rem-3px)] lg:flex-col gap-6 overflow-y-auto rounded-sm p-4">
+      <div className="container-md row-2 flex gap-6 overflow-auto rounded-sm p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-8rem-3px)] lg:flex-col">
         {opponents.map((item, index) => (
           <Opponent
             key={index}
@@ -179,13 +179,15 @@ export default function Game() {
           />
         ))}
       </div>
-      <div className="container-md flex-center relative col-1 row-3 lg:row-2 rounded-sm">
+      <div className="container-md flex-center relative col-1 row-3 rounded-sm lg:row-2">
         <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-2xl font-bold italic">
           {gameTable.gameText}
         </div>
         <div className="flex-center gap-2">
           {gameTable.cards.map((item, index) => (
-            <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
+            <div className="flex-center h-[6.75em] w-[5.5em]">
+              <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
+            </div>
           ))}
         </div>
         <ThemeBtn
@@ -196,7 +198,7 @@ export default function Game() {
           NEW ROUND
         </ThemeBtn>
       </div>
-      <div className="container-md col-1 row-4 lg:row-3 grid grid-cols-[auto_1fr_1fr] grid-rows-[auto_1fr_auto] gap-2 rounded-sm p-4">
+      <div className="container-md col-1 row-4 grid grid-cols-[auto_1fr_1fr] grid-rows-[auto_1fr_auto] gap-2 rounded-sm p-4 lg:row-3">
         <div className="relative col-1 row-[1/3]">
           <Avatar
             className="h-[121px] w-[110px] md:h-[132px] md:w-[120px] lg:h-[143px] lg:w-[130px]"
@@ -221,7 +223,10 @@ export default function Game() {
         </ChipLabel> */}
         <div className="col-2 row-[2/4] grid grid-cols-[minmax(2rem,1fr)_minmax(110px,1fr)] gap-2">
           {player.cards.map((item, index) => (
-            <div key={index} className="flex-center place-self-center h-[6.75em] w-[5.5em] text-xl">
+            <div
+              key={index}
+              className="flex-center h-[6.75em] w-[5.5em] place-self-center text-xl"
+            >
               <PokerCard rank={item?.rank} suit={item?.suit} />
             </div>
           ))}
