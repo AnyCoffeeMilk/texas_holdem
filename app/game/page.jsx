@@ -150,7 +150,7 @@ export default function Game() {
   const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
   return !player.avatar ? null : (
-    <div className="grid min-h-[100svh] w-[768px] lg:w-[1024px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] gap-4 p-8">
+    <div className="grid min-h-[100svh] w-[600px] md:w-[768px] lg:w-[1024px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] gap-4 p-8">
       <div className="col-1 lg:col-[1/3] row-1 flex justify-between">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
@@ -183,7 +183,7 @@ export default function Game() {
         <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-2xl font-bold italic">
           {gameTable.gameText}
         </div>
-        <div className="flex-centers gap-2">
+        <div className="flex-center gap-2">
           {gameTable.cards.map((item, index) => (
             <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
           ))}
