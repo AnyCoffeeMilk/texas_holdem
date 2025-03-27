@@ -7,6 +7,7 @@
   --shadow-sm: 1.5px 1.5px 0px 1.5px var(--color-dark);
   --shadow-md: 2px 2px 0px 2px var(--color-dark);
   --animate-pop: pop 2s linear infinite;
+  --animate-blink: blink 1.5s linear infinite;
 
   @keyframes pop {
     45%,
@@ -19,6 +20,19 @@
       transform: scale(1.05);
     }
   }
+
+  @keyframes blink {
+    15% {
+      color: var(--color-dark);
+    }
+    25% {
+      color: var(--color-light);
+    }
+  }
+}
+
+@utility container-sm {
+  @apply border-dark mr-[3px] mb-[3px] border-t-2 border-l-2 shadow-sm;
 }
 
 @utility container-sm {
@@ -39,15 +53,15 @@
 }
 
 @utility button-container {
-  @apply flex overflow-hidden active:mt-[1px] active:mr-[2px] active:mb-[2px] active:ml-[1px] active:shadow-xs;
+  @apply container-sm flex cursor-pointer overflow-hidden active:mt-[1px] active:mr-[2px] active:mb-[2px] active:ml-[1px] active:shadow-xs;
   @apply disabled:mt-[1px] disabled:mr-[2px] disabled:mb-[2px] disabled:ml-[1px] disabled:cursor-not-allowed disabled:shadow-xs;
 }
 
 @utility button {
-  @apply flex-1 animate-pop tracking-wider [&>svg]:mb-[1px];
-  @apply not-disabled:group-hover:text-light not-disabled:group-hover:bg-dark not-disabled:group-hover:[&>svg]:text-light;
+  @apply flex-1 tracking-wider [&>svg]:mb-[1px];
+  @apply group-hover:text-light group-hover:bg-dark group-hover:[&>svg]:text-light;
   @apply group-active:[&>svg]:stroke-[0.5];
-  @apply disabled:mt-[1px] disabled:mr-[2px] disabled:mb-[2px] disabled:ml-[1px] disabled:shadow-xs;
+  @apply group-disabled:text-stroke-dark group-disabled:text-light group-disabled:animate-none group-disabled:bg-transparent;
 }
 
 svg {
@@ -60,6 +74,8 @@ main {
 }
 
 body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-dark) transparent;
   font-family: var(--font-prime), Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -73,7 +89,7 @@ body {
 :root {
   --prime-light: #e9cbb1;
   --prime-dark: #2b1e1a;
-  @apply text-sm md:text-base;
+  @apply text-sm lg:text-base;
 }
 
 html,
@@ -85,7 +101,6 @@ body {
 }
 
 button {
-  cursor: pointer;
   outline: inherit;
   font-family: var(--font-prime);
 }

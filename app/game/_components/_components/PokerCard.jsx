@@ -22,9 +22,9 @@ function PokerCard({ rank, suit, isFacedown }) {
   )
 
   return rank === undefined ? (
-    <div className="border-dark bg-light h-[6.25em] w-[5em] rounded-sm border-2" />
+    <div className="border-dark bg-light h-[6.75em] w-[5.5em] rounded-sm border-2" />
   ) : (
-    <div className="h-[6.25em] w-[5em] bg-transparent perspective-[1000px]">
+    <div className="h-[6.75em] w-[5.5em] bg-transparent perspective-[1000px]">
       <div
         className="h-full w-full transition-transform duration-500 transform-3d"
         style={container_style}
