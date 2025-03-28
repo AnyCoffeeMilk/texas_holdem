@@ -161,7 +161,7 @@ export default function Game() {
           RULESETS <SettingsSVG />
         </ThemeLink>
       </div>
-      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-2 sm:gap-6 sm:p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
+      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
         {opponents.map((item, index) => (
           <Opponent
             key={index}
