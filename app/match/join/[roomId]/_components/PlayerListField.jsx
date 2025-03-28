@@ -16,7 +16,7 @@ export default function PlayerListField({ roomId }) {
   }, [])
   
   return (
-    <div className="border-dark grid grid-flow-col grid-cols-2 grid-rows-4 gap-4 rounded-sm border-2 p-4">
+    <div className="border-dark grid grid-flow-col grid-cols-2 grid-rows-[repeat(4,32px)] gap-4 rounded-sm border-2 p-4">
       {playerList.map((item, index) => (
         <div key={index} className="flex text-xl font-extrabold">
           <span className="w-[1.5em]">{index + 1}:</span>

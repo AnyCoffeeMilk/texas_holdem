@@ -32,7 +32,7 @@ export default function JoinRoomField() {
           />
         </div>
       </div>
-      <ThemeBtn onClick={handleClick}>Join Room</ThemeBtn>
+      <ThemeBtn disabled={roomId.length !== 6} onClick={handleClick}>Join Room</ThemeBtn>
     </>
   )
 }
