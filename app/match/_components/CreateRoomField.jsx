@@ -9,7 +9,7 @@ export default function CreateRoomField() {
   const [select, setSelect] = useState(0)
 
   const handleClick = () => {
-    createRoom().then((roomId) => redirect(`/match/${roomId}`))
+    createRoom().then((roomId) => redirect(`/match/create/${roomId}`))
   }
 
   return (
