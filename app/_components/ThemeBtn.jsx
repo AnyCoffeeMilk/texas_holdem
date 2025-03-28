@@ -6,7 +6,7 @@ export default function ThemeBtn({ className, innerClassName, disabled, onClick,
       onClick={onClick}
     >
       <div className={`button rounded-xs px-5 py-2 flex-1 flex-center ${innerClassName}`}>
-        <div className="flex-center animate-pop group-disabled:animate-none">{children}</div>
+        <div className="flex-center animate-pop group-disabled:animate-none uppercase">{children}</div>
       </div>
     </button>
   )

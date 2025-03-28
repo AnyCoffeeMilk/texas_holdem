@@ -1,7 +1,7 @@
 import ThemeLink from '@/app/_components/ThemeLink'
 import GoBackSVG from '@/app/_svgs/GoBackSVG'
 import SettingItem from './_components/SettingItem'
-import SectionTitle from '../_components/SectionTitle'
+import SectionTitle from '../../_components/SectionTitle'
 import PageTitle from '../../_components/PageTitle'
 
 const settings_list = [

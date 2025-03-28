@@ -1,3 +1,5 @@
+"use server";
+
 async function pushData(data) {
     const res = await fetch('/api/message', {
         method: 'POST',

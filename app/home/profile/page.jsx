@@ -15,7 +15,7 @@ import RookSVG from '@/public/avatar/rook.svg'
 import Avatar from '@/app/_components/Avatar'
 import { useRouter } from 'next/navigation'
 import PageTitle from '../../_components/PageTitle'
-import SectionTitle from '../_components/SectionTitle'
+import SectionTitle from '../../_components/SectionTitle'
 
 const avatar_list = [
   { name: 'bishop', src: BishopSVG },
