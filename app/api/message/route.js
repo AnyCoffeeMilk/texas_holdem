@@ -12,7 +12,7 @@ const pusher = new Pusher({
 export async function POST(request) {
 	const { message } = await request.json()
 
-	await pusher.trigger('chat-channel', 'new-message', {
+	await pusher.trigger('chat-channel', 'message', {
 		message,
 	})
 

@@ -6,7 +6,7 @@ import ThemeLink from '@/app/_components/ThemeLink'
 import GoBackSVG from '@/app/_svgs/GoBackSVG'
 import ChipLabel from '@/app/_components/ChipLabel'
 import LoanItem from './_components/LoanItem'
-import PageTitle from '../_components/PageTitle'
+import PageTitle from '../../_components/PageTitle'
 import SectionTitle from '../_components/SectionTitle'
 
 const loan_list = [

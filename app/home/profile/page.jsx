@@ -14,7 +14,7 @@ import QueenSVG from '@/public/avatar/queen.svg'
 import RookSVG from '@/public/avatar/rook.svg'
 import Avatar from '@/app/_components/Avatar'
 import { useRouter } from 'next/navigation'
-import PageTitle from '../_components/PageTitle'
+import PageTitle from '../../_components/PageTitle'
 import SectionTitle from '../_components/SectionTitle'
 
 const avatar_list = [
@@ -51,7 +51,7 @@ export default function Profile() {
   const avatarSVGMap = useMemo(
     () =>
       avatar_list.map((item, index) => (
-        <button className=' justify-self-center' key={index} onClick={() => handleAvatarClick(item.src)}>
+        <button className='cursor-pointer justify-self-center' key={index} onClick={() => handleAvatarClick(item.src)}>
           <Avatar
             className={`h-[96px] w-[80px] p-0 sm:h-[120px] sm:w-[100px] [&>img]:border-none ${item.src.src === playerAvatar?.src ? '' : 'not-hover:border-light'}`}
             src={item.src}

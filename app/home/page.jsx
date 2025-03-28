@@ -11,9 +11,7 @@ import AIMatchSVG from '@/app/_svgs/AIMatchSVG'
 import { read_player_profile } from '@/actions/actions'
 import ThemeLink from '../_components/ThemeLink'
 import GameTitle from './_components/GameTitle'
-import { pushData } from '@/actions/pushData'
-import pusherClient from '@/lib/pusher'
-import PageTitle from './_components/PageTitle'
+import PageTitle from '../_components/PageTitle'
 
 export default function Home() {
   const [playerName, setPlayerName] = useState('Loading...')
@@ -29,14 +27,6 @@ export default function Home() {
       }
     )
   }, [])
-
-  // useEffect(() => {
-  //     var channel = pusherClient.subscribe('my-channel');
-  //     channel.bind('my-event', (data) => {
-  //         alert(JSON.stringify(data));
-  //     });
-  //     pushData({ message: 'testing message' })
-  // }, [])
 
   return !playerAvatar ? null : (
     <div className="m-1 grid gap-4 sm:m-4 sm:w-auto sm:grid-cols-[auto_1fr] sm:grid-rows-[1fr_auto]">
@@ -67,10 +57,10 @@ export default function Home() {
         <GameTitle />
       </div>
       <div className="col-1 row-3 grid gap-2 sm:col-[2/3] sm:row-[2/3]">
-        <ThemeLink href="/game">
+        <ThemeLink href="/match">
           START ONLINE MATCH <OnlineMatchSVG />
         </ThemeLink>
-        <ThemeLink href="/game">
+        <ThemeLink href="/match/bots">
           START AI MATCH <AIMatchSVG />
         </ThemeLink>
         <div className="grid grid-cols-[auto_1fr] gap-2">

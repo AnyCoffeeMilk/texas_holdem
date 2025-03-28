@@ -8,6 +8,7 @@ function Avatar({ className, src, name }) {
         <Image
           className="border-dark bg-light absolute h-full w-full rounded-sm border-2 object-contain py-4"
           src={src}
+          priority
           draggable={false}
           alt={`Avatar of ${name}`}
         />

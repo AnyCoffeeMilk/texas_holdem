@@ -2,13 +2,13 @@
 
 import { useEffect, useRef } from 'react'
 
+import ChipLabel from '@/app/_components/ChipLabel'
+import Avatar from '@/app/_components/Avatar'
+import ThemeBtn from '@/app/_components/ThemeBtn'
+import ThemeLink from '@/app/_components/ThemeLink'
+import GoBackSVG from '@/app/_svgs/GoBackSVG'
+import SettingsSVG from '@/app/_svgs/SettingsSVG'
 import Opponent from './_components/Opponent'
-import ChipLabel from '../_components/ChipLabel'
-import Avatar from '../_components/Avatar'
-import ThemeBtn from '../_components/ThemeBtn'
-import ThemeLink from '../_components/ThemeLink'
-import GoBackSVG from '../_svgs/GoBackSVG'
-import SettingsSVG from '../_svgs/SettingsSVG'
 import PokerCard from './_components/_components/PokerCard'
 
 import {
@@ -20,9 +20,13 @@ import {
 import useGamer from '@/hooks/useGamer'
 import useGameTable from '@/hooks/useGameTable'
 import useTurnHandler from '@/hooks/useTurnHandler'
-import PageTitle from '../home/_components/PageTitle'
+import pusherClient from '@/lib/pusher'
+import { pushData } from '@/actions/pushData'
+import PageTitle from '@/app/_components/PageTitle'
 
-export default function Game() {
+var channel = pusherClient.subscribe('chat-channel')
+
+export default function OnlineGame() {
   const gameTable = useGameTable()
   const player = useGamer()
   const gamerA = useGamer()
@@ -148,6 +152,16 @@ export default function Game() {
     }, 1500)
   }
 
+  const handleClick = () => {
+    pushData({ message: 'testing message' })
+  }
+
+  useEffect(() => {
+    channel.bind('message', (data) => {
+      console.log(JSON.stringify(data))
+    })
+  }, [])
+
   const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
   return !player.avatar ? null : (
@@ -156,21 +170,15 @@ export default function Game() {
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
         </ThemeLink>
-        <PageTitle>Ai Match</PageTitle>
-        <ThemeLink href="/game" className="px-2 py-1">
-          RULESETS <SettingsSVG />
-        </ThemeLink>
+        <PageTitle>Online Match</PageTitle>
       </div>
       <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
         {opponents.map((item, index) => (
           <Opponent
             key={index}
+            info={item}
             inTurn={inTurnGamer?.name === item.name && !gameTable.isNewGame}
             flipCard={!gameTable.isNewGame}
-            avatar={item.avatar}
-            name={item.name}
-            cards={item.cards}
-            bets={item.bets}
             blindTag={
               sbBetsName === item.name
                 ? 'SB'
