@@ -15,7 +15,7 @@ export default function JoinRoomField() {
 
   const handleClick = () => {
     if (roomId.length === 6) {
-      redirect(`/match/${roomId}`)
+      redirect(`/match/join/${roomId}`)
     } else {
       
     }

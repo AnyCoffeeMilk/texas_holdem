@@ -4,7 +4,6 @@ import PageTitle from '@/app/_components/PageTitle'
 
 import SectionTitle from '@/app/_components/SectionTitle'
 import PlayerListField from './_components/PlayerListField'
-import RoomIdField from './_components/RoomIdField'
 
 export default async function Room({ params }) {
   const { roomId } = await params
@@ -19,10 +18,13 @@ export default async function Room({ params }) {
         <PageTitle>Room</PageTitle>
       </div>
       <SectionTitle>Room Id</SectionTitle>
-      <RoomIdField roomId={roomId} />
+      <div className="border-dark flex-center rounded-sm border-2 p-8">
+        <div className="bg-dark text-light rounded-sm px-[1em] py-[0.1em] text-6xl font-extrabold">
+          {roomId}
+        </div>
+      </div>
       <SectionTitle>Players</SectionTitle>
       <PlayerListField roomId={roomId} />
-      <ThemeLink href="/match/online">Start Game</ThemeLink>
     </div>
   )
 }

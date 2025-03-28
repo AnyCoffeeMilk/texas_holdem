@@ -1,7 +1,7 @@
 "use server";
 
-async function pushData(data) {
-    const res = await fetch('/api/message', {
+export async function pushData(data) {
+    const res = await fetch(process.env.HOST_URL + '/api/message', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -11,8 +11,4 @@ async function pushData(data) {
     if (!res.ok) {
         console.error('failed to push data');
     }
-}
-
-export {
-    pushData
 }
