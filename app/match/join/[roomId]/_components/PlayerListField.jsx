@@ -11,18 +11,10 @@ export default function PlayerListField({ roomId }) {
   const [playerList, setPlayerList] = useState([])
 
   useEffect(() => {
-    read_player_profile().then(({player_name}) => {
-      joinRoom(roomId, player_name)
-    })
+    read_player_profile().then(({player_name}) => joinRoom(roomId, player_name))
+    roomChannel.bind(roomId, (data) => setPlayerList(data.playerList))
   }, [])
-
-  useEffect(() => {
-    roomChannel.bind(roomId, (data) => {
-      console.log(data)
-      setPlayerList(data.playerList)
-    })
-  }, [])
-
+  
   return (
     <div className="border-dark grid grid-flow-col grid-cols-2 grid-rows-4 gap-4 rounded-sm border-2 p-4">
       {playerList.map((item, index) => (

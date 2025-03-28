@@ -22,7 +22,6 @@ export default function PlayerListField({ roomId }) {
     joinRoomChannel.bind(roomId, (data) => {
       let tmp = [...playerList]
       tmp.push(data.playerName.trim())
-      console.log("join trigger", tmp)
       setPlayerList(tmp)
       updateRoom(roomId, tmp)
     })
