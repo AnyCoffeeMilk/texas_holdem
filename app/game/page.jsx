@@ -20,6 +20,7 @@ import {
 import useGamer from '@/hooks/useGamer'
 import useGameTable from '@/hooks/useGameTable'
 import useTurnHandler from '@/hooks/useTurnHandler'
+import PageTitle from '../home/_components/PageTitle'
 
 export default function Game() {
   const gameTable = useGameTable()
@@ -150,16 +151,17 @@ export default function Game() {
   const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
   return !player.avatar ? null : (
-    <div className="grid min-h-[calc(100svh-1rem)] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:p-4 lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-8">
+    <div className="grid min-h-[calc(100svh-1rem)] max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:p-4 lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] lg:gap-4">
       <div className="col-1 row-1 flex justify-between lg:col-[1/3]">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
         </ThemeLink>
+        <PageTitle>Ai Match</PageTitle>
         <ThemeLink href="/game" className="px-2 py-1">
           RULESETS <SettingsSVG />
         </ThemeLink>
       </div>
-      <div className="container-sm sm:container-md row-2 flex gap-6 overflow-auto rounded-sm p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-8rem-3px)] lg:flex-col">
+      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-2 sm:gap-6 sm:p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
         {opponents.map((item, index) => (
           <Opponent
             key={index}
@@ -179,11 +181,11 @@ export default function Game() {
           />
         ))}
       </div>
-      <div className="container-sm sm:container-md flex-center relative col-1 row-3 rounded-sm lg:row-2">
+      <div className="container-sm sm:container-md flex-center px-2 sm:px-4 relative col-1 row-3 rounded-sm lg:row-2">
         <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-xl font-bold italic lg:text-2xl">
           {gameTable.gameText}
         </div>
-        <div className="flex-center gap-2 text-lg">
+        <div className="grid grid-cols-[repeat(4,minmax(0,1fr))_1fr] gap-1 sm:flex-center sm:gap-2 text-xl sm:text-lg">
           {gameTable.cards.map((item, index) => (
             <div className="flex-center h-[6.75em] w-[5.5em]">
               <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
@@ -198,7 +200,7 @@ export default function Game() {
           NEW ROUND
         </ThemeBtn>
       </div>
-      <div className="container-sm sm:container-md col-1 row-4 grid grid-cols-[auto_195px_minmax(100px,1fr)] grid-rows-[auto_1fr_auto] gap-2 rounded-sm p-2 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:p-4 lg:row-3">
+      <div className="sm:container-md col-1 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(110px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:row-3">
         <div className="relative col-1 row-[1/3]">
           <Avatar
             className="h-[110px] w-[100px] sm:h-[132px] sm:w-[120px] lg:h-[143px] lg:w-[130px]"
@@ -214,14 +216,14 @@ export default function Game() {
           </div>
         </div>
         <div
-          className={`bg-dark text-light ${!isBtnDisabled ? 'animate-blink' : null} col-1 row-3 rounded-sm text-center text-xl font-bold`}
+          className={`bg-dark text-light ${!isBtnDisabled ? 'animate-blink' : null} col-1 row-3 rounded-sm py-0.5 text-center text-base font-bold sm:text-xl`}
         >
           {player.name}
         </div>
         {/* <ChipLabel className={styles.playerBank} chips={player.bank} digits={5}>
           BANK
         </ChipLabel> */}
-        <div className="col-2 row-[2/4] grid grid-cols-[minmax(0,1fr)_1fr] gap-2 sm:grid-cols-2">
+        <div className="col-2 row-[2/4] grid grid-cols-[minmax(0,1fr)_1fr] gap-1 sm:grid-cols-2 sm:gap-2">
           {player.cards.map((item, index) => (
             <div
               key={index}
@@ -232,18 +234,30 @@ export default function Game() {
           ))}
         </div>
         <div className="col-3 row-[1/4] grid gap-2 sm:text-lg">
-          <ThemeBtn onClick={handleCall} className="[&>div]:py-0" disabled={isBtnDisabled}>
+          <ThemeBtn
+            onClick={handleCall}
+            className="[&>div]:py-0"
+            disabled={isBtnDisabled}
+          >
             {player.bets === top_bets ? 'CHECK' : 'CALL'}
           </ThemeBtn>
-          <ThemeBtn onClick={handleRaise} className="[&>div]:py-0" disabled={isBtnDisabled}>
+          <ThemeBtn
+            onClick={handleRaise}
+            className="[&>div]:py-0"
+            disabled={isBtnDisabled}
+          >
             RAISE
           </ThemeBtn>
-          <ThemeBtn onClick={handleFold} className="[&>div]:py-0"  disabled={isBtnDisabled}>
+          <ThemeBtn
+            onClick={handleFold}
+            className="[&>div]:py-0"
+            disabled={isBtnDisabled}
+          >
             FOLD
           </ThemeBtn>
         </div>
         <ChipLabel
-          className="col-2 row-1 text-lg sm:text-xl"
+          className="col-2 row-1 text-base sm:text-xl [&>span]:px-1"
           chips={player.bets}
           digits={3}
         >
