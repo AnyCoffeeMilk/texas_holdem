@@ -151,7 +151,7 @@ export default function Game() {
   const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
   return !player.avatar ? null : (
-    <div className="grid min-h-[calc(100svh-1rem)] max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:p-4 lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] lg:gap-4">
+    <div className="grid min-h-[calc(100svh-1rem)] max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-4">
       <div className="col-1 row-1 flex justify-between lg:col-[1/3]">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
@@ -181,11 +181,11 @@ export default function Game() {
           />
         ))}
       </div>
-      <div className="container-sm sm:container-md flex-center px-2 sm:px-4 relative col-1 row-3 rounded-sm lg:row-2">
+      <div className="container-sm sm:container-md flex-center relative col-1 row-3 rounded-sm px-2 sm:px-4 lg:row-2">
         <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-xl font-bold italic lg:text-2xl">
           {gameTable.gameText}
         </div>
-        <div className="grid grid-cols-[repeat(4,minmax(0,1fr))_1fr] gap-1 sm:flex-center sm:gap-2 text-xl sm:text-lg">
+        <div className="sm:flex-center grid grid-cols-[repeat(4,minmax(0,1fr))_1fr] gap-1 text-xl sm:gap-2 sm:text-lg">
           {gameTable.cards.map((item, index) => (
             <div className="flex-center h-[6.75em] w-[5.5em]">
               <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
