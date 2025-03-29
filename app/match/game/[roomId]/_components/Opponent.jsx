@@ -1,7 +1,7 @@
-import PokerCard from './_components/PokerCard'
 import ChipLabel from '@/app/_components/ChipLabel'
 import Avatar from '@/app/_components/Avatar'
-import BlindTag from './_components/BlindTag'
+import BlindTag from '@/app/match/_components/BlindTag'
+import PokerCard from '@/app/match/_components/PokerCard'
 
 export default function Opponent({ info, inTurn, flipCard, blindTag }) {
   return (
