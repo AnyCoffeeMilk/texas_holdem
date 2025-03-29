@@ -10,10 +10,10 @@ const pusher = new Pusher({
 })
 
 export async function POST(request) {
-	const { roomId, playerName } = await request.json()
+	const { roomId, name, uuid } = await request.json()
 
 	await pusher.trigger('join-room-channel', roomId, {
-		playerName,
+		name, uuid
 	})
 
 	return NextResponse.json({ success: true })

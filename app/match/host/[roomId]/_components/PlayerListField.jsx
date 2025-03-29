@@ -14,18 +14,22 @@ export default function PlayerListField({ roomId }) {
   const [playerList, setPlayerList] = useState([])
 
   useEffect(() => {
-    read_player_profile().then(({ player_name }) => {
-      setPlayerList([player_name])
+    read_player_profile().then(({ player_name, player_uuid }) => {
+      setPlayerList([{ name: player_name, uuid: player_uuid }])
     })
   }, [])
 
   useEffect(() => {
     joinRoomChannel.unbind(roomId)
     joinRoomChannel.bind(roomId, (data) => {
-      let tmp = [...playerList]
-      tmp.push(data.playerName.trim())
-      setPlayerList(tmp)
-      updateRoom(roomId, tmp)
+      if (
+        !playerList.map((item) => item.uuid).includes(data.playerUUID)
+      ) {
+        let tmp = [...playerList]
+        tmp.push(data)
+        setPlayerList(tmp)
+        updateRoom(roomId, tmp)
+      }
     })
   }, [playerList])
 
@@ -41,10 +45,13 @@ export default function PlayerListField({ roomId }) {
           <span>Loading...</span>
         ) : (
           playerList.map((item, index) => (
-            <div key={index} className="flex items-center text-xl font-extrabold">
+            <div
+              key={index}
+              className="flex items-center text-xl font-extrabold"
+            >
               <span className="w-[1.5em]">{index + 1}:</span>
               <div className="bg-dark text-light w-[180px] rounded-sm py-[0.1em] text-center">
-                {item}
+                {item.name}
               </div>
             </div>
           ))

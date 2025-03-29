@@ -6,14 +6,12 @@ import BlindTag from '@/app/match/_components/BlindTag'
 import PokerCard from '@/app/match/_components/PokerCard'
 import { useEffect, useState } from 'react'
 import useGamer from '@/hooks/useGamer'
-import { getAvatarById } from '@/utils/getAvatarById'
 
 export default function Opponent({ initInfo, inTurn, flipCard, blindTag }) {
   const info = useGamer()
   
-  console.log(info.avatar)
   useEffect(() => {
-    info.setInitInfo(initInfo.name, initInfo.uuid, getAvatarById(initInfo.avatar))
+    info.setInitInfo(initInfo.name, initInfo.uuid, initInfo.avatar)
   }, [])
 
   return (

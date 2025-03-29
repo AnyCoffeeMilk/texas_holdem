@@ -49,11 +49,11 @@ export default function OnlineGame({ roomId }) {
   // Handle Player Join Game
   useEffect(() => {
     read_player_profile().then(
-      ({ player_name, player_avatar, player_bank, player_avatar_id, player_uuid }) => {
+      ({ player_name, player_avatar, player_bank, player_uuid }) => {
         player.setInfo(player_name, player_avatar, player_bank)
-        console.log({ uuid: player_uuid, name: player_name, avatar: player_avatar_id }, 'join')
+        console.log({ uuid: player_uuid, name: player_name, avatar: player_avatar }, 'join')
         setUUID(player_uuid)
-        updatePlayers(roomId, [{ uuid: player_uuid, name: player_name, avatar: player_avatar_id }])
+        updatePlayers(roomId, [{ uuid: player_uuid, name: player_name, avatar: player_avatar }])
       }
     )
     read_opponents_profile().then(([gamer_a, gamer_b, gamer_c]) => {
@@ -76,7 +76,7 @@ export default function OnlineGame({ roomId }) {
         let tmp = [...opponentList]
         tmp.push(...new_opponents)
         setOpponentList(tmp)
-        updatePlayers(roomId, [{ uuid: uuid, name: player.name }, ...tmp])
+        updatePlayers(roomId, [{ uuid: uuid, name: player.name, avatar: player.avatar }, ...tmp])
       }
     })
   }, [opponentList, uuid, player])

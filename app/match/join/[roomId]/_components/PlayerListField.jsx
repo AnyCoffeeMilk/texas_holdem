@@ -14,13 +14,11 @@ export default function PlayerListField({ roomId }) {
 
   useEffect(() => {
     roomChannel.bind(roomId, (data) => setPlayerList(data.playerList))
-    read_player_profile().then(({ player_name }) =>
-      joinRoom(roomId, player_name)
+    read_player_profile().then(({ player_name, player_uuid }) =>
+      joinRoom(roomId, player_name, player_uuid)
     )
     startGameChannel.bind(roomId, () => redirect(`/match/game/${roomId}`))
   }, [])
-
-  console.log(playerList.length)
 
   return (
     <div className="border-dark grid grid-flow-col grid-cols-2 grid-rows-[repeat(4,32px)] gap-4 rounded-sm border-2 p-4">
@@ -31,7 +29,7 @@ export default function PlayerListField({ roomId }) {
           <div key={index} className="flex text-xl font-extrabold">
             <span className="w-[1.5em]">{index + 1}:</span>
             <div className="bg-dark text-light w-[180px] rounded-sm py-[0.1em] text-center">
-              {item}
+              {item.name}
             </div>
           </div>
         ))
