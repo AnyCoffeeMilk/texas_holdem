@@ -5,6 +5,7 @@ import pusherClient from '@/lib/pusher'
 import { read_player_profile } from '@/actions/actions'
 import { updateRoom } from '@/actions/updateRoom'
 import ThemeBtn from '@/app/_components/ThemeBtn'
+import { redirect } from 'next/navigation'
 
 var joinRoomChannel = pusherClient.subscribe('join-room-channel')
 
