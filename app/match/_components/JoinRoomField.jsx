@@ -24,7 +24,7 @@ export default function JoinRoomField() {
   return (
     <>
       <div className="border-dark flex-center rounded-sm border-2 p-8">
-        <div className="bg-dark text-light w-[7em] rounded-sm py-[0.1em] text-6xl font-extrabold">
+        <div className="bg-dark text-light w-[5em] sm:w-[7em] rounded-sm py-[0.1em] text-6xl font-extrabold">
           <input
             className="w-full selection:text-dark selection:bg-light text-center"
             onChange={handleChange}

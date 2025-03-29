@@ -7,7 +7,7 @@ import CreateRoomField from './_components/CreateRoomField'
 
 export default function MatchRoom() {
   return (
-    <div className="container-md grid max-w-[600px] gap-2 rounded-sm p-4 sm:gap-4">
+    <div className="container-md flex-1 grid max-w-[600px] gap-2 rounded-sm p-4 sm:gap-4">
       <div className="flex justify-between">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />

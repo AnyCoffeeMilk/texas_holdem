@@ -16,7 +16,7 @@ export default function RoomIdField({ roomId }) {
   return (
     <div
       onClick={handleClick}
-      className="border-dark flex-center cursor-pointer group flex-col gap-2 rounded-sm border-2 p-8"
+      className="border-dark flex-center cursor-pointer group flex-col gap-2 rounded-sm border-2 p-4 sm:p-8"
     >
       <div className="bg-dark text-light rounded-sm px-[1em] py-[0.1em] text-6xl font-extrabold">
         {roomId}
