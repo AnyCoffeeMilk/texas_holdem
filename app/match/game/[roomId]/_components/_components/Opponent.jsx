@@ -4,11 +4,17 @@ import ChipLabel from '@/app/_components/ChipLabel'
 import Avatar from '@/app/_components/Avatar'
 import BlindTag from '@/app/match/_components/BlindTag'
 import PokerCard from '@/app/match/_components/PokerCard'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useGamer from '@/hooks/useGamer'
+import { getAvatarById } from '@/utils/getAvatarById'
 
-export default function Opponent({ inTurn, flipCard, blindTag }) {
+export default function Opponent({ initInfo, inTurn, flipCard, blindTag }) {
   const info = useGamer()
+  
+  console.log(info.avatar)
+  useEffect(() => {
+    info.setInitInfo(initInfo.name, initInfo.uuid, getAvatarById(initInfo.avatar))
+  }, [])
 
   return (
     <div className="relative grid min-w-[10.25rem] grid-cols-1 grid-rows-[auto_auto_auto] gap-1 lg:grid-cols-[1fr_auto] lg:grid-rows-[1fr_auto_auto]">

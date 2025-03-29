@@ -3,6 +3,7 @@ import { useState } from "react"
 
 const useGamer = () => {
     const [name, setName] = useState()
+    const [uuid, setUUID] = useState()
     const [avatar, setAvatar] = useState()
     const [bank, setBank] = useState()
     const [cards, setCards] = useState([null, null])
@@ -27,6 +28,12 @@ const useGamer = () => {
         },
     }
 
+    const setInitInfo = (initName, initUUID, avatar) => {
+        setName(initName)
+        setUUID(initUUID)
+        setAvatar(avatar)
+    }
+
     const setInfo = (newName, newAvatar, newBank) => {
         setName(newName)
         setAvatar(newAvatar)
@@ -40,7 +47,7 @@ const useGamer = () => {
 
     return {
         name, avatar, cards, bets, bank,
-        setInfo, setBank, setCards, setSB, setBB,
+        setInfo, setBank, setCards, setSB, setBB, setInitInfo,
         gameAction, newRound
     }
 }

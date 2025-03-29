@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import ChipLabel from '@/app/_components/ChipLabel'
 import Avatar from '@/app/_components/Avatar'
@@ -20,14 +20,20 @@ import useGamer from '@/hooks/useGamer'
 import useGameTable from '@/hooks/useGameTable'
 import useTurnHandler from '@/hooks/useTurnHandler'
 import PageTitle from '@/app/_components/PageTitle'
+import pusherClient from '@/lib/pusher'
+import { updatePlayers } from '@/actions/updatePlayers'
+
+var updatePlayersChannel = pusherClient.subscribe('update-players-channel')
 
 export default function OnlineGame({ roomId }) {
   const gameTable = useGameTable()
   const player = useGamer()
+  const [uuid, setUUID] = useState('')
   const gamerA = useGamer()
   const gamerB = useGamer()
   const gamerC = useGamer()
   const opponents = [gamerA, gamerB, gamerC]
+  const [opponentList, setOpponentList] = useState([])
 
   const {
     sbBetsName,
@@ -40,10 +46,14 @@ export default function OnlineGame({ roomId }) {
 
   const timeoutBin = useRef(null)
 
+  // Handle Player Join Game
   useEffect(() => {
     read_player_profile().then(
-      ({ player_name, player_avatar, player_bank }) => {
+      ({ player_name, player_avatar, player_bank, player_avatar_id, player_uuid }) => {
         player.setInfo(player_name, player_avatar, player_bank)
+        console.log({ uuid: player_uuid, name: player_name, avatar: player_avatar_id }, 'join')
+        setUUID(player_uuid)
+        updatePlayers(roomId, [{ uuid: player_uuid, name: player_name, avatar: player_avatar_id }])
       }
     )
     read_opponents_profile().then(([gamer_a, gamer_b, gamer_c]) => {
@@ -52,6 +62,24 @@ export default function OnlineGame({ roomId }) {
       gamerC.setInfo(gamer_c.name, gamer_c.avatar, gamer_c.bank)
     })
   }, [])
+
+  // Handle Opponents Join Game
+  useEffect(() => {
+    updatePlayersChannel.unbind(roomId)
+    updatePlayersChannel.bind(roomId, (data) => {
+      const new_opponents = data.playerList.filter(
+        (item) =>
+          !opponentList.map((opponent) => opponent.uuid).includes(item.uuid) &&
+          item.uuid !== uuid
+      )
+      if (new_opponents.length > 0) {
+        let tmp = [...opponentList]
+        tmp.push(...new_opponents)
+        setOpponentList(tmp)
+        updatePlayers(roomId, [{ uuid: uuid, name: player.name }, ...tmp])
+      }
+    })
+  }, [opponentList, uuid, player])
 
   const top_bets = Math.max(
     ...[...opponents, player].map((gamer) => gamer.bets)
@@ -120,11 +148,11 @@ export default function OnlineGame({ roomId }) {
         </ThemeLink>
         <PageTitle>Online Match</PageTitle>
       </div>
-      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
-        {opponents.map((item, index) => (
+      <div className="sm:container-md row-2 sm:min-h-[172px] lg:min-w-[320px] flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
+        {opponentList.length === 0 ? <span>Loading...</span> : opponentList.map((item, index) => (
           <Opponent
             key={index}
-            info={item}
+            initInfo={item}
             inTurn={inTurnGamer?.name === item.name && !gameTable.isNewGame}
             flipCard={!gameTable.isNewGame}
             blindTag={

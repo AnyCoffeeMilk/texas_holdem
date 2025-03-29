@@ -7,6 +7,7 @@ import KnightSVG from "@/public/avatar/knight.svg";
 import PawnSVG from "@/public/avatar/pawn.svg";
 import QueenSVG from "@/public/avatar/queen.svg";
 import RookSVG from "@/public/avatar/rook.svg";
+import { randomUUID } from "crypto";
 
 const avatar_dict = {
     'bishop': BishopSVG,
@@ -45,12 +46,17 @@ async function read_player_profile() {
     if (!cookieStore.has('player_bank')) {
         cookieStore.set('player_bank', '100')
     }
+    if (!cookieStore.has('player_uuid')) {
+        cookieStore.set('player_uuid', randomUUID())
+    }
 
     const player_name = cookieStore.get('player_name').value
     const player_avatar = avatar_dict[cookieStore.get('player_avatar').value]
     const player_bank = parseInt(cookieStore.get('player_bank').value)
+    const player_uuid = cookieStore.get('player_uuid').value
+    const player_avatar_id = cookieStore.get('player_avatar').value
 
-    return { player_name, player_avatar, player_bank }
+    return { player_name, player_avatar, player_bank, player_avatar_id, player_uuid }
 }
 
 async function add_bank (amount) {
