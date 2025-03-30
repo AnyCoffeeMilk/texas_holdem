@@ -7,8 +7,8 @@ const font = Tektur({
 })
 
 export const metadata = {
-    title: "Texas Holdem Online",
-    description: "Play Texas Holdem online",
+    title: "Texas Hold'em Online",
+    description: "Play Texas Hold'em online",
 };
 
 export default function RootLayout({ children }) {

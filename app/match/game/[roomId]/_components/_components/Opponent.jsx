@@ -5,14 +5,20 @@ import Avatar from '@/app/_components/Avatar'
 import BlindTag from '@/app/match/_components/BlindTag'
 import PokerCard from '@/app/match/_components/PokerCard'
 import { useEffect, useState } from 'react'
-import useGamer from '@/hooks/useGamer'
+import useOnlineGamer from '@/hooks/useOnlineGamer'
 
-export default function Opponent({ initInfo, inTurn, flipCard, blindTag }) {
-  const info = useGamer()
+export default function Opponent({ initInfo, joinCallback, inTurn, flipCard, blindTag }) {
+  const info = useOnlineGamer()
   
   useEffect(() => {
     info.setInitInfo(initInfo.name, initInfo.uuid, initInfo.avatar)
   }, [])
+  
+  useEffect(() => {
+    if (info.uuid !== undefined) {
+      joinCallback(info)
+    }
+  }, [info.uuid])
 
   return (
     <div className="relative grid min-w-[10.25rem] grid-cols-1 grid-rows-[auto_auto_auto] gap-1 lg:grid-cols-[1fr_auto] lg:grid-rows-[1fr_auto_auto]">

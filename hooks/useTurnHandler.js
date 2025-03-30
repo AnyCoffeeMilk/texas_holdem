@@ -100,7 +100,7 @@ const useTurnHandler = (gamers_list, gameTable) => {
 
                 timeoutBin.current = setTimeout(() => {
                     setTurnQueue(queue_tmp)
-                    setTurnCounter(1)
+                    setTurnCounter(0)
                 }, 1500)
                 break
             case 2: // Center Draw 3 Cards State

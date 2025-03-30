@@ -182,8 +182,8 @@ export default function BotsGame() {
         </div>
         <div className="sm:flex-center grid grid-cols-[repeat(4,minmax(0,1fr))_1fr] gap-1 text-xl sm:gap-2 sm:text-lg">
           {gameTable.cards.map((item, index) => (
-            <div className="flex-center h-[6.75em] w-[5.5em]">
-              <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
+            <div key={index} className="flex-center h-[6.75em] w-[5.5em]">
+              <PokerCard rank={item?.rank} suit={item?.suit} />
             </div>
           ))}
         </div>
