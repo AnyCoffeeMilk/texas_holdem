@@ -150,7 +150,7 @@ export default function BotsGame() {
   const isBtnDisabled = inTurnGamer?.name !== player.name || gameTable.noAction
 
   return !player.avatar ? null : (
-    <div className="grid min-h-[calc(100svh-1rem)] max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:w-[1024px] lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-4">
+    <div className="grid min-h-[calc(100svh-1rem)] max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:w-[1024px] lg:grid-cols-[auto_1fr] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-4">
       <div className="col-1 row-1 flex justify-between lg:col-[1/3]">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
@@ -159,7 +159,7 @@ export default function BotsGame() {
           AI Match
         </PageTitle>
       </div>
-      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-2 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
+      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-1 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
         {opponents.map((item, index) => (
           <Opponent
             key={index}
@@ -176,7 +176,7 @@ export default function BotsGame() {
           />
         ))}
       </div>
-      <div className="container-sm sm:container-md flex-center relative col-1 row-3 rounded-sm px-2 sm:px-4 lg:row-2">
+      <div className="container-sm lg:col-2 sm:container-md flex-center relative col-1 row-3 rounded-sm px-2 sm:px-4 lg:row-2">
         <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-xl font-bold italic lg:text-2xl">
           {gameTable.gameText}
         </div>
@@ -195,7 +195,7 @@ export default function BotsGame() {
           NEW ROUND
         </ThemeBtn>
       </div>
-      <div className="sm:container-md col-1 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(110px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:row-3">
+      <div className="sm:container-md col-1 lg:col-2 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(110px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:row-3">
         <div className="relative col-1 row-[1/3]">
           <Avatar
             className="h-[110px] w-[100px] sm:h-[132px] sm:w-[120px] lg:h-[143px] lg:w-[130px]"
