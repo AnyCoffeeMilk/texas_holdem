@@ -35,10 +35,6 @@
   @apply border-dark mr-[3px] mb-[3px] border-t-2 border-l-2 shadow-sm;
 }
 
-@utility container-sm {
-  @apply border-dark mr-[3px] mb-[3px] border-t-2 border-l-2 shadow-sm;
-}
-
 @utility container-md {
   @apply border-dark mr-1 mb-1 border-t-2 border-l-2 shadow-md;
 }

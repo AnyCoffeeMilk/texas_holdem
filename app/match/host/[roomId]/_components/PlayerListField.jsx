@@ -1,14 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import pusherClient from '@/lib/pusher'
 import { read_player_profile } from '@/actions/actions'
-import { updateRoom } from '@/actions/updateRoom'
 import ThemeBtn from '@/app/_components/ThemeBtn'
 import { redirect } from 'next/navigation'
-import { startGame } from '@/actions/startGame'
-
-var joinRoomChannel = pusherClient.subscribe('join-room-channel')
 
 export default function PlayerListField({ roomId }) {
   const [playerList, setPlayerList] = useState([])
@@ -20,17 +15,7 @@ export default function PlayerListField({ roomId }) {
   }, [])
 
   useEffect(() => {
-    joinRoomChannel.unbind(roomId)
-    joinRoomChannel.bind(roomId, (data) => {
-      if (
-        !playerList.map((item) => item.uuid).includes(data.playerUUID)
-      ) {
-        let tmp = [...playerList]
-        tmp.push(data)
-        setPlayerList(tmp)
-        updateRoom(roomId, tmp)
-      }
-    })
+
   }, [playerList])
 
   const handleClick = () => {

@@ -21,7 +21,6 @@ import useGameTable from '@/hooks/useGameTable';
 import useOnlineTurnHandler from '@/hooks/useOnlineTurnHandler';
 import PageTitle from '@/app/_components/PageTitle';
 import pusherClient from '@/lib/pusher';
-import { updatePlayers } from '@/actions/updatePlayers';
 
 var updatePlayersChannel = pusherClient.subscribe('update-players-channel');
 
