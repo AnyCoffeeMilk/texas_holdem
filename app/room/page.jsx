@@ -19,8 +19,8 @@ export default function MatchRoom() {
   const [clicked, setClicked] = useState(false);
 
   const handleJoinClick = () => {
-    read_player_profile().then(({ player_name, player_uuid }) => {
-      socket.emit("join-room", roomId, player_uuid, player_name, (status) => {
+    read_player_profile().then(({ player_name, player_avatar_id, player_uuid }) => {
+      socket.emit("join-room", roomId, player_uuid, player_name, player_avatar_id, (status) => {
         if (status === 200) {
           redirect(`/room/${roomId}`);
         } else {
@@ -32,8 +32,8 @@ export default function MatchRoom() {
 
   const handleCreateClick = () => {
     setClicked(true);
-    read_player_profile().then(({ player_name, player_uuid }) => {
-      socket.emit("create-room", player_uuid, player_name, (status, roomId) => {
+    read_player_profile().then(({ player_name, player_avatar_id, player_uuid }) => {
+      socket.emit("create-room", player_uuid, player_name, player_avatar_id, (status, roomId) => {
         if (status === 201) {
           redirect(`/room/${roomId}`);
         } else {

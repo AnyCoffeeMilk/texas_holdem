@@ -1,22 +1,19 @@
-"use client";
-
 import ChipLabel from "@/app/_components/ChipLabel";
 import Avatar from "@/app/_components/Avatar";
 import BlindTag from "@/app/_components/BlindTag";
 import PokerCard from "@/app/_components/PokerCard";
 import { useEffect, useState } from "react";
 import useOnlineGamer from "@/hooks/useOnlineGamer";
+import { getAvatarById } from "@/utils/getAvatarById";
 
 export default function Opponent({ initInfo, inTurn, flipCard, blindTag }) {
   const info = useOnlineGamer();
 
   useEffect(() => {
-    info.setInitInfo(initInfo.name, initInfo.uuid, initInfo.avatar);
+    info.setInitInfo(initInfo.username, initInfo.uuid, getAvatarById(initInfo.avatarId));
   }, []);
 
-  useEffect(() => {
-
-  }, [info.uuid]);
+  useEffect(() => {}, [info.uuid]);
 
   return (
     <div className="relative grid min-w-[10.25rem] grid-cols-1 grid-rows-[auto_auto_auto] gap-1 lg:grid-cols-[1fr_auto] lg:grid-rows-[1fr_auto_auto]">
@@ -36,20 +33,11 @@ export default function Opponent({ initInfo, inTurn, flipCard, blindTag }) {
       <div className="grid grid-cols-[1.5rem_1fr] gap-1 text-[0.7em] sm:text-[0.81em] lg:col-2 lg:row-1 lg:flex lg:text-[0.98em]">
         {info.cards.map((item, index) => (
           <div key={index} className="h-[6.75em] w-[5.5em]">
-            <PokerCard
-              key={index}
-              rank={item?.rank}
-              suit={item?.suit}
-              isFacedown={flipCard}
-            />
+            <PokerCard key={index} rank={item?.rank} suit={item?.suit} isFacedown={flipCard} />
           </div>
         ))}
       </div>
-      <ChipLabel
-        className="col-[1/3] row-3 sm:text-lg lg:col-2 lg:row-[2/4]"
-        chips={info.bets}
-        digits={3}
-      >
+      <ChipLabel className="col-[1/3] row-3 sm:text-lg lg:col-2 lg:row-[2/4]" chips={info.bets} digits={3}>
         BETS
       </ChipLabel>
     </div>

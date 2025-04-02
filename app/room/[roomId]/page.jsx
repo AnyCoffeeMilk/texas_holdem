@@ -24,6 +24,7 @@ export default function Room() {
   useEffect(() => {
     socket.off("update-room");
     socket.on("update-room", (players) => setPlayerList(players));
+    socket.off("start-game");
     socket.on("start-game", () => redirect(`/game/${roomId}`));
     read_player_profile().then(({ player_uuid }) =>
       socket.emit("get-room-players", roomId, (status, players, hostUUID) => {
