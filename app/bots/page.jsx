@@ -8,7 +8,7 @@ import ThemeBtn from '@/app/_components/ThemeBtn'
 import ThemeLink from '@/app/_components/ThemeLink'
 import GoBackSVG from '@/app/_svgs/GoBackSVG'
 import Opponent from './_components/Opponent'
-import PokerCard from '@/app/match/_components/PokerCard'
+import PokerCard from '@/app/_components/PokerCard'
 
 import {
    read_player_profile,

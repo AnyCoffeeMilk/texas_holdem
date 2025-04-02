@@ -1,30 +1,28 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-
-import ChipLabel from '@/app/_components/ChipLabel';
-import Avatar from '@/app/_components/Avatar';
-import ThemeBtn from '@/app/_components/ThemeBtn';
-import ThemeLink from '@/app/_components/ThemeLink';
-import GoBackSVG from '@/app/_svgs/GoBackSVG';
-import Opponent from './_components/Opponent';
-import PokerCard from '@/app/match/_components/PokerCard';
-
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "next/navigation";
+import ChipLabel from "@/app/_components/ChipLabel";
+import Avatar from "@/app/_components/Avatar";
+import ThemeBtn from "@/app/_components/ThemeBtn";
+import ThemeLink from "@/app/_components/ThemeLink";
+import GoBackSVG from "@/app/_svgs/GoBackSVG";
+import Opponent from "./_components/Opponent";
+import PokerCard from "@/app/_components/PokerCard";
 import {
   read_player_profile,
   read_opponents_profile,
   get_opponent_action,
   add_bank,
-} from '@/actions/actions';
-import useOnlineGamer from '@/hooks/useOnlineGamer';
-import useGameTable from '@/hooks/useGameTable';
-import useOnlineTurnHandler from '@/hooks/useOnlineTurnHandler';
-import PageTitle from '@/app/_components/PageTitle';
-import pusherClient from '@/lib/pusher';
+} from "@/actions/actions";
+import useOnlineGamer from "@/hooks/useOnlineGamer";
+import useGameTable from "@/hooks/useGameTable";
+import useOnlineTurnHandler from "@/hooks/useOnlineTurnHandler";
+import PageTitle from "@/app/_components/PageTitle";
 
-var updatePlayersChannel = pusherClient.subscribe('update-players-channel');
+export default function OnlineGame() {
+  const { roomId } = useParams();
 
-export default function OnlineGame({ roomId }) {
   const gameTable = useGameTable();
   const player = useOnlineGamer();
   const gamerA = useOnlineGamer();
@@ -50,13 +48,6 @@ export default function OnlineGame({ roomId }) {
     read_player_profile().then(
       ({ player_name, player_avatar, player_bank, player_uuid }) => {
         player.setInitInfo(player_name, player_uuid, player_avatar);
-        updatePlayers(roomId, [
-          {
-            uuid: player_uuid,
-            name: player_name,
-            avatar: player_avatar,
-          },
-        ]);
       }
     );
     read_opponents_profile().then(([gamer_a, gamer_b, gamer_c]) => {
@@ -68,31 +59,11 @@ export default function OnlineGame({ roomId }) {
 
   // Handle Opponents Join Game
   useEffect(() => {
-    updatePlayersChannel.unbind(roomId);
-    updatePlayersChannel.bind(roomId, (data) => {
-      const new_opponents = data.playerList.filter(
-        (item) =>
-          !opponentList.map((opponent) => opponent.uuid).includes(item.uuid) &&
-          item.uuid !== player.uuid
-      );
-      if (new_opponents.length > 0) {
-        let tmp = [...opponentList];
-        tmp.push(...new_opponents);
-        setOpponentList(tmp);
-        updatePlayers(roomId, [
-          { uuid: player.uuid, name: player.name, avatar: player.avatar },
-          ...tmp,
-        ]);
-      }
-    });
+
   }, [opponentList, player.uuid, player]);
 
-  const handleJoinCallback = (playerObject) => addPlayer(playerObject);
-
   useEffect(() => {
-    if (player.uuid !== undefined) {
-      addPlayer(player);
-    }
+
   }, [player.uuid]);
 
   const top_bets = Math.max(
@@ -170,14 +141,13 @@ export default function OnlineGame({ roomId }) {
             <Opponent
               key={index}
               initInfo={item}
-              joinCallback={handleJoinCallback}
               inTurn={inTurnGamer?.name === item.name && !gameTable.isNewGame}
               flipCard={!gameTable.isNewGame}
               blindTag={
                 sbBetsName === item.name
-                  ? 'SB'
+                  ? "SB"
                   : bbBetsName === item.name
-                    ? 'BB'
+                    ? "BB"
                     : null
               }
             />
@@ -212,14 +182,14 @@ export default function OnlineGame({ roomId }) {
           />
           <div className="text-light bg-dark border-light absolute -top-1 -left-2 rotate-z-[-20deg] rounded-sm border-2 px-2 font-bold">
             {sbBetsName === player.name
-              ? 'SB'
+              ? "SB"
               : bbBetsName === player.name
-                ? 'BB'
+                ? "BB"
                 : null}
           </div>
         </div>
         <div
-          className={`bg-dark text-light ${!isBtnDisabled ? 'animate-blink' : null} col-1 row-3 rounded-sm py-0.5 text-center text-base font-bold sm:text-xl`}
+          className={`bg-dark text-light ${!isBtnDisabled ? "animate-blink" : null} col-1 row-3 rounded-sm py-0.5 text-center text-base font-bold sm:text-xl`}
         >
           {player.name}
         </div>
@@ -242,7 +212,7 @@ export default function OnlineGame({ roomId }) {
             className="[&>div]:py-0"
             disabled={isBtnDisabled}
           >
-            {player.bets === top_bets ? 'CHECK' : 'CALL'}
+            {player.bets === top_bets ? "CHECK" : "CALL"}
           </ThemeBtn>
           <ThemeBtn
             onClick={handleRaise}

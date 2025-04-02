@@ -18,54 +18,53 @@ export default function MatchRoom() {
   const [roomId, setRoomId] = useState("");
   const [clicked, setClicked] = useState(false);
 
-  const handleClick = () => {
+  const handleJoinClick = () => {
     read_player_profile().then(({ player_name, player_uuid }) => {
-      socket.emit("joinRoom", roomId, player_uuid, player_name, (res) => {
-        if (res === 0) {
-          console.log("Room not found.");
+      socket.emit("join-room", roomId, player_uuid, player_name, (status) => {
+        if (status === 200) {
+          redirect(`/room/${roomId}`);
+        } else {
           setClicked(false);
-        } else if (res === -1) {
-          console.log("Room Id invalid.");
-          setClicked(false);
-        } else if (res === 1) {
-          console.log("Successfully joined room.");
-          redirect(`/match/room/${roomId}`);
         }
       });
     });
   };
 
-  const handleCreateRoom = () => {
+  const handleCreateClick = () => {
     setClicked(true);
     read_player_profile().then(({ player_name, player_uuid }) => {
-      socket.emit("createRoom", player_uuid, player_name, (roomId) => {
-        redirect(`/match/room/${roomId}`);
+      socket.emit("create-room", player_uuid, player_name, (status, roomId) => {
+        if (status === 201) {
+          redirect(`/room/${roomId}`);
+        } else {
+          setClicked(false);
+        }
       });
     });
   };
 
   return (
-    <div className="container-md grid max-w-[600px] flex-1 gap-8 rounded-sm p-4">
+    <div className="container-md grid max-w-[600px] flex-1 gap-4 rounded-sm p-4">
       <div className="flex justify-between">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
         </ThemeLink>
         <PageTitle>Match</PageTitle>
       </div>
-      <div className="grid gap-4">
+      <div className="grid gap-2">
         <SectionTitle>Join Room by Id</SectionTitle>
         <JoinInputBox value={roomId} onChange={setRoomId} />
         <ThemeBtn
           disabled={roomId.length !== 6 || clicked}
-          onClick={handleClick}
+          onClick={handleJoinClick}
         >
           Join Room
         </ThemeBtn>
       </div>
-      <div className="grid gap-4">
+      <div className="grid gap-2">
         <SectionTitle>Create A New Room</SectionTitle>
         <CreateOption />
-        <ThemeBtn disabled={clicked} onClick={handleCreateRoom}>
+        <ThemeBtn disabled={clicked} onClick={handleCreateClick}>
           Create Room
         </ThemeBtn>
       </div>
