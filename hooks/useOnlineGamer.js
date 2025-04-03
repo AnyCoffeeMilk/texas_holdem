@@ -47,7 +47,7 @@ const useOnlineGamer = () => {
 
     return {
         name, avatar, cards, bets, bank, uuid,
-        setInfo, setBank, setCards, setSB, setBB, setInitInfo,
+        setInfo, setBank, setCards, setSB, setBB, setInitInfo, setBets,
         gameAction, newRound
     }
 }

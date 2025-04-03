@@ -23,13 +23,16 @@ export default function OnlineGame() {
 
   const gameTable = useGameTable();
   const player = useOnlineGamer();
-  const [btnDisabled, setBtnDisabled] = useState(true);
 
   const [isHost, setIsHost] = useState(false);
-  const [hideNewGame, setHideNewGame] = useState(false)
+  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [hideNewGame, setHideNewGame] = useState(false);
   const [opponents, setOpponents] = useState([]);
+  const [gameState, setGameState] = useState(0);
+  const [gameText, setGameText] = useState("");
   const [bbUUID, setBbUUID] = useState("");
   const [sbUUID, setSbUUID] = useState("");
+  const [inTurnUUID, setInTurnUUID] = useState("");
 
   useEffect(() => {
     read_player_profile().then(({ player_name, player_avatar, player_uuid }) => {
@@ -44,25 +47,95 @@ export default function OnlineGame() {
           redirect("/room");
         }
       });
+      socket.off("disconnected");
+      socket.on("disconnected", () => redirect("/room"));
+      socket.off("update-public-state");
+      socket.on("update-public-state", (newState) => {
+        setGameState(newState.gameState);
+        setBbUUID(newState.bbUUID);
+        setSbUUID(newState.sbUUID);
+        setInTurnUUID(newState.inTurnUUID);
+        setOpponents(newState.players.filter((item) => item.uuid !== player_uuid));
+        player.setBets(newState.players.find((item) => item.uuid === player_uuid).bets);
+      });
+      socket.off("update-private-state");
+      socket.on("update-private-state", (newState) => {
+        console.log(newState);
+        player.setCards(newState.cards);
+      });
     });
   }, []);
 
-  const handleCall = () => {};
+  useEffect(() => {
+    if (inTurnUUID === player.uuid) {
+      setBtnDisabled(false);
+    }
+  }, [inTurnUUID, player.uuid]);
 
-  const handleRaise = () => {};
+  useEffect(() => {
+    switch (gameState) {
+      case 0:
+        setGameText(isHost ? "Press NEW ROUND to start." : "Waiting for game to start.");
+        break;
+      case 1:
+        setGameText(
+          sbUUID === player.uuid
+            ? "You are the Small Blind."
+            : `${opponents.find((item) => item.uuid === sbUUID).username} is the Small Blind.`
+        );
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+    }
+  }, [gameState, isHost]);
 
-  const handleFold = () => {};
+  const handleCall = () => {
+    setBtnDisabled(true);
+    socket.emit("call-action", roomId, player.uuid, (status) => {
+      if (status === 404) {
+        setBtnDisabled(false);
+      }
+    });
+  };
+
+  const handleRaise = () => {
+    setBtnDisabled(true);
+    socket.emit("raise-action", roomId, player.uuid, (status) => {
+      if (status === 404) {
+        setBtnDisabled(false);
+      }
+    });
+  };
+
+  const handleFold = () => {
+    setBtnDisabled(true);
+    socket.emit("fold-action", roomId, player.uuid, (status) => {
+      if (status === 200) {
+        player.setCards([null, null]);
+      } else {
+        setBtnDisabled(false);
+      }
+    });
+  };
 
   const handleNewRound = () => {
     setHideNewGame(true);
     socket.emit("new-round", roomId, (status) => {
-      if (status ===  200) {
-
-      } else {
+      if (status === 404) {
         setHideNewGame(false);
       }
     });
-  }
+  };
 
   return !player.avatar ? null : (
     <div className="grid min-h-[calc(100svh-1rem)] max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:w-[1024px] lg:grid-cols-[auto_1fr] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-4">
@@ -72,14 +145,15 @@ export default function OnlineGame() {
         </ThemeLink>
         <PageTitle>Online Match</PageTitle>
       </div>
-      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:min-h-[172px] sm:gap-6 sm:p-4 lg:col-1 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:min-w-[320px] lg:flex-col">
+      <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-1 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
         {opponents.length === 0 ? (
           <span>Loading...</span>
         ) : (
           opponents.map((item, index) => (
             <Opponent
               key={index}
-              initInfo={item}
+              info={item}
+              inTurn={inTurnUUID === item.uuid}
               blindTag={sbUUID === item.uuid ? "SB" : bbUUID === item.uuid ? "BB" : null}
             />
           ))
@@ -87,7 +161,7 @@ export default function OnlineGame() {
       </div>
       <div className="container-sm sm:container-md flex-center relative col-1 row-3 rounded-sm px-2 sm:px-4 lg:col-2 lg:row-2">
         <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-xl font-bold italic lg:text-2xl">
-          {gameTable.gameText}
+          {gameText}
         </div>
         <div className="sm:flex-center grid grid-cols-[repeat(4,minmax(0,1fr))_1fr] gap-1 text-xl sm:gap-2 sm:text-lg">
           {gameTable.cards.map((item, index) => (

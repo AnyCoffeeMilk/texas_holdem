@@ -13,7 +13,7 @@ import PawnSVG from '@/public/avatar/pawn.svg'
 import QueenSVG from '@/public/avatar/queen.svg'
 import RookSVG from '@/public/avatar/rook.svg'
 import Avatar from '@/app/_components/Avatar'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import PageTitle from '../../_components/PageTitle'
 import SectionTitle from '../../_components/SectionTitle'
 
@@ -29,7 +29,6 @@ const avatar_list = [
 export default function Profile() {
   const [playerName, setPlayerName] = useState('Loading...')
   const [playerAvatar, setPlayerAvatar] = useState()
-  const router = useRouter()
 
   useEffect(() => {
     read_player_profile().then(({ player_name, player_avatar }) => {
@@ -40,7 +39,7 @@ export default function Profile() {
 
   const handleAvatarClick = (src) => setPlayerAvatar(src)
   const handleSave = () => {
-    set_player_profile(playerName, playerAvatar, null).then(() => router.back())
+    set_player_profile(playerName, playerAvatar, null).then(() => redirect("/home"))
   }
   const handleNameChange = (e) => {
     if (e.target.value.length <= 9) {

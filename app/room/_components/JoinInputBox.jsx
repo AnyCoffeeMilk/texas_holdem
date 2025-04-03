@@ -10,7 +10,6 @@ export default function JoinInputBox({ value, onChange }) {
   const handleClick = () => {
     clearTimeout(timeoutRef.current);
     navigator.clipboard.readText().then((text) => {
-      console.log(isRoomIdValid(text));
       if (isRoomIdValid(text)) {
         onChange(text);
         setCopied(true);

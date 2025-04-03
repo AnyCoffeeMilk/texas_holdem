@@ -6,7 +6,7 @@ function Avatar({ className, src, name }) {
     () =>
       src === undefined ? null : (
         <Image
-          className="border-dark bg-light absolute h-full w-full rounded-sm border-2 object-contain py-4"
+          className="border-dark bg-light absolute h-full w-full rounded-sm border-2 object-contain py-[10%]"
           src={src}
           priority
           draggable={false}
