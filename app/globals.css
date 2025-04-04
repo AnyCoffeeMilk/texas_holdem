@@ -24,9 +24,11 @@
   @keyframes blink {
     15% {
       color: var(--color-dark);
+      transform: translateY(-3px);
     }
     25% {
       color: var(--color-light);
+      transform: translateY(0);
     }
   }
 }

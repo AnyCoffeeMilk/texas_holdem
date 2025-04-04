@@ -30,9 +30,11 @@ export default function OnlineGame() {
   const [opponents, setOpponents] = useState([]);
   const [gameState, setGameState] = useState(0);
   const [gameText, setGameText] = useState("");
+  const [centerCards, setCenterCards] = useState([]);
   const [bbUUID, setBbUUID] = useState("");
   const [sbUUID, setSbUUID] = useState("");
   const [inTurnUUID, setInTurnUUID] = useState("");
+  const [winnerUUIDs, setWinnerUUIDs] = useState([]);
 
   useEffect(() => {
     read_player_profile().then(({ player_name, player_avatar, player_uuid }) => {
@@ -55,22 +57,20 @@ export default function OnlineGame() {
         setBbUUID(newState.bbUUID);
         setSbUUID(newState.sbUUID);
         setInTurnUUID(newState.inTurnUUID);
+        setCenterCards(newState.centerCards);
         setOpponents(newState.players.filter((item) => item.uuid !== player_uuid));
+        setWinnerUUIDs(newState.winnerUUIDs);
         player.setBets(newState.players.find((item) => item.uuid === player_uuid).bets);
+        if (newState.inTurnUUID === player_uuid) {
+          setBtnDisabled(false);
+        }
       });
       socket.off("update-private-state");
       socket.on("update-private-state", (newState) => {
-        console.log(newState);
         player.setCards(newState.cards);
       });
     });
   }, []);
-
-  useEffect(() => {
-    if (inTurnUUID === player.uuid) {
-      setBtnDisabled(false);
-    }
-  }, [inTurnUUID, player.uuid]);
 
   useEffect(() => {
     switch (gameState) {
@@ -85,19 +85,36 @@ export default function OnlineGame() {
         );
         break;
       case 2:
+        setGameText(
+          inTurnUUID === player.uuid
+            ? "It's your turn now."
+            : `${opponents.find((item) => item.uuid === inTurnUUID).username}'s turn.`
+        );
         break;
       case 3:
-        break;
-      case 4:
-        break;
-      case 5:
-        break;
-      case 6:
-        break;
-      case 7:
+        setHideNewGame(false);
+        if (winnerUUIDs.length <= 1) {
+          setGameText(
+            winnerUUIDs[0] === player.uuid
+              ? "You are the winner!"
+              : `${opponents.find((item) => item.uuid === winnerUUIDs[0]).username} is the winner!`
+          );
+        } else {
+          setGameText(
+            winnerUUIDs.includes(player.uuid)
+              ? `You, ${opponents
+                  .filter((item) => winnerUUIDs.includes(item.uuid))
+                  .map((item) => item.username)
+                  .join(", ")} are the winners!`
+              : `${opponents
+                  .filter((item) => winnerUUIDs.includes(item.uuid))
+                  .map((item) => item.username)
+                  .join(", ")} are the winners!`
+          );
+        }
         break;
     }
-  }, [gameState, isHost]);
+  }, [gameState, isHost, sbUUID, inTurnUUID, winnerUUIDs]);
 
   const handleCall = () => {
     setBtnDisabled(true);
@@ -153,7 +170,8 @@ export default function OnlineGame() {
             <Opponent
               key={index}
               info={item}
-              inTurn={inTurnUUID === item.uuid}
+              isBlinking={inTurnUUID === item.uuid || winnerUUIDs.includes(item.uuid)}
+              flipCard={winnerUUIDs.length === 0}
               blindTag={sbUUID === item.uuid ? "SB" : bbUUID === item.uuid ? "BB" : null}
             />
           ))
@@ -164,9 +182,9 @@ export default function OnlineGame() {
           {gameText}
         </div>
         <div className="sm:flex-center grid grid-cols-[repeat(4,minmax(0,1fr))_1fr] gap-1 text-xl sm:gap-2 sm:text-lg">
-          {gameTable.cards.map((item, index) => (
-            <div className="flex-center h-[6.75em] w-[5.5em]">
-              <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
+          {centerCards.map((item, index) => (
+            <div key={index} className="flex-center h-[6.75em] w-[5.5em]">
+              <PokerCard rank={item?.rank} suit={item?.suit} />
             </div>
           ))}
         </div>
@@ -188,7 +206,7 @@ export default function OnlineGame() {
           </div>
         </div>
         <div
-          className={`bg-dark text-light ${!btnDisabled ? "animate-blink" : null} col-1 row-3 rounded-sm py-0.5 text-center text-base font-bold sm:text-xl`}
+          className={`bg-dark text-light ${!btnDisabled || winnerUUIDs.includes(player.uuid) ? "animate-blink" : null} col-1 row-3 rounded-sm py-0.5 text-center text-base font-bold sm:text-xl`}
         >
           {player.name}
         </div>
@@ -214,7 +232,7 @@ export default function OnlineGame() {
           </ThemeBtn>
         </div>
         <ChipLabel className="col-2 row-1 text-base sm:text-xl [&>span]:px-1" chips={player.bets} digits={3}>
-          BETS
+          BET
         </ChipLabel>
       </div>
     </div>

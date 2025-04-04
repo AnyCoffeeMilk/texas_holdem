@@ -195,7 +195,7 @@ export default function BotsGame() {
                NEW ROUND
             </ThemeBtn>
          </div>
-         <div className="sm:container-md col-1 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(110px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:col-2 lg:row-3">
+         <div className="sm:container-md col-1 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(120px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:col-2 lg:row-3">
             <div className="relative col-1 row-[1/3]">
                <Avatar
                   className="h-[110px] w-[100px] sm:h-[132px] sm:w-[120px] lg:h-[143px] lg:w-[130px]"
@@ -256,7 +256,7 @@ export default function BotsGame() {
                chips={player.bets}
                digits={3}
             >
-               BETS
+               BET
             </ChipLabel>
          </div>
       </div>

@@ -40,7 +40,7 @@ export default function Home() {
           </ThemeLink>
         </div>
         <Avatar
-          className="col-1 row-[2/5] min-h-full w-[110px] sm:col-[1/3] sm:row-2 sm:h-[240px] sm:min-h-auto sm:w-full md:h-[300px]"
+          className="col-1 row-[2/5] min-h-full w-[110px] sm:col-[1/3] sm:row-2 sm:h-[240px] sm:min-h-auto sm:w-full md:w-[245px] md:h-[270px] lg:w-full lg:h-[300px]"
           src={playerAvatar}
           name={playerName}
         />
