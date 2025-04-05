@@ -1,15 +1,14 @@
 import { memo } from "react";
-import ChipSVG from "../_svgs/ChipSVG";
 
 function ChipLabel({ className, chips, digits, children }) {
   return (
     <div className={`bg-dark flex items-center rounded-sm p-1 font-bold ${className}`}>
-      <span className="text-dark text-stroke-light grid flex-1 items-center px-2 text-center text-[1.1em] tracking-widest">
+      <span className="text-dark text-stroke-light grid flex-1 items-center px-2 text-center text-[1.1em]/[1em]] tracking-widest">
         {children}
       </span>
       <div className="bg-light text-dark flex items-center gap-0.5 rounded-xs p-0.5 text-[1.3em]">
         {/* <ChipSVG /> */}
-        <div className="w-[0.8em] flex-1 rounded-xs text-center text-[1em]/[1em] text-[1em]">
+        <div className="w-[0.8em] flex-1 rounded-xs text-center text-[1em]/[1em]">
           $
         </div>
         <div className="flex flex-1 gap-0.5">

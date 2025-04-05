@@ -1,161 +1,203 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { redirect, useParams } from "next/navigation";
-import ChipLabel from "@/app/_components/ChipLabel";
-import Avatar from "@/app/_components/Avatar";
-import ThemeBtn from "@/app/_components/ThemeBtn";
 import ThemeLink from "@/app/_components/ThemeLink";
 import GoBackSVG from "@/app/_svgs/GoBackSVG";
 import Opponent from "./_components/Opponent";
-import PokerCard from "@/app/_components/PokerCard";
-import { read_player_profile, read_opponents_profile, get_opponent_action, add_bank } from "@/actions/actions";
-import useOnlineGamer from "@/hooks/useOnlineGamer";
-import useGameTable from "@/hooks/useGameTable";
-import useOnlineTurnHandler from "@/hooks/useOnlineTurnHandler";
+import { read_player_profile, add_bank } from "@/actions/actions";
 import PageTitle from "@/app/_components/PageTitle";
 import { getSocket } from "@/utils/socket";
+import GameTable from "./_components/GameTable";
+import PlayerArea from "./_components/PlayerArea";
 
 let socket = getSocket();
 
+const gameStateInit = {
+  playerUUID: "",
+  playerName: "",
+  playerAvatar: "",
+  playerCards: [null, null],
+  playerBets: 0,
+  disableAction: true,
+  isHost: false,
+  showNewRound: false,
+  gameText: "",
+  opponents: [],
+  centerCards: [],
+  bbUUID: "",
+  sbUUID: "",
+  inTurnUUID: "",
+  winnerUUIDs: [],
+};
+
+const reducer = (state, { type, payload }) => {
+  switch (type) {
+    case "JOIN_ROOM":
+      return {
+        ...state,
+        playerUUID: payload.playerUUID,
+        playerName: payload.playerName,
+        playerAvatar: payload.playerAvatar,
+        opponents: payload.opponents,
+        isHost: payload.isHost,
+        showNewRound: payload.isHost,
+        gameText: payload.isHost ? "Press NEW ROUND to start." : "Waiting for game to start.",
+      };
+    case "HIDE_NEW_GAME":
+      return {
+        ...state,
+        showNewRound: false,
+      };
+    case "SHOW_NEW_GAME":
+      return {
+        ...state,
+        showNewRound: true,
+      };
+    case "DISABLE_ACTION":
+      return {
+        ...state,
+        disableAction: true
+      }
+    case "ENABLE_ACTION":
+      return {
+        ...state,
+        disableAction: false,
+      }
+    case "NEW_ROUND":
+      return {
+        ...state,
+        playerBets: payload.players.find((item) => item.uuid === state.playerUUID).bets,
+        playerCards: [
+          { rank: "X", suit: "X" },
+          { rank: "X", suit: "X" },
+        ],
+        opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
+        centerCards: payload.centerCards,
+        bbUUID: payload.bbUUID,
+        sbUUID: payload.sbUUID,
+        inTurnUUID: payload.inTurnUUID,
+        winnerUUIDs: payload.winnerUUIDs,
+        gameText:
+          payload.sbUUID === state.playerUUID
+            ? "You are the Small Blind."
+            : `${payload.players.find((item) => item.uuid === payload.sbUUID).username} is the Small Blind.`,
+      };
+    case "NEXT_TURN":
+      const playerState = payload.players.find((item) => item.uuid === state.playerUUID);
+      return {
+        ...state,
+        inTurnUUID: payload.inTurnUUID,
+        centerCards: payload.centerCards,
+        disableAction: payload.inTurnUUID !== state.playerUUID,
+        playerBets: playerState.bets,
+        playerCards: playerState.cards[0] === null ? playerState.cards : state.playerCards,
+        opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
+        gameText:
+          payload.inTurnUUID === state.playerUUID
+            ? "It's your turn now."
+            : `${state.opponents.find((item) => item.uuid === payload.inTurnUUID).username}'s turn.`,
+      };
+    case "SET_PLAYER_CARD":
+      return {
+        ...state,
+        playerCards: payload,
+      };
+    case "SET_WINNER":
+      return {
+        ...state,
+        inTurnUUID: "",
+        winnerUUIDs: payload.winnerUUIDs,
+        opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
+        showNewRound: state.isHost,
+        gameText:
+          payload.winnerUUIDs[0] === state.playerUUID
+            ? "You are the winner!"
+            : `${state.opponents.find((item) => item.uuid === payload.winnerUUIDs[0]).username} is the winner!`,
+      };
+    case "SET_WINNERS":
+      return {
+        ...state,
+        inTurnUUID: "",
+        winnerUUIDs: payload.winnerUUIDs,
+        opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
+        showNewRound: state.isHost,
+        gameText: payload.winnerUUIDs.includes(state.playerUUID)
+          ? `You, ${state.opponents
+              .filter((item) => payload.winnerUUIDs.includes(item.uuid))
+              .map((item) => item.username)
+              .join(", ")} are the winners!`
+          : `${state.opponents
+              .filter((item) => payload.winnerUUIDs.includes(item.uuid))
+              .map((item) => item.username)
+              .join(", ")} are the winners!`,
+      };
+  }
+};
+
 export default function OnlineGame() {
   const { roomId } = useParams();
-
-  const gameTable = useGameTable();
-  const player = useOnlineGamer();
-
-  const [isHost, setIsHost] = useState(false);
-  const [btnDisabled, setBtnDisabled] = useState(true);
-  const [hideNewGame, setHideNewGame] = useState(false);
-  const [opponents, setOpponents] = useState([]);
-  const [gameState, setGameState] = useState(0);
-  const [gameText, setGameText] = useState("");
-  const [centerCards, setCenterCards] = useState([]);
-  const [bbUUID, setBbUUID] = useState("");
-  const [sbUUID, setSbUUID] = useState("");
-  const [inTurnUUID, setInTurnUUID] = useState("");
-  const [winnerUUIDs, setWinnerUUIDs] = useState([]);
+  const [state, dispatch] = useReducer(reducer, gameStateInit);
 
   useEffect(() => {
     read_player_profile().then(({ player_name, player_avatar, player_uuid }) => {
-      player.setInitInfo(player_name, player_uuid, player_avatar);
       socket.emit("get-room-players", roomId, (status, players, hostUUID) => {
         if (status === 200) {
-          setOpponents(players.filter((item) => item.uuid !== player_uuid));
-          if (hostUUID === player_uuid) {
-            setIsHost(true);
-          }
+          dispatch({
+            type: "JOIN_ROOM",
+            payload: {
+              playerUUID: player_uuid,
+              playerName: player_name,
+              playerAvatar: player_avatar,
+              opponents: players.filter((item) => item.uuid !== player_uuid),
+              isHost: hostUUID === player_uuid,
+            },
+          });
         } else {
           redirect("/room");
         }
       });
-      socket.off("disconnected");
-      socket.on("disconnected", () => redirect("/room"));
+      socket.off("lost-host");
+      socket.on("lost-host", () => redirect("/room"));
       socket.off("update-public-state");
       socket.on("update-public-state", (newState) => {
-        setGameState(newState.gameState);
-        setBbUUID(newState.bbUUID);
-        setSbUUID(newState.sbUUID);
-        setInTurnUUID(newState.inTurnUUID);
-        setCenterCards(newState.centerCards);
-        setOpponents(newState.players.filter((item) => item.uuid !== player_uuid));
-        setWinnerUUIDs(newState.winnerUUIDs);
-        player.setBets(newState.players.find((item) => item.uuid === player_uuid).bets);
-        if (newState.inTurnUUID === player_uuid) {
-          setBtnDisabled(false);
+        if (newState.gameStage === 1) {
+          dispatch({ type: "NEW_ROUND", payload: newState });
+        } else if (newState.gameStage === 2) {
+          dispatch({ type: "NEXT_TURN", payload: newState });
+        } else if (newState.gameStage === 3) {
+          if (newState.winnerUUIDs.length === 1) {
+            dispatch({ type: "SET_WINNER", payload: newState });
+          } else {
+            dispatch({ type: "SET_WINNER", payload: newState });
+          }
         }
       });
       socket.off("update-private-state");
-      socket.on("update-private-state", (newState) => {
-        player.setCards(newState.cards);
-      });
+      socket.on("update-private-state", (newState) => dispatch({ type: "SET_PLAYER_CARD", payload: newState.cards }));
     });
   }, []);
 
-  useEffect(() => {
-    switch (gameState) {
-      case 0:
-        setGameText(isHost ? "Press NEW ROUND to start." : "Waiting for game to start.");
-        break;
-      case 1:
-        setGameText(
-          sbUUID === player.uuid
-            ? "You are the Small Blind."
-            : `${opponents.find((item) => item.uuid === sbUUID).username} is the Small Blind.`
-        );
-        break;
-      case 2:
-        setGameText(
-          inTurnUUID === player.uuid
-            ? "It's your turn now."
-            : `${opponents.find((item) => item.uuid === inTurnUUID).username}'s turn.`
-        );
-        break;
-      case 3:
-        setHideNewGame(false);
-        if (winnerUUIDs.length <= 1) {
-          setGameText(
-            winnerUUIDs[0] === player.uuid
-              ? "You are the winner!"
-              : `${opponents.find((item) => item.uuid === winnerUUIDs[0]).username} is the winner!`
-          );
-        } else {
-          setGameText(
-            winnerUUIDs.includes(player.uuid)
-              ? `You, ${opponents
-                  .filter((item) => winnerUUIDs.includes(item.uuid))
-                  .map((item) => item.username)
-                  .join(", ")} are the winners!`
-              : `${opponents
-                  .filter((item) => winnerUUIDs.includes(item.uuid))
-                  .map((item) => item.username)
-                  .join(", ")} are the winners!`
-          );
-        }
-        break;
-    }
-  }, [gameState, isHost, sbUUID, inTurnUUID, winnerUUIDs]);
-
-  const handleCall = () => {
-    setBtnDisabled(true);
-    socket.emit("call-action", roomId, player.uuid, (status) => {
+  const handleAction = (actionID) => {
+    dispatch({ type: "DISABLE_ACTION" });
+    socket.emit(actionID, roomId, state.playerUUID, (status) => {
       if (status === 404) {
-        setBtnDisabled(false);
-      }
-    });
-  };
-
-  const handleRaise = () => {
-    setBtnDisabled(true);
-    socket.emit("raise-action", roomId, player.uuid, (status) => {
-      if (status === 404) {
-        setBtnDisabled(false);
-      }
-    });
-  };
-
-  const handleFold = () => {
-    setBtnDisabled(true);
-    socket.emit("fold-action", roomId, player.uuid, (status) => {
-      if (status === 200) {
-        player.setCards([null, null]);
-      } else {
-        setBtnDisabled(false);
+        dispatch({ type: "ENABLE_ACTION" });
       }
     });
   };
 
   const handleNewRound = () => {
-    setHideNewGame(true);
+    dispatch({ type: "HIDE_NEW_GAME" });
     socket.emit("new-round", roomId, (status) => {
       if (status === 404) {
-        setHideNewGame(false);
+        dispatch({ type: "SHOW_NEW_GAME" });
       }
     });
   };
 
-  return !player.avatar ? null : (
-    <div className="grid min-h-[calc(100svh-1rem)] max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:w-[1024px] lg:grid-cols-[auto_1fr] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-4">
+  return !state.playerUUID ? null : (
+    <div className="grid min-h-[calc(100svh-1rem)] w-full max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:w-[1024px] lg:grid-cols-[auto_1fr] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-4">
       <div className="col-1 row-1 flex justify-between lg:col-[1/3]">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
@@ -163,78 +205,31 @@ export default function OnlineGame() {
         <PageTitle>Online Match</PageTitle>
       </div>
       <div className="sm:container-md row-2 flex gap-2 overflow-auto rounded-sm py-1 sm:gap-6 sm:p-4 lg:col-1 lg:row-[2/4] lg:h-[calc(100svh-7rem-3px)] lg:flex-col">
-        {opponents.length === 0 ? (
+        {state.opponents.length === 0 ? (
           <span>Loading...</span>
         ) : (
-          opponents.map((item, index) => (
+          state.opponents.map((item, index) => (
             <Opponent
               key={index}
               info={item}
-              isBlinking={inTurnUUID === item.uuid || winnerUUIDs.includes(item.uuid)}
-              flipCard={winnerUUIDs.length === 0}
-              blindTag={sbUUID === item.uuid ? "SB" : bbUUID === item.uuid ? "BB" : null}
+              isBlinking={state.inTurnUUID === item.uuid || state.winnerUUIDs.includes(item.uuid)}
+              blindTag={state.sbUUID === item.uuid ? "SB" : state.bbUUID === item.uuid ? "BB" : null}
             />
           ))
         )}
       </div>
-      <div className="container-sm sm:container-md flex-center relative col-1 row-3 rounded-sm px-2 sm:px-4 lg:col-2 lg:row-2">
-        <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-xl font-bold italic lg:text-2xl">
-          {gameText}
-        </div>
-        <div className="sm:flex-center grid grid-cols-[repeat(4,minmax(0,1fr))_1fr] gap-1 text-xl sm:gap-2 sm:text-lg">
-          {centerCards.map((item, index) => (
-            <div key={index} className="flex-center h-[6.75em] w-[5.5em]">
-              <PokerCard rank={item?.rank} suit={item?.suit} />
-            </div>
-          ))}
-        </div>
-        {!isHost || hideNewGame ? null : (
-          <ThemeBtn className="absolute right-2 bottom-2" onClick={handleNewRound}>
-            NEW ROUND
-          </ThemeBtn>
-        )}
-      </div>
-      <div className="sm:container-md col-1 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(110px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:col-2 lg:row-3">
-        <div className="relative col-1 row-[1/3]">
-          <Avatar
-            className="h-[110px] w-[100px] sm:h-[132px] sm:w-[120px] lg:h-[143px] lg:w-[130px]"
-            src={player.avatar}
-            name={player.name}
-          />
-          <div className="text-light bg-dark border-light absolute -top-1 -left-2 rotate-z-[-20deg] rounded-sm border-2 px-2 font-bold">
-            {sbUUID === player.uuid ? "SB" : bbUUID === player.uuid ? "BB" : null}
-          </div>
-        </div>
-        <div
-          className={`bg-dark text-light ${!btnDisabled || winnerUUIDs.includes(player.uuid) ? "animate-blink" : null} col-1 row-3 rounded-sm py-0.5 text-center text-base font-bold sm:text-xl`}
-        >
-          {player.name}
-        </div>
-        <div className="col-2 row-[2/4] grid grid-cols-[minmax(0,1fr)_1fr] gap-1 sm:grid-cols-2 sm:gap-2">
-          {player.cards.map((item, index) => (
-            <div
-              key={index}
-              className="flex-center h-[105px] w-[85px] text-xl sm:h-full sm:w-full sm:place-self-center"
-            >
-              <PokerCard rank={item?.rank} suit={item?.suit} />
-            </div>
-          ))}
-        </div>
-        <div className="col-3 row-[1/4] grid gap-2 sm:text-lg">
-          <ThemeBtn onClick={handleCall} className="[&>div]:py-0" disabled={btnDisabled}>
-            CHECK
-          </ThemeBtn>
-          <ThemeBtn onClick={handleRaise} className="[&>div]:py-0" disabled={btnDisabled}>
-            RAISE
-          </ThemeBtn>
-          <ThemeBtn onClick={handleFold} className="[&>div]:py-0" disabled={btnDisabled}>
-            FOLD
-          </ThemeBtn>
-        </div>
-        <ChipLabel className="col-2 row-1 text-base sm:text-xl [&>span]:px-1" chips={player.bets} digits={3}>
-          BET
-        </ChipLabel>
-      </div>
+      <GameTable
+        gameText={state.gameText}
+        onNewRound={handleNewRound}
+        centerCards={state.centerCards}
+        showNewRound={state.showNewRound}
+      />
+      <PlayerArea
+        state={state}
+        onCall={() => handleAction("call-action")}
+        onRaise={() => handleAction("raise-action")}
+        onFold={() => handleAction("fold-action")}
+      />
     </div>
   );
 }
