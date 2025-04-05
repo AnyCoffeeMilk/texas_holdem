@@ -4,6 +4,8 @@ import PokerCard from "@/app/_components/PokerCard";
 import ThemeBtn from "@/app/_components/ThemeBtn";
 
 export default function PlayerArea({ state, onCall, onRaise, onFold }) {
+  const topBets = Math.max(...state.opponents.map((item) => item.bets));
+
   return (
     <div className="sm:container-md col-1 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(110px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:col-2 lg:row-3">
       <div className="relative col-1 row-[1/3]">
@@ -30,7 +32,7 @@ export default function PlayerArea({ state, onCall, onRaise, onFold }) {
       </div>
       <div className="col-3 row-[1/4] grid gap-2 sm:text-lg">
         <ThemeBtn onClick={onCall} className="[&>div]:py-0" disabled={state.disableAction}>
-          CHECK
+          {state.playerBets < topBets ? "CALL" : "CHECK"}
         </ThemeBtn>
         <ThemeBtn onClick={onRaise} className="[&>div]:py-0" disabled={state.disableAction}>
           RAISE

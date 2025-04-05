@@ -1,7 +1,8 @@
+import ChipLabel from "@/app/_components/ChipLabel";
 import PokerCard from "@/app/_components/PokerCard";
 import ThemeBtn from "@/app/_components/ThemeBtn";
 
-export default function GameTable({ gameText, onNewRound, centerCards, showNewRound }) {
+export default function GameTable({ gameText, onNewRound, centerCards, chipPool, showNewRound }) {
   return (
     <div className="container-sm sm:container-md flex-center relative col-1 row-3 rounded-sm px-2 sm:px-4 lg:col-2 lg:row-2">
       <div className="bg-dark text-light absolute top-4 w-full p-2 text-center text-xl font-bold italic lg:text-2xl">
@@ -14,7 +15,10 @@ export default function GameTable({ gameText, onNewRound, centerCards, showNewRo
           </div>
         ))}
       </div>
-      {showNewRound ?  (
+      <ChipLabel className="absolute left-2 bottom-2 text-xl" chips={chipPool} digits={4}>
+        POOL
+      </ChipLabel>
+      {showNewRound ? (
         <ThemeBtn className="absolute right-2 bottom-2" onClick={onNewRound}>
           NEW ROUND
         </ThemeBtn>

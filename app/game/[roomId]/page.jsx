@@ -57,13 +57,13 @@ const reducer = (state, { type, payload }) => {
     case "DISABLE_ACTION":
       return {
         ...state,
-        disableAction: true
-      }
+        disableAction: true,
+      };
     case "ENABLE_ACTION":
       return {
         ...state,
         disableAction: false,
-      }
+      };
     case "NEW_ROUND":
       return {
         ...state,
@@ -196,6 +196,11 @@ export default function OnlineGame() {
     });
   };
 
+  const chipPool =
+    state.opponents.length > 0
+      ? state.playerBets + state.opponents.map((item) => item.bets).reduce((a, b) => a + b)
+      : 0;
+
   return !state.playerUUID ? null : (
     <div className="grid min-h-[calc(100svh-1rem)] w-full max-w-[480px] min-w-[350px] grid-cols-1 grid-rows-[auto_auto_1fr_auto] gap-2 sm:w-[620px] sm:max-w-none sm:min-w-auto lg:w-[1024px] lg:grid-cols-[auto_1fr] lg:grid-rows-[auto_1fr_auto] lg:gap-4 lg:p-4">
       <div className="col-1 row-1 flex justify-between lg:col-[1/3]">
@@ -221,6 +226,7 @@ export default function OnlineGame() {
       <GameTable
         gameText={state.gameText}
         onNewRound={handleNewRound}
+        chipPool={chipPool}
         centerCards={state.centerCards}
         showNewRound={state.showNewRound}
       />
