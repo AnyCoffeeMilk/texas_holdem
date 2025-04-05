@@ -4,12 +4,12 @@ import { useEffect, useReducer, useState } from "react";
 import { redirect, useParams } from "next/navigation";
 import ThemeLink from "@/app/_components/ThemeLink";
 import GoBackSVG from "@/app/_svgs/GoBackSVG";
-import Opponent from "./_components/Opponent";
+import Opponent from "../_components/Opponent";
 import { read_player_profile, add_bank } from "@/actions/actions";
 import PageTitle from "@/app/_components/PageTitle";
 import { getSocket } from "@/utils/socket";
-import GameTable from "./_components/GameTable";
-import PlayerArea from "./_components/PlayerArea";
+import GameTable from "../_components/GameTable";
+import PlayerArea from "../_components/PlayerArea";
 
 let socket = getSocket();
 

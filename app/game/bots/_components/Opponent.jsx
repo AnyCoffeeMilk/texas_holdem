@@ -19,7 +19,7 @@ export default function Opponent({ info, inTurn, flipCard, blindTag }) {
       >
         {info.name}
       </div>
-      <div className="col-2 row-1 grid grid-cols-[1.5rem_1fr] gap-1 text-[0.7em] sm:text-[0.81em] lg:col-2 lg:row-[1/4] lg:grid-cols-[4rem_1fr] lg:text-[0.98em]">
+      <div className="col-2 row-1 grid grid-cols-[1.5rem_1fr] gap-1 px-0.5 text-[0.7em] sm:text-[0.81em] lg:col-2 lg:row-[1/4] lg:grid-cols-[4rem_1fr] lg:text-[0.98em]">
         {info.cards.map((item, index) => (
           <div key={index} className="h-[6.75em] w-[5.5em]">
             <PokerCard key={index} rank={item?.rank} suit={item?.suit} isFacedown={flipCard} />
