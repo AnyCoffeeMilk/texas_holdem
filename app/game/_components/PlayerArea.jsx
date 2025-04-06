@@ -5,12 +5,14 @@ import ThemeBtn from "@/app/_components/ThemeBtn";
 
 export default function PlayerArea({ state, onCall, onRaise, onFold }) {
   const topBets = Math.max(...state.opponents.map((item) => item.bets));
+  const blinkStyle =
+    state.inTurnUUID === state.playerUUID || state.winnerUUIDs.includes(state.playerUUID) ? "animate-blink" : null;
 
   return (
-    <div className="sm:container-md col-1 row-4 grid grid-cols-[auto_minmax(130px,auto)_minmax(110px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_1fr_minmax(100px,1fr)] sm:gap-2 sm:p-4 lg:col-2 lg:row-3">
-      <div className="relative col-1 row-[1/3]">
+    <div className="sm:container-md min-w-[calc(390px-1rem)] col-1 row-4 grid grid-cols-[auto_minmax(120px,auto)_minmax(120px,1fr)] grid-rows-[auto_1fr_auto] gap-1 rounded-sm p-0 sm:grid-cols-[auto_200px_1fr] sm:gap-2 sm:p-4 lg:col-2 lg:row-3">
+      <div className="relative col-1 row-[1/4]">
         <Avatar
-          className="h-[110px] w-[100px] sm:h-[132px] sm:w-[120px] lg:h-[143px] lg:w-[130px]"
+          className="h-[130px] w-[118px] sm:h-[154px] sm:w-[140px] lg:h-[176px] lg:w-[160px]"
           src={state.playerAvatar}
           name={state.playerName}
         />
@@ -19,29 +21,29 @@ export default function PlayerArea({ state, onCall, onRaise, onFold }) {
         </div>
       </div>
       <div
-        className={`bg-dark text-light ${state.inTurnUUID === state.playerUUID || state.winnerUUIDs.includes(state.playerUUID) ? "animate-blink" : null} col-1 row-3 rounded-sm py-0.5 text-center text-base font-bold sm:text-xl`}
+        className={`bg-dark text-light ${blinkStyle} border-light z-10 col-2 row-3 self-end rounded-sm border-t-2 py-0.5 text-center text-xl font-bold sm:text-2xl`}
       >
         {state.playerName}
       </div>
-      <div className="col-2 row-[2/4] grid grid-cols-[minmax(0,1fr)_1fr] gap-1 sm:grid-cols-2 sm:gap-2">
+      <div className="col-2 row-[2/4] grid grid-cols-[minmax(0,1fr)_1fr] gap-1 px-1 sm:row-[1/4] sm:gap-2">
         {state.playerCards.map((item, index) => (
-          <div key={index} className="flex-center h-[105px] w-[85px] text-xl sm:h-full sm:w-full sm:place-self-center">
+          <div key={index} className="h-[95px] w-[80px] text-lg sm:h-[135px] sm:w-[115px] sm:text-2xl">
             <PokerCard rank={item?.rank} suit={item?.suit} />
           </div>
         ))}
       </div>
-      <div className="col-3 row-[1/4] grid gap-2 sm:text-lg">
-        <ThemeBtn onClick={onCall} className="[&>div]:py-0" disabled={state.disableAction}>
-          {state.playerBets < topBets ? "CALL" : "CHECK"}
-        </ThemeBtn>
-        <ThemeBtn onClick={onRaise} className="[&>div]:py-0" disabled={state.disableAction}>
+      <div className="col-3 row-[1/4] grid gap-1 text-[1.1em] sm:row-[2/4] sm:grid-cols-2 sm:gap-2 sm:text-xl">
+        <ThemeBtn onClick={onRaise} className="sm:col-[1/3] sm:row-1 [&>div]:py-0" disabled={state.disableAction}>
           RAISE
         </ThemeBtn>
-        <ThemeBtn onClick={onFold} className="[&>div]:py-0" disabled={state.disableAction}>
+        <ThemeBtn onClick={onCall} className="sm:col-1 sm:row-2 [&>div]:py-0" disabled={state.disableAction}>
+          {state.playerBets < topBets ? "CALL" : "CHECK"}
+        </ThemeBtn>
+        <ThemeBtn onClick={onFold} className="sm:col-2 sm:row-2 [&>div]:py-0" disabled={state.disableAction}>
           FOLD
         </ThemeBtn>
       </div>
-      <ChipLabel className="col-2 row-1 text-base sm:text-xl [&>span]:px-1" chips={state.playerBets} digits={3}>
+      <ChipLabel className="col-2 row-1 text-lg sm:col-3 sm:text-2xl" chips={state.playerBets} digits={3}>
         BET
       </ChipLabel>
     </div>

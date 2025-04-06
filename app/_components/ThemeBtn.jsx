@@ -1,7 +1,7 @@
 export default function ThemeBtn({ className, innerClassName, disabled, onClick, children }) {
   return (
     <button
-      className={`group button-container flex flex-col rounded-sm p-[3px] font-bold ${className}`}
+      className={`group button-container flex flex-col rounded-sm p-[0.15em] font-bold ${className}`}
       disabled={disabled}
       onClick={onClick}
     >

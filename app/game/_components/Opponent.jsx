@@ -27,7 +27,7 @@ export default function Opponent({ info, isBlinking, blindTag }) {
           </div>
         ))}
       </div>
-      <ChipLabel className="col-[1/3] row-2 sm:text-lg lg:col-2 lg:row-[2/4]" chips={info.bets} digits={3}>
+      <ChipLabel className="col-[1/3] row-2 text-xl lg:col-2 lg:row-[2/4]" chips={info.bets} digits={3}>
         BET
       </ChipLabel>
     </div>

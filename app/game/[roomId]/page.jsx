@@ -10,6 +10,7 @@ import PageTitle from "@/app/_components/PageTitle";
 import { getSocket } from "@/utils/socket";
 import GameTable from "../_components/GameTable";
 import PlayerArea from "../_components/PlayerArea";
+import RaisePanel from "../_components/RaisePanel";
 
 let socket = getSocket();
 
@@ -22,6 +23,8 @@ const gameStateInit = {
   disableAction: true,
   isHost: false,
   showNewRound: false,
+  showRaisePanel: false,
+  minBet: 4,
   gameText: "",
   opponents: [],
   centerCards: [],
@@ -64,6 +67,16 @@ const reducer = (state, { type, payload }) => {
         ...state,
         disableAction: false,
       };
+    case "SHOW_RAISE_PANEL":
+      return {
+        ...state,
+        showRaisePanel: true,
+      };
+    case "HIDDEN_RAISE_PANEL":
+      return {
+        ...state,
+        showRaisePanel: false,
+      };
     case "NEW_ROUND":
       return {
         ...state,
@@ -76,6 +89,7 @@ const reducer = (state, { type, payload }) => {
         centerCards: payload.centerCards,
         bbUUID: payload.bbUUID,
         sbUUID: payload.sbUUID,
+        minBet: 4,
         inTurnUUID: payload.inTurnUUID,
         winnerUUIDs: payload.winnerUUIDs,
         gameText:
@@ -90,6 +104,7 @@ const reducer = (state, { type, payload }) => {
         inTurnUUID: payload.inTurnUUID,
         centerCards: payload.centerCards,
         disableAction: payload.inTurnUUID !== state.playerUUID,
+        minBet: payload.minBet,
         playerBets: playerState.bets,
         playerCards: playerState.cards[0] === null ? playerState.cards : state.playerCards,
         opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
@@ -178,13 +193,21 @@ export default function OnlineGame() {
     });
   }, []);
 
-  const handleAction = (actionID) => {
+  const handleAction = (actionID, newBets = null) => {
     dispatch({ type: "DISABLE_ACTION" });
-    socket.emit(actionID, roomId, state.playerUUID, (status) => {
-      if (status === 404) {
-        dispatch({ type: "ENABLE_ACTION" });
-      }
-    });
+    if (newBets !== null) {
+      socket.emit(actionID, roomId, state.playerUUID, (status) => {
+        if (status === 404) {
+          dispatch({ type: "ENABLE_ACTION" });
+        }
+      });
+    } else {
+      socket.emit(actionID, roomId, state.playerUUID, newBets, (status) => {
+        if (status === 404) {
+          dispatch({ type: "ENABLE_ACTION" });
+        }
+      });
+    }
   };
 
   const handleNewRound = () => {
@@ -196,7 +219,7 @@ export default function OnlineGame() {
     });
   };
 
-  const chipPool =
+  const chipPot =
     state.opponents.length > 0
       ? state.playerBets + state.opponents.map((item) => item.bets).reduce((a, b) => a + b)
       : 0;
@@ -226,16 +249,34 @@ export default function OnlineGame() {
       <GameTable
         gameText={state.gameText}
         onNewRound={handleNewRound}
-        chipPool={chipPool}
+        chipPot={chipPot}
         centerCards={state.centerCards}
         showNewRound={state.showNewRound}
       />
       <PlayerArea
         state={state}
         onCall={() => handleAction("call-action")}
-        onRaise={() => handleAction("raise-action")}
+        onRaise={() => dispatch({ type: "SHOW_RAISE_PANEL" })}
         onFold={() => handleAction("fold-action")}
       />
+      {state.showRaisePanel ? (
+        <div className="bg-dark/50 flex-center absolute top-0 left-0 z-20 h-screen w-screen p-1">
+          <RaisePanel
+            playerInfo={{
+              username: state.playerName,
+              avatar: state.playerAvatar,
+              bets: state.playerBets,
+            }}
+            minBet={state.minBet}
+            chipPot={chipPot}
+            onCancel={() => dispatch({ type: "HIDDEN_RAISE_PANEL" })}
+            onConfirm={(newBets) => {
+              dispatch({ type: "HIDDEN_RAISE_PANEL" });
+              handleAction("raise-action", newBets);
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }
