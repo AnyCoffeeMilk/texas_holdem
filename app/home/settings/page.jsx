@@ -1,23 +1,29 @@
-import ThemeLink from '@/app/_components/ThemeLink'
-import GoBackSVG from '@/app/_svgs/GoBackSVG'
-import SettingItem from './_components/SettingItem'
-import SectionTitle from '../../_components/SectionTitle'
-import PageTitle from '../../_components/PageTitle'
+'use client'
+
+import ThemeLink from "@/app/_components/ThemeLink";
+import GoBackSVG from "@/app/_svgs/GoBackSVG";
+import SettingItem from "./_components/SettingItem";
+import SectionTitle from "../../_components/SectionTitle";
+import PageTitle from "../../_components/PageTitle";
+import ThemeBtn from "@/app/_components/ThemeBtn";
+import { redirect } from "next/navigation";
 
 const settings_list = [
   {
-    name: 'theme',
+    name: "Theme",
     selected: 1,
-    options: [{ text: 'dark' }, { text: 'light' }],
+    options: [{ text: "dark" }, { text: "light" }],
   },
   {
-    name: 'language',
+    name: "Language",
     selected: 0,
-    options: [{ text: 'eng' }, { text: 'cn' }],
+    options: [{ text: "eng" }, { text: "cn" }],
   },
-]
+];
 
-export default function Profile() {
+export default function Settings() {
+  const handleSave = () => redirect("/home");
+
   return (
     <div className="container-md grid w-[500px] gap-4 rounded-sm p-4">
       <div className="flex items-center justify-between">
@@ -29,14 +35,10 @@ export default function Profile() {
       <SectionTitle>Preferences</SectionTitle>
       <div className="grid gap-4">
         {settings_list.map((item, index) => (
-          <SettingItem
-            key={index}
-            name={item.name}
-            initSelect={item.selected}
-            options={item.options}
-          />
+          <SettingItem key={index} name={item.name} initSelect={item.selected} options={item.options} />
         ))}
       </div>
+      <ThemeBtn onClick={handleSave}>Save</ThemeBtn>
     </div>
-  )
+  );
 }

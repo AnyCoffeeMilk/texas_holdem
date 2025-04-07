@@ -10,9 +10,9 @@ import PageTitle from '../../_components/PageTitle'
 import SectionTitle from '../../_components/SectionTitle'
 
 const loan_list = [
-  { text: 'LOAN A BIT', chips: 50 },
-  { text: 'LOAN A LOT', chips: 100 },
-  { text: 'BUY ME A COFFEE', chips: -50 },
+  { text: 'Loan a bit', price: 0, chips: 50 },
+  { text: 'Loan a lot', price: 0, chips: 100 },
+  { text: 'Buy me a coffee', price: 50, chips: -50 },
 ]
 
 export default function Profile() {
@@ -36,7 +36,7 @@ export default function Profile() {
   }
 
   return playerBank === undefined ? null : (
-    <div className="container-md min-w-[380px] sm:min-w-auto grid gap-4 rounded-sm p-2 sm:p-4 text-sm">
+    <div className="container-md w-[500px] sm:min-w-auto grid gap-4 rounded-sm p-2 sm:p-4 text-sm">
       <div className="flex items-center justify-between">
         <ThemeLink href="/home" className="px-2 py-1">
           HOME <GoBackSVG />
@@ -54,7 +54,7 @@ export default function Profile() {
         {loan_list.map((item, index) => (
           <LoanItem
             key={index}
-            chips={item.chips}
+            price={item.price}
             digits={item.chips.toString().length}
             disabled={btnDisabled}
             onPurchase={() => handlePurchase(item.chips)}

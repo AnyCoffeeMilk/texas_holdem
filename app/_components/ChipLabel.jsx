@@ -8,11 +8,9 @@ function ChipLabel({ className, chips, digits, children }) {
       </span>
       <div className="bg-light text-dark flex items-center gap-0.5 rounded-xs p-0.5 text-[1.3em]">
         {/* <ChipSVG /> */}
-        <div className="w-[0.8em] flex-1 rounded-xs text-center text-[1em]/[1em]">
-          $
-        </div>
+        <div className="w-[0.8em] flex-1 rounded-xs text-center text-[1em]/[1em]">$</div>
         <div className="flex flex-1 gap-0.5">
-          {chips
+          {Math.floor(chips)
             .toString()
             .padStart(digits, "0")
             .split("")

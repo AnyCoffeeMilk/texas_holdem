@@ -1,21 +1,16 @@
-import ChipLabel from '@/app/_components/ChipLabel'
-import PurchaseBtn from './_components/PurchaseBtn'
-import ChipSVG from '@/app/_svgs/ChipSVG'
+import PurchaseBtn from "./_components/PurchaseBtn";
 
-export default function LoanItem({ chips, digits, onPurchase, children }) {
+export default function LoanItem({ price, onPurchase, children }) {
   return (
     <div className="flex items-stretch gap-2">
-      <ChipLabel
-        className="[&>span]:text-light [&>span]:font-extralight flex-1 text-lg"
-        chips={chips}
-        digits={digits}
-      >
-        {children}
-      </ChipLabel>
+      <div className="border-dark flex flex-1 items-center gap-4 rounded-sm border-2 px-4 py-2 text-xl font-semibold">
+        <span className="max-w-[40%] sm:max-w-none">{children}</span>
+        <div className="bg-dark h-[1px] flex-1 rounded-full" />
+        <span>${price}</span>
+      </div>
       <PurchaseBtn price={0} onClick={onPurchase}>
-        <ChipSVG />
-        <span className="sm:text-2xl/[1em]">-0</span>
+        <span className="text-base sm:text-xl/[1em]">PURCHASE</span>
       </PurchaseBtn>
     </div>
-  )
+  );
 }

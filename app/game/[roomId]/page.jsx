@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { redirect, useParams } from "next/navigation";
 import ThemeLink from "@/app/_components/ThemeLink";
 import GoBackSVG from "@/app/_svgs/GoBackSVG";
@@ -20,10 +20,12 @@ const gameStateInit = {
   playerAvatar: "",
   playerCards: [null, null],
   playerBets: 0,
+  playerBuyIn: 0,
   disableAction: true,
   isHost: false,
   showNewRound: false,
   showRaisePanel: false,
+  showBuyInDecrement: false,
   minBet: 4,
   gameText: "",
   opponents: [],
@@ -32,9 +34,11 @@ const gameStateInit = {
   sbUUID: "",
   inTurnUUID: "",
   winnerUUIDs: [],
+  reward: 0,
 };
 
 const reducer = (state, { type, payload }) => {
+  let playerState;
   switch (type) {
     case "JOIN_ROOM":
       return {
@@ -42,6 +46,7 @@ const reducer = (state, { type, payload }) => {
         playerUUID: payload.playerUUID,
         playerName: payload.playerName,
         playerAvatar: payload.playerAvatar,
+        playerBuyIn: payload.playerBuyIn,
         opponents: payload.opponents,
         isHost: payload.isHost,
         showNewRound: payload.isHost,
@@ -78,9 +83,13 @@ const reducer = (state, { type, payload }) => {
         showRaisePanel: false,
       };
     case "NEW_ROUND":
+      playerState = payload.players.find((item) => item.uuid === state.playerUUID);
       return {
         ...state,
-        playerBets: payload.players.find((item) => item.uuid === state.playerUUID).bets,
+        reward: 0,
+        showBuyInDecrement: true,
+        playerBuyIn: playerState.buyIn,
+        playerBets: playerState.bets,
         playerCards: [
           { rank: "X", suit: "X" },
           { rank: "X", suit: "X" },
@@ -98,14 +107,16 @@ const reducer = (state, { type, payload }) => {
             : `${payload.players.find((item) => item.uuid === payload.sbUUID).username} is the Small Blind.`,
       };
     case "NEXT_TURN":
-      const playerState = payload.players.find((item) => item.uuid === state.playerUUID);
+      playerState = payload.players.find((item) => item.uuid === state.playerUUID);
       return {
         ...state,
+        showBuyInDecrement: false,
         inTurnUUID: payload.inTurnUUID,
         centerCards: payload.centerCards,
         disableAction: payload.inTurnUUID !== state.playerUUID,
         minBet: payload.minBet,
         playerBets: playerState.bets,
+        playerBuyIn: playerState.buyIn,
         playerCards: playerState.cards[0] === null ? playerState.cards : state.playerCards,
         opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
         gameText:
@@ -122,9 +133,12 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         inTurnUUID: "",
+        centerCards: payload.centerCards,
+        playerBuyIn:  payload.players.find((item) => item.uuid === state.playerUUID).buyIn,
+        reward: payload.winnerUUIDs[0] === state.playerUUID ? payload.reward : 0,
         winnerUUIDs: payload.winnerUUIDs,
         opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
-        showNewRound: state.isHost,
+        showNewRound: state.isHost && payload.players.find((item) => item.buyIn === 0) === undefined,
         gameText:
           payload.winnerUUIDs[0] === state.playerUUID
             ? "You are the winner!"
@@ -134,9 +148,12 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         inTurnUUID: "",
+        centerCards: payload.centerCards,
+        playerBuyIn: payload.players.find((item) => item.uuid === state.playerUUID).buyIn,
+        reward: payload.winnerUUIDs.includes(state.playerUUID) ? payload.reward : 0,
         winnerUUIDs: payload.winnerUUIDs,
         opponents: payload.players.filter((item) => item.uuid !== state.playerUUID),
-        showNewRound: state.isHost,
+        showNewRound: state.isHost && payload.players.find((item) => item.buyIn === 0) === undefined,
         gameText: payload.winnerUUIDs.includes(state.playerUUID)
           ? `You, ${state.opponents
               .filter((item) => payload.winnerUUIDs.includes(item.uuid))
@@ -164,6 +181,7 @@ export default function OnlineGame() {
               playerUUID: player_uuid,
               playerName: player_name,
               playerAvatar: player_avatar,
+              playerBuyIn: players.find((item) => item.uuid === player_uuid).buyIn,
               opponents: players.filter((item) => item.uuid !== player_uuid),
               isHost: hostUUID === player_uuid,
             },
@@ -193,17 +211,17 @@ export default function OnlineGame() {
     });
   }, []);
 
-  const handleAction = (actionID, newBets = null) => {
+  const handleAction = (actionID, addBet = null) => {
     dispatch({ type: "DISABLE_ACTION" });
-    if (newBets !== null) {
+    if (addBet === null) {
       socket.emit(actionID, roomId, state.playerUUID, (status) => {
-        if (status === 404) {
+        if (status !== 200) {
           dispatch({ type: "ENABLE_ACTION" });
         }
       });
     } else {
-      socket.emit(actionID, roomId, state.playerUUID, newBets, (status) => {
-        if (status === 404) {
+      socket.emit(actionID, roomId, state.playerUUID, addBet, (status) => {
+        if (status !== 200) {
           dispatch({ type: "ENABLE_ACTION" });
         }
       });
@@ -213,7 +231,7 @@ export default function OnlineGame() {
   const handleNewRound = () => {
     dispatch({ type: "HIDE_NEW_GAME" });
     socket.emit("new-round", roomId, (status) => {
-      if (status === 404) {
+      if (status !== 200) {
         dispatch({ type: "SHOW_NEW_GAME" });
       }
     });
@@ -266,13 +284,14 @@ export default function OnlineGame() {
               username: state.playerName,
               avatar: state.playerAvatar,
               bets: state.playerBets,
+              buyIn: state.playerBuyIn,
             }}
             minBet={state.minBet}
             chipPot={chipPot}
             onCancel={() => dispatch({ type: "HIDDEN_RAISE_PANEL" })}
-            onConfirm={(newBets) => {
+            onConfirm={(addBet) => {
               dispatch({ type: "HIDDEN_RAISE_PANEL" });
-              handleAction("raise-action", newBets);
+              handleAction("raise-action", addBet);
             }}
           />
         </div>
