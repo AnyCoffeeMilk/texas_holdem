@@ -4,7 +4,7 @@ import PokerCard from "@/app/_components/PokerCard";
 import ThemeBtn from "@/app/_components/ThemeBtn";
 import PlayerBuyIn from "./_components/PlayerBuyIn";
 import BuyInDecrement from "./_components/BuyInDecrement";
-import BuyInincrement from "./_components/BuyInincrement";
+import BuyInIncrement from "./_components/BuyInIncrement";
 
 export default function PlayerArea({ state, onCall, onRaise, onFold }) {
   const topBets = Math.max(...state.opponents.map((item) => item.bets));
@@ -25,7 +25,7 @@ export default function PlayerArea({ state, onCall, onRaise, onFold }) {
           {state.sbUUID === state.playerUUID ? "SB" : state.bbUUID === state.playerUUID ? "BB" : null}
         </div>
         <PlayerBuyIn buyIn={state.playerBuyIn} />
-        {state.reward > 0 ? <BuyInincrement amount={state.reward} /> : null}
+        {state.reward > 0 ? <BuyInIncrement amount={state.reward} /> : null}
         {state.showBuyInDecrement && buyInDecrement > 0 ? <BuyInDecrement amount={buyInDecrement} /> : null}
       </div>
       <div
