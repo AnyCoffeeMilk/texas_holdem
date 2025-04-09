@@ -50,7 +50,7 @@ export default function OnlineGame() {
           if (newState.winnerUUIDs.length === 1) {
             dispatch({ type: "SET_WINNER", payload: newState });
           } else {
-            dispatch({ type: "SET_WINNER", payload: newState });
+            dispatch({ type: "SET_WINNERS", payload: newState });
           }
         }
       });
