@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:4000";
+const SOCKET_URL = "http://texas-holdem-api.hust.online";
 let socket;
 
 export const getSocket = () => {
