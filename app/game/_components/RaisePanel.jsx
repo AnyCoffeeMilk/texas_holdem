@@ -97,7 +97,7 @@ export default function RaisePanel({ playerInfo, minBet, chipPot, onCancel, onCo
                 text={item.text}
                 outlineText={item.outlineText}
                 selected={select === index}
-                disabled={item.addBet < minBet}
+                disabled={item.addBet < minBet || item.addBet > playerInfo.buyIn}
                 onSelect={() => {
                   setSelect(index);
                   setNewBet(playerInfo.bets + raiseOptions[index].addBet);
