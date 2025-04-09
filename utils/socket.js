@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://texas-holdem-api.hust.online";
+const SOCKET_URL = "https://texas-holdem-api.hust.online";
 let socket;
 
 export const getSocket = () => {
