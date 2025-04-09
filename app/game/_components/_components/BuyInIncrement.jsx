@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import increaseSrc from "@/public/increase.svg";
 import Image from "next/image";
 
-export default function BuyInincrement({ amount }) {
+export default function BuyInIncrement({ amount }) {
   const IncreaseSVG = useMemo(
     () => (
       <Image className="h-[1em] w-[1em] object-contain p-0.5" src={increaseSrc} alt="Down arrow" draggable={false} />
