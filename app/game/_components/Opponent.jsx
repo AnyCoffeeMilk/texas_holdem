@@ -22,9 +22,9 @@ export default function Opponent({ info, isBlinking, blindTag }) {
       >
         {info.username}
       </div>
-      <div className="col-2 row-1 grid grid-cols-[1.5rem_1fr] gap-1 text-[0.7em] px-0.5 sm:text-[0.81em] lg:col-2 lg:row-[1/4] lg:grid-cols-[4rem_1fr] lg:text-[0.98em]">
+      <div className="col-2 row-1 grid grid-cols-[1.5rem_1fr] h-[6em] overflow-hidden gap-1 text-[0.7em] px-0.5 sm:text-[0.81em] lg:col-2 lg:row-[1/4] lg:grid-cols-[4rem_1fr] lg:text-[0.98em]">
         {info.cards.map((item, index) => (
-          <div key={index} className="h-[6.75em] w-[5.5em]">
+          <div key={index} className="h-[calc(100%+0.75em)] w-[5.5em]">
             <PokerCard key={index} rank={item?.rank} suit={item?.suit} />
           </div>
         ))}

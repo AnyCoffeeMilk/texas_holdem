@@ -117,6 +117,7 @@ export const gameStateReducer = (state, { type, payload }) => {
       return {
         ...state,
         inTurnUUID: "",
+        playerCards: payload.players.find((item) => item.uuid === state.playerUUID).cards,
         centerCards: payload.centerCards,
         playerBuyIn: payload.players.find((item) => item.uuid === state.playerUUID).buyIn,
         reward: payload.winnerUUIDs[0] === state.playerUUID ? payload.reward : 0,
@@ -132,6 +133,7 @@ export const gameStateReducer = (state, { type, payload }) => {
       return {
         ...state,
         inTurnUUID: "",
+        playerCards: payload.players.find((item) => item.uuid === state.playerUUID).cards,
         centerCards: payload.centerCards,
         playerBuyIn: payload.players.find((item) => item.uuid === state.playerUUID).buyIn,
         reward: payload.winnerUUIDs.includes(state.playerUUID) ? payload.reward : 0,
